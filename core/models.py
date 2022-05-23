@@ -3,7 +3,7 @@ from django.db import models
 
 class Field(models.Model):
     name = models.CharField(max_length=100, null=False, unique=True)
-    abr = models.CharField(max_length=100, null=False, unique=True)
+    abr = models.CharField(max_length=50, null=False, unique=True)
 
     def __str__(self):
         return self.name
@@ -11,7 +11,7 @@ class Field(models.Model):
 
 class Level(models.Model):
     name = models.CharField(max_length=100, null=False, unique=True)
-    abr = models.CharField(max_length=100, null=False, unique=True)
+    abr = models.CharField(max_length=50, null=False, unique=True)
 
     def __str__(self):
         return self.name
