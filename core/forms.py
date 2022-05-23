@@ -53,9 +53,7 @@ class GroupForm(forms.Form):
             all_capacity = 0
             for group in groups:
                 all_capacity += group.capacity
-            if (all_capacity + capacity) > self.cleaned_data[
-                "grade"
-            ].capacity:
+            if (all_capacity + capacity) > self.cleaned_data["grade"].capacity:
                 raise forms.ValidationError(
                     "La capacité est trop grande pour ce groupe"
                 )
@@ -64,3 +62,9 @@ class GroupForm(forms.Form):
                 "La capacité du groupe ne peut pas être plus grande que celle de la classe."
             )
         return capacity
+
+    def save(self, commit=True):
+        name = self.cleaned_data["name"]
+        capacity = self.cleaned_data["capacity"]
+        grade = self.cleaned_data["grade"]
+        return Group.objects.create(name=name, capacity=capacity, grade=grade)
