@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <ul>
+            {% for error in form.errors  %}
+                <li>error
+            {% endfor %}
+        </ul>
+        <input type="submit" value="Submit">
+    </form>
+   
+</body>
+</html>
