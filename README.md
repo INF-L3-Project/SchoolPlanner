@@ -30,38 +30,37 @@ This is  a web application that allows school administrators to easily manage th
 
 1. Clone the repositiory into your workstation (device/machine) by running the command: <br>
 
-        git clone https://github.com/INF-L3-Project/SchoolPlanner-backend.git
+        git clone https://github.com/INF-L3-Project/SchoolPlanner.git
 
 
 2. Create and activate a virtual environment:
 
    ```sh
-   $ python3 -m venv venv && source venv/bin/activate
+   $ python3 -m venv .env && source .env/bin/activate
    ```
 
 3. Install the requirements:
 
    ```sh
-   (venv)$ pip install -r requirements.txt
+   (.env)$ pip install -r requirements.txt
    ```
 
+4. Inside `schoolplanner/` create a file name `.env` and use the example file in `env_example` to fill it file
+
+   
+   
 4. Apply the migrations:
 
    ```sh
-   (venv)$ python manage.py migrate
+   (.env)$ python manage.py migrate
    ```
-6. Inside `schoolplanner/` create a file name `.env` and use the example file in `env_example` to fill it file
-
-5. Seed the database:
-
-   ```sh
-   (venv)$ python manage.py migrate
-   ```
-
+   
+   
+   
 6. Run the server:
 
    ```sh
-   (venv)$ python manage.py runserver
+   (.env)$ python manage.py runserver
    ```
 
 
