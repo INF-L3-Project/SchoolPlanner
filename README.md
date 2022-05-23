@@ -65,3 +65,9 @@ This is  a web application that allows school administrators to easily manage th
 
 
 7. Check the server is running by going to [localhost:8000](http://127.0.0.1:8000)
+
+
+
+### **Live result**
+
+[schedule school generator](https://schedule-school-generator.herokuapp.com/)
