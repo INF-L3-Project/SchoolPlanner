@@ -2,18 +2,15 @@ from .models import Field, Grade, Group, Level
 from django import forms
 
 
-class FieldForm(forms.Form):
+class FieldForm(forms.ModelForm):
+
     class Meta:
         model = Field
         fields = ("name", "abr")
 
-    def save(self, commit=True):
-        name = self.cleaned_data["name"]
-        abr = self.cleaned_data["abr"]
-        return Field.objects.create(name=name, abr=abr)
-
 
 class LevelForm(forms.Form):
+
     class Meta:
         model = Level
         fields = ("name", "abr")
@@ -25,6 +22,7 @@ class LevelForm(forms.Form):
 
 
 class GradeForm(forms.Form):
+
     class Meta:
         model = Grade
         fields = ("field", "level", "capacity")
@@ -41,6 +39,7 @@ class GradeForm(forms.Form):
 
 
 class GroupForm(forms.Form):
+
     class Meta:
         model = Group
         fields = ("name", "capacity", "grade")
@@ -55,8 +54,7 @@ class GroupForm(forms.Form):
                 all_capacity += group.capacity
             if (all_capacity + capacity) > self.cleaned_data["grade"].capacity:
                 raise forms.ValidationError(
-                    "La capacité est trop grande pour ce groupe"
-                )
+                    "La capacité est trop grande pour ce groupe")
         elif capacity > self.cleaned_data["grade"].capacity:
             raise forms.ValidationError(
                 "La capacité du groupe ne peut pas être plus grande que celle de la classe."
