@@ -3,25 +3,20 @@ from django import forms
 
 
 class FieldForm(forms.ModelForm):
-
+    
     class Meta:
         model = Field
         fields = ("name", "abr")
 
 
-class LevelForm(forms.Form):
+class LevelForm(forms.ModelForm):
 
     class Meta:
         model = Level
         fields = ("name", "abr")
 
-    def save(self, commit=True):
-        name = self.cleaned_data["name"]
-        abr = self.cleaned_data["abr"]
-        return Level.objects.create(name=name, abr=abr)
 
-
-class GradeForm(forms.Form):
+class GradeForm(forms.ModelForm):
 
     class Meta:
         model = Grade
@@ -38,7 +33,7 @@ class GradeForm(forms.Form):
         )
 
 
-class GroupForm(forms.Form):
+class GroupForm(forms.ModelForm):
 
     class Meta:
         model = Group
@@ -61,8 +56,3 @@ class GroupForm(forms.Form):
             )
         return capacity
 
-    def save(self, commit=True):
-        name = self.cleaned_data["name"]
-        capacity = self.cleaned_data["capacity"]
-        grade = self.cleaned_data["grade"]
-        return Group.objects.create(name=name, capacity=capacity, grade=grade)

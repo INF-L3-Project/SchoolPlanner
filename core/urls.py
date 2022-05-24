@@ -1,14 +1,14 @@
 from django.urls import path
-from core.views import HomeView, AccountView, BranchView, ClasseView, ClassroomView, CourseView, LevelView, TeacherView, UnitView, TimetableView, NotFoundView
+from core.views import HomeView, AccountView, FieldView, GradeView, ClassroomView, GroupView, LevelView, TeacherView, UnitView, TimetableView, NotFoundView
 
 app_name = 'core'
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('account/', AccountView.as_view(), name='account'),
-    path('branch/', BranchView.as_view(), name='branch'),
-    path('classe/', ClasseView.as_view(), name='classe'),
+    path('field/', FieldView.as_view(), name='field'),
+    path('grade/', GradeView.as_view(), name='grade'),
     path('classroom/', ClassroomView.as_view(), name='classroom'),
-    path('course/', CourseView.as_view(), name='course'),
+    path('group/', GroupView.as_view(), name='group'),
     path('level/', LevelView.as_view(), name='level'),
     path('teacher/', TeacherView.as_view(), name='teacher'),
     path('unit/', UnitView.as_view(), name='contact'),
