@@ -1,9 +1,12 @@
+from pprint import pprint
+
+from django.shortcuts import get_object_or_404
 from .models import Field, Grade, Group, Level
 from django import forms
 
 
 class FieldForm(forms.ModelForm):
-    
+
     class Meta:
         model = Field
         fields = ("name", "abr")
@@ -41,18 +44,18 @@ class GroupForm(forms.ModelForm):
 
     def clean_capacity(self):
         """Check if the capacity of the group is possible for the selected grade."""
-        groups = Group.objects.all().filter(grade=self.cleaned_data["grade"])
-        capacity = self.cleaned_data["capacity"]
+        groups = Group.objects.all().filter(grade=self.data["grade"])
+        grade = get_object_or_404(Grade, id=self.data["grade"])
+        capacity = int(self.data["capacity"])
         if groups:
             all_capacity = 0
             for group in groups:
                 all_capacity += group.capacity
-            if (all_capacity + capacity) > self.cleaned_data["grade"].capacity:
+            if (all_capacity + capacity) > grade.capacity:
                 raise forms.ValidationError(
                     "La capacité est trop grande pour ce groupe")
-        elif capacity > self.cleaned_data["grade"].capacity:
+        elif capacity > grade.capacity:
             raise forms.ValidationError(
                 "La capacité du groupe ne peut pas être plus grande que celle de la classe."
             )
         return capacity
-
