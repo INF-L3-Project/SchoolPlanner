@@ -13,18 +13,97 @@
 	<title>{% block title %} {% endblock %}</title>
 </head>
 <body>
-
-	<header>
 	
-	</header>
-
-		{% block content %}
-
+    <header>
+        <div class="toggle">
+            <i class="fa fa-bars"></i>
+        </div>
+        <h3>Dashboard</h3>
+        <a href="#">
+            <i class="fa fa-sign-out"></i>
+        </a>
+    </header>
+	<div class="container-fluid d-lg-flex justify-content-between ps-0">
+		{% block nav %}
+			<div>
+				<nav>
+					<ul>
+						<li>
+							<a class="toggle" href="#">
+								<span class="icon"><i class="fa fa-bars"></i></span>
+								<span class="title">Menu</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="icon"><i class="fa fa-edit"></i></span>
+								<span class="title">UEs</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="icon"><i class="fa fa-book"></i></span>
+								<span class="title">Filières</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="icon"><i class="fa fa-male"></i></span>
+								<span class="title">Enseignants</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="icon"><i class="fa fa-building-o"></i></span>
+								<span class="title">Salles</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="icon"><i class="fa fa-line-chart"></i></span>
+								<span class="title">Niveaux</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="icon"><i class="fa fa-university"></i></span>
+								<span class="title">Classes</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="icon"><i class="fa fa-group"></i></span>
+								<span class="title">Groupe</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="icon"><i class="fa fa-calendar"></i></span>
+								<span class="title">Emplois de temps</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="icon"><i class="fa fa-user-circle-o"></i></span>
+								<span class="title">Mon compte</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
 		{% endblock %}
+		<div class="container-fluid p-0">
+			{% block content %}
 
-	<footer class="pt-4">
-		
-	</footer>
+			{% endblock %}
+		</div>
+	</div>
+    
+	
+    
+
+
+
 
 	{% block extra_script %}
 

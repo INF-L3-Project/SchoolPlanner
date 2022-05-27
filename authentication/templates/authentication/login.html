@@ -1,25 +1,77 @@
 {% extends 'core/base.html' %}
 
-{% block title %} SchoolPlanner - Login {% endblock %}
+{% block title %} SchoolPlanner - Sign-in {% endblock %}
+
+{% block nav %}{% endblock %}
 
 {% block content %}
 
 
 
-	<div class="container-fluid my-4 pt-4">
-		<h1>Hello Login</h1>
+	<div class="container-fluid p-0">
+		
+		<div class="row">
+			<div class="col-lg-3">
+				<img src="/static/core/images/bg_login.jpg" alt="bg_login" class="w-100 bg_login">
+			</div>
+			<div class="col-lg-7">
+				<div class="container-fluid d-flex justify-content-start">
+					<img src="/static/core/images/logo.png" alt="logo" width="100px" height="100px">
+				</div>
+				<div class="ps-lg-5 ms-lg-2">
+					<div class="container px-lg-5 mx-lg-5">
+						<h2 class="text-dark fw-bold">Connectez-vous</h2>
+						<h7 class="text-pink">Connectez-vous et consultez/générez gratuitement vos emplois<br /> de temps</h7>
+					</div>
+					<div class="mt-5">
+						<form class="container px-lg-5 mx-lg-5" id="needs-validation" novalidate>
+							<div class="form-group">
+								<label class="text-inverse mb-2" for="inputEmail4">Adresse email</label>
+								<input type="email" class="form-control" id="inputEmail4" placeholder="Email" required>
+								<div class="invalid-feedback">
+									Veuillez entrer une adresse mail valide.
+								</div>
+							</div>  
+							<div class="form-group mt-4">
+								<label class="text-inverse mb-2" for="inputpassword">Mot de passe</label>
+								<input type="password" class="form-control" id="inputpassword" placeholder="password" required>
+								<div class="invalid-feedback">
+									Veuillez entrer un mot de passe.
+								</div>
+							</div>  
+							<div class="text-center mt-5">
+								<button class="bg-dark p-2 text-white fw-bold rounded border-0 w-100" type="submit">Se connecter</button>
+							</div>
+							<div class="mt-4 text-center">
+								<p>Vous n'avez pas de compte? <span><a href="" class="text-unterline text-dark">S'inscrire</a></span></p>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 
 
 
 {% endblock %}
-
-
-
 {% block extra_script %}
 
-	<script type="text/javascript">
-	</script>
-	
+<script type="text/javascript">
+	(function() {
+		'use strict';
+		window.addEventListener('load', function() {
+		var form = document.getElementById('needs-validation');
+		form.addEventListener('submit', function(event) {
+			if (form.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+			}
+			form.classList.add('was-validated');
+		}, false);
+		}, false);
+	})();
+</script>
 
 {% endblock %}
