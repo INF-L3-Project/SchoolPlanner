@@ -22,11 +22,10 @@ class LoginView(View):
                 login(request, user)
                 return redirect(valuenext)
             else:
-                error = ValidationError("Invalid email or password")
+                error = ValidationError("Adresse électronique/mot de passe non valide.")
                 context = {"form": form, "error": error}
                 return render(request, self.template_name, context)
         else:
-            print(form.errors)
             return render(request, self.template_name, {"form": form})
 
     def get(self, request, *args, **kwargs):
@@ -46,7 +45,8 @@ class RegisterView(View):
         form = self.form_class(data=request.POST)
         if form.is_valid():
             # on cree un compte
-            institution = form.save(commit=True)
+            institution = form.save()
+            messages.success('Inscription reussie ! Connectez à présent')
             return redirect('authentication:login')
 
         else:
