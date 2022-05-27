@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block title %} SchoolPlanner - Sign-in {% endblock %}
 
@@ -12,11 +13,11 @@
 		
 		<div class="row">
 			<div class="col-lg-3">
-				<img src="/static/core/images/bg_login.jpg" alt="bg_login" class="w-100 bg_login">
+				<img src="{% static 'core/images/bg_login.jpg' %}" alt="bg_login" class="w-100 bg_login">
 			</div>
 			<div class="col-lg-7">
 				<div class="container-fluid d-flex justify-content-start">
-					<img src="/static/core/images/logo.png" alt="logo" width="100px" height="100px">
+					<img src="{% static 'core/images/logo.png' %}" alt="logo" width="100px" height="100px">
 				</div>
 				<div class="ps-lg-5 ms-lg-2">
 					<div class="container px-lg-5 mx-lg-5">

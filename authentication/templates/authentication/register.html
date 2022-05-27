@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block title %} SchoolPlanner - Sign-up {% endblock %}
 
@@ -12,11 +13,11 @@
 		
 		<div class="row">
 			<div class="col-lg-3 left_img">
-				<img src="/static/core/images/bg_login.jpg" alt="bg_login" class="w-100 bg_register">
+				<img src="{% static 'core/images/bg_login.jpg' %}" alt="bg_login" class="w-100 bg_register">
 			</div>
 			<div class="col-lg-7">
 				<div class="container-fluid d-flex justify-content-start">
-					<img src="/static/core/images/logo.png" alt="logo" width="100px" height="100px">
+					<img src="{% static 'core/images/logo.png' %}" alt="logo" width="100px" height="100px">
 				</div>
 				<div class="ps-lg-5 ms-lg-2">
 					<div class="container px-lg-5 mx-lg-5">
@@ -68,10 +69,10 @@
 							</div>  
 							
 							<div class="text-center mt-5">
-								<button class="bg-dark p-2 text-white fw-bold rounded border-0 w-100" type="submit">S'inscrire</button>
+								<button class="bg-dark p-2 text-white fw-bold rounded border-0 w-100" type="submit">S'enregistrer</button>
 							</div>
 							<div class="mt-4 text-center">
-								<p>Vous avez déjà un compte? <span><a href="{% url 'authentication:login' %}" class="text-unterline text-dark">Se connecter</a></span></p>
+								<p>Vous avez déjà un compte? <span><a href={% url 'authentication:login' %} class="text-unterline text-dark">Se connecter</a></span></p>
 							</div>
 						</form>
 					</div>

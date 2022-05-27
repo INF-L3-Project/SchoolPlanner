@@ -1,11 +1,13 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-	<link type="text/css" rel="stylesheet" href="/static/core/css/bootstrap.min.css"  media="screen,projection"/>
-    <link rel="stylesheet" type="text/css" href="/static/core/css/style.css">
+	<link type="text/css" rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}"  media="screen,projection"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/style.css' %}">
 
     {% block extra_style %}
     {% endblock %}
@@ -110,8 +112,8 @@
 	{% endblock %}
 
 
-	<script type="text/javascript" src="/static/core/js/bootstrap.bundle.min.js"></script>
-	<script type="text/javascript" src="/static/core/js/script.js"></script>
+	<script type="text/javascript" src="{% static 'core/js/bootstrap.bundle.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'core/js/script.js' %}"></script>
 
 
 </body>

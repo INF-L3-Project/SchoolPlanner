@@ -87,7 +87,7 @@ class GroupView(View):
 
     def get(self, request, *args, **kwargs):
         groups = Group.objects.all()
-        return render(request, self.template_name, {"groups": groups, "form": self.form_class})
+        return render(request, self.template_name, {"groups": groups})
 
 
 class AccountView(TemplateView):
