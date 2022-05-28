@@ -2,8 +2,16 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import TemplateView
-from .models import Field, Grade, Group, Level
-from .forms import FieldForm, GradeForm, GroupForm, LevelForm
+from .models import Classroom, Field, Grade, Group, Level, Teacher, Unit
+from .forms import (
+    ClassroomForm,
+    FieldForm,
+    GradeForm,
+    GroupForm,
+    LevelForm,
+    TeacherForm,
+    UnitForm,
+)
 
 
 class HomeView(TemplateView):
@@ -94,19 +102,69 @@ class AccountView(TemplateView):
     template_name = "core/account.html"
 
 
-class ClassroomView(TemplateView):
+class ClassroomView(View):
+    """Cette vue c'est pour les salles de classe (exemple : Amphi 350, A250)."""
+
     template_name = "core/classroom.html"
+    form_class = ClassroomForm
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse("Created !")
+        else:
+            print(form.errors)
+            return render(request, self.template_name, {})
+
+    def get(self, request, *args, **kwargs):
+        classrooms = Classroom.objects.all()
+        return render(request, self.template_name, {"classrooms": classrooms})
 
 
-class TeacherView(TemplateView):
+class TeacherView(View):
+    """Cette vue c'est pour les enseignants."""
+
     template_name = "core/teacher.html"
+    form_class = TeacherForm
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse("Created !")
+        else:
+            print(form.errors)
+            return render(request, self.template_name, {})
+
+    def get(self, request, *args, **kwargs):
+        teachers = Teacher.objects.all()
+        return render(request, self.template_name, {"teachers": teachers})
 
 
-class UnitView(TemplateView):
+class UnitView(View):
+    """Cette vue c'est pour les unitées d'enseignement (exemple : Algorithmique)."""
+
     template_name = "core/unit.html"
+    form_class = UnitForm
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse("Created !")
+        else:
+            print(form.errors)
+            return render(request, self.template_name, {})
+
+    def get(self, request, *args, **kwargs):
+        units = Unit.objects.all()
+        return render(request, self.template_name, {"units": units})
 
 
 class TimetableView(TemplateView):
+    """Cette vue c'est pour les emplois du temps."""
+
     template_name = "core/timetable.html"
 
 
