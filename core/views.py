@@ -28,7 +28,7 @@ class FieldView(View):
         form = self.form_class(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect(self.template_name)
+            return render(request, self.template_name, {"fields": Field.objects.all()})
         else:
             print(form.errors)
             return render(request, self.template_name, {})
@@ -48,7 +48,7 @@ class LevelView(View):
         form = self.form_class(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect(self.template_name)
+            return render(request, self.template_name, {"levels": Level.objects.all()})
         else:
             print(form.errors)
             return render(request, self.template_name, {})
@@ -68,7 +68,7 @@ class GradeView(View):
         form = self.form_class(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect(self.template_name)
+            return render(request, self.template_name, {"grades": Grade.objects.all()})
         else:
             print(form.errors)
             return render(request, self.template_name, {})
@@ -88,7 +88,7 @@ class GroupView(View):
         form = self.form_class(data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse("Created !")
+            return render(request, self.template_name, {"groups": Group.objects.all()})
         else:
             print(form.errors)
             return render(request, self.template_name, {})
@@ -112,7 +112,7 @@ class ClassroomView(View):
         form = self.form_class(data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse("Created !")
+            return render(request, self.template_name, {"classrooms": Classroom.objects.all()})
         else:
             print(form.errors)
             return render(request, self.template_name, {})
@@ -132,7 +132,7 @@ class TeacherView(View):
         form = self.form_class(data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse("Created !")
+            return render(request, self.template_name, {"teachers": Teacher.objects.all()})
         else:
             print(form.errors)
             return render(request, self.template_name, {})
@@ -152,7 +152,7 @@ class UnitView(View):
         form = self.form_class(data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse("Created !")
+            return render(request, self.template_name, {"units": Unit.objects.all()})
         else:
             print(form.errors)
             return render(request, self.template_name, {})
