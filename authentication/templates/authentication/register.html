@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block title %} SchoolPlanner - Sign-up {% endblock %}
 
@@ -12,48 +13,55 @@
 		
 		<div class="row">
 			<div class="col-lg-3 left_img">
-				<img src="/static/core/images/bg_login.jpg" alt="bg_login" class="w-100 bg_register">
+				<img src="{% static 'core/images/bg_login.jpg' %}" alt="bg_login" class="w-100 bg_register">
 			</div>
 			<div class="col-lg-7">
 				<div class="container-fluid d-flex justify-content-start">
-					<img src="/static/core/images/logo.png" alt="logo" width="100px" height="100px">
+					<img src="{% static 'core/images/logo.png' %}" alt="logo" width="100px" height="100px">
 				</div>
 				<div class="ps-lg-5 ms-lg-2">
 					<div class="container px-lg-5 mx-lg-5">
 						<h2 class="text-dark fw-bold">Inscrivez-vous</h2>
-						<h7 class="text-pink">Inscrivez-vous pour planifier vos emplois de temps académiques.</h7>
+						<h7 class="text-pink">Générez, modifiez et imprimez l'emploi du temps de votre établissement en quelques clics.</h7>
 					</div>
 					<div class="mt-5">
-						<form class="container px-lg-5 mx-lg-5" id="needs-validation" novalidate>
+						<center>
+							<span class='text-danger'>  </span>
+							</center>
+						<form  method='post' class="container px-lg-5 mx-lg-5" id="needs-validation" novalidate>
+							{% csrf_token %}
 							<div class="form-group">
-								<label class="text-inverse mb-2" for="validationCustom01">Nom</label>
-								<input type="text" class="form-control" id="validationCustom01" placeholder="Entrez votre nom" required>
+								<label class="text-inverse mb-2" for="validationCustom01">Nom complet</label><span class='text-danger'> *</span>
+								<input name='last_name' type="text" class="form-control" id="validationCustom01" placeholder="Entrez votre nom complet" value="{{form.last_name.value|default_if_none:''}}" required>
 							</div>
 							<div class="form-group mt-4">
-								<label class="text-inverse mb-2" for="validationCustom02">Prénom</label>
-								<input type="text" class="form-control" id="validationCustom02" placeholder="Entrez votre prénom" required>
-							</div>  
-							<div class="form-group mt-4">
-								<label class="text-inverse mb-2" for="inputEmail4">Adresse email</label>
-								<input type="email" class="form-control" id="inputEmail4" placeholder="Entrez une adresse mail valide" required>
+								<label class="text-inverse mb-2" for="inputEmail4">Adresse email</label><span class='text-danger'> *</span>
+								<input type="email" class="form-control" id="inputEmail4" name='email' placeholder="Entrez une adresse mail valide" value="{{form.email.value|default_if_none:''}}" required>
 								<div class="invalid-feedback">
 									Veuillez entrer une adresse mail valide.
 								</div>
+								{% for error in form.email.errors %}
+								<span class='text-danger'> {{ error }} </span>
+								{% endfor %}
+
 							</div>  
 							<div class="form-group mt-4">
-								<label class="text-inverse mb-2" for="inputpassword">Mot de passe</label>
-								<input type="password" class="form-control" id="inputpassword" placeholder="Entrez un mot de passe" required>
+								<label class="text-inverse mb-2" for="inputpassword">Mot de passe</label><span class='text-danger'> *</span>
+								<input type="password" name='password' class="form-control" id="inputpassword" placeholder="Entrez un mot de passe" required>
 								<div class="invalid-feedback">
 									Veuillez entrer un mot de passe.
 								</div>
 							</div>
 							<div class="form-group mt-4">
-								<label class="text-inverse mb-2" for="validationCustom02">Institution</label>
-								<input type="text" class="form-control" id="validationCustom02" placeholder="Entrez le nom de votre institution" required>
+								<label class="text-inverse mb-2" for="validationCustom02">Nom de votre institution</label><span class='text-danger'> *</span>
+								<input type="text" name='name' class="form-control" id="validationCustom02" placeholder="Entrez le nom de votre institution" value="{{form.name.value|default_if_none:''}}" required>
+								<div class="invalid-feedback">
+									Veuillez entrer le nom de votre institution.
+								</div>
 							</div>
 							<div class="form-group mt-4">
 								<label class="custom-file mb-2">Logo</label>
-								<input type="file" id="file" class="form-control custom-file-input" required>
+								<input type="file" id="file" class="form-control custom-file-input">
 								<span class="custom-file-control"></span>
 								<div class="invalid-feedback">
 									Veuillez sélectionner une image.
@@ -61,10 +69,10 @@
 							</div>  
 							
 							<div class="text-center mt-5">
-								<button class="bg-dark p-2 text-white fw-bold rounded border-0 w-100" type="submit">Se connecter</button>
+								<button class="bg-dark p-2 text-white fw-bold rounded border-0 w-100" type="submit">S'enregistrer</button>
 							</div>
 							<div class="mt-4 text-center">
-								<p>Vous avez déjà un compte? <span><a href="" class="text-unterline text-dark">Se connecter</a></span></p>
+								<p>Vous avez déjà un compte? <span><a href={% url 'authentication:login' %} class="text-unterline text-dark">Se connecter</a></span></p>
 							</div>
 						</form>
 					</div>
