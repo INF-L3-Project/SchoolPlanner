@@ -1,20 +1,20 @@
-/* ==========================Font========================== */
-
-@font-face {
-    font-family: 'robotoregular';
-    src: url(../fonts/roboto-regular-webfont.woff) format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 .text-dark{
     color: #37354A !important;
 }
 .bg-dark{
     background-color: #37354A !important;
 }
+.bg-pink{
+    background-color: #FF0052;
+}
+.bg-pink2{
+    background-color: #ffcbda !important;
+}
 .text-pink{
     color: #C35C7B;
+}
+.text-pink2{
+    color: #FF0052;
 }
 input:focus{
     outline: none;
@@ -25,7 +25,13 @@ input:focus{
 .bg_register{
     height: 100%;
 }
-
+.th{
+    width: 160px;
+    background-color: #C35C7B;
+}
+#form{
+    display: none;
+}
 
 * {
     margin: 0;
