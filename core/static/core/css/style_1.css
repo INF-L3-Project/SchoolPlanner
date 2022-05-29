@@ -14,7 +14,13 @@ Titre: Style de la page level.html
 }
 
 .icon_level{
-    font-size: 4rem;
+    font-size: 4.6rem;
+}
+.icon_field{
+    font-size: 4.5rem;
+}
+.icon_class{
+    font-size: 4.5rem;
 }
 /* .icon_field{
     font-size: 4rem;
