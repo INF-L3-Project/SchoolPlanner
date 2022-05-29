@@ -1,3 +1,4 @@
+from pprint import pprint
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
@@ -22,8 +23,9 @@ class LoginView(View):
                 login(request, user)
                 return redirect(valuenext)
             else:
-                error = ValidationError("Adresse électronique/mot de passe non valide.")
-                context = {"form": form, "error": error}
+                messages.error(
+                    request, "Adresse électronique/mot de passe non valide.")
+                context = {"form": form}
                 return render(request, self.template_name, context)
         else:
             return render(request, self.template_name, {"form": form})
@@ -45,8 +47,12 @@ class RegisterView(View):
         form = self.form_class(data=request.POST)
         if form.is_valid():
             # on cree un compte
-            institution = form.save()
-            messages.success('Inscription reussie ! Connectez à présent')
+            institution = form.save(commit=False)
+            institution.logo = request.FILES['logo']
+            institution.save()
+            pprint(institution.logo)
+            messages.success(request,
+                             'Inscription reussie ! Connectez à présent')
             return redirect('authentication:login')
 
         else:
