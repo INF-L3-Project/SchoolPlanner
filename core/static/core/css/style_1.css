@@ -1,0 +1,32 @@
+/*
+Titre: Style de la page level.html 
+-forme 
+*/
+.bg-dark{
+    background-color: #37354A !important;
+}
+.bg-pink{
+    background-color: #ff0052 !important;
+}
+
+.forme{
+    border-radius: 12px;
+}
+
+.icon_level{
+    font-size: 4rem;
+}
+/* .icon_field{
+    font-size: 4rem;
+} */
+.space{
+    margin-top: 3rem;
+}
+.new_level{
+    border-radius: 0.8rem;
+    margin-left: 7rem;
+}
+/*
+Titre: Style de la page field.html 
+-forme 
+*/

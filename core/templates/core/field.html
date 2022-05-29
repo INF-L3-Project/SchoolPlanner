@@ -1,13 +1,57 @@
 {% extends 'core/base.html' %}
-{% block title %} SchoolPlanner - Fields {% endblock %}
+{% load static %}
+{% block title %} SchoolPlanner - Levels {% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" type="text/css" href="{% static 'core/css/style_1.css' %}">
+{% endblock %}
+
 
 {% block content %}
 
 
 
-	<div class="container-fluid my-4 pt-4">
-		<h1>Hello Fields</h1>
-	</div>
+<div class="container-fluid my-4 pt-4 ps-lg-2 ms-lg-2">
+	<div class="container">
+		<span class="d-flex">
+			<i class="fa fa-home mx-2 mt-1" aria-hidden="true"></i>
+			<i class="fa fa-chevron-right mt-1" aria-hidden="true"></i>
+			<p class="mx-2">Dashboard</p>
+			<i class="fa fa-chevron-right mt-1" aria-hidden="true"></i>
+			<p class="fw-bold">Filieres</p>
+		</span>
+		<h1 class="fw-bold space">Filieres</h1>
+		<div class="row row-cols-3 row-cols-lg-5 space g-2 g-lg-5">
+		  <div class="col">
+			<div class="py-5 px-4 text-white text-center shadow forme" id="back_field_1"><h3 class="fw-bold fs-5">INFORMATIQUE</h3></div>
+		  </div>
+		  <div class="col">
+			<div class="py-5 px-4 text-white text-center shadow  forme" id="back_field_2"><h3 class="fw-bold fs-5">MATHEMATIQUE</h3></div>
+		  </div>
+		  <div class="col">
+			<div class="p-5 text-white text-center shadow  forme" id="back_field_3"><h3 class="fw-bold fs-5">PHYSIQUE</h3></div>
+		  </div>
+		  <div class="col">
+			<div class="p-5 text-white text-center shadow  forme" id="back_field_4"><h3 class="fw-bold fs-5">CHIMIE</h3></div>
+		  </div>
+		  <div class="col">
+			<div class="p-5 text-white text-center shadow  forme" id="back_field_5"><h3 class="fw-bold fs-5">BIOLOGIE</h3></div>
+		  </div>
+		  <div class="col">
+			<div class="p-5 text-white text-center shadow  forme" id="back_field_6"><h3 class="fw-bold fs-5">HISTOIRE</h3></div>
+		  </div>
+		  <div class="col">
+			<div class="p-5 text-white text-center shadow  forme" id="back_field_7"><h3 class="fw-bold fs-5">GEOGRAPHIE</h3></div>
+		  </div>
+		  <div class="col">
+			<div class="p-5 text-white text-center shadow  forme" id="back_field_8"><h3 class="fw-bold fs-5">SOCIOLOGIE</h3></div>
+		  </div>
+		  <div class="col">
+			<div class="p-5 text-white text-center shadow forme" id="back_field_9"><h3><i class="fa fa-plus icon_field" aria-hidden="true"></i></h3></div>
+		  </div>
+		</div>
+	  </div>
+</div>
 
 
 
