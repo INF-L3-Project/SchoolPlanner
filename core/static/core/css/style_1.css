@@ -21,12 +21,6 @@
 .space{
     margin-top: 3rem;
 }
-.new_level{
+.new{
     border-radius: 0.8rem;
-    margin-left: 7rem;
 }
-@media only screen and (min-width: 600px) {
-    h3{
-
-    }
-} 
