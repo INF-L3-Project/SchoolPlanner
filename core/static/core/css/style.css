@@ -21,9 +21,11 @@ input:focus{
 }
 .bg_login{
     height: 100vh;
+    object-fit: cover;
 }
 .bg_register{
     height: 100%;
+    object-fit: cover;
 }
 .th{
     width: 160px;
@@ -54,7 +56,8 @@ nav {
     height: 100%;
     background: var(--bg-secondary);
     transition: .5s;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 nav.active {
@@ -165,6 +168,11 @@ header {
     nav ul li a.toggle {
         display: none;
     }
+
+    #dashboard_nav{
+        display: none;
+    }
+
     .bg_login, .bg_register{
         display: none;
     }
