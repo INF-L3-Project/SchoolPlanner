@@ -78,3 +78,20 @@ class ProvideForm(forms.ModelForm):
     class Meta:
         model = Provide
         fields = "__all__"
+
+    def clean(self):
+        # Check if the group selected can doing course at the selected classroom
+        group = get_object_or_404(Group, id=self.data["group"])
+        classroom = get_object_or_404(Classroom, id=self.data["classroom"])
+        if group.capacity > classroom.capacity:
+            raise forms.ValidationError(
+                "Cette salle ne peut pas contenir un groupe avec une telle capacité."
+            )
+        # Check if a classroom is already taken at the selected range
+        
+        # Verify that a group is not doing 2 classes at the same time
+
+        # Check that several groups are not teaching in the same classroom
+
+        # Verify that a teacher does not teach in 2 classrooms at the same time
+        
