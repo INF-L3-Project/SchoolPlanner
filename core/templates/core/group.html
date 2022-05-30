@@ -1,14 +1,163 @@
 {% extends 'core/base.html' %}
-{% block title %} SchoolPlanner - Groups {% endblock %}
+
+{% load static %}
+{% block title %} SchoolPlanner - Levels {% endblock %}
+
+    {% block extra_style %}
+    	<link rel="stylesheet" type="text/css" href="{% static 'core/css/style2.css' %}">
+    {% endblock %}
+	
 
 {% block content %}
 
 
 
-	<div class="container-fluid my-4 pt-4">
-		<h1>Hello Groups</h1>
-	</div>
+	<section class="container-fluid my-4 pt-4 ps-lg-5">
+		<div class="ps-lg-5">
+		<div>
+			<span class="text-dark">
+				<i class="fa fa-home"></i>  
+					<i class="fa fa-chevron-right" aria-hidden="true"></i>
+									Dashboard 
+					<i class="fa fa-chevron-right" aria-hidden="true"></i>
+						 			<span class="fw-bold">Groupes</span>
+			</span>
+		</div>
 
+		<h1 class="fw-bold text-dark mt-5">Groupes</h1>
+		<!-- **********************Search bar******************** -->
+
+		<div class="d-flex justify-content-between">
+			<div class="d-flex w-25">
+				<form>
+					<div class="mt-2 bg-light border-1 p-1 border-danger rounded-pill">
+						<button type="submit" class=" border-0 bg-light p-0 me-3">
+							<i class="fa fa-search fa text-dark" aria-hidden="true"></i>
+						</button>
+						<input type="search" name="" class="border-0 w-75 bg-light fs-5">
+					</div>
+				</form>
+			</div>
+			<div class="d-flex p-5 pt-0 pb-0 justify-content-center w-50">
+				<div class="d-flex m-2">
+					<form>
+						<div class="mt-2 bg-light p-1 border-danger rounded-pill">
+							<span class="border-0 bg-light p-0 me-3">
+								<i class="fa fa-filter fa text-dark" aria-hidden="true"></i>
+							</span>
+							<select class="border-0 bg-light fs-5">
+								<option>salut</option>
+								<option>Panda</option>
+							</select>
+						</div>
+					</form>
+				</div>
+				<div class="d-flex m-2">
+					<button type="button" class="border-0 fs-5 pe-2 bg-pink text-white  rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						<span class="border-0 p-0 me-2">
+							<i class="fa fa-plus ps-1" aria-hidden="true"></i>
+						</span>Ajouter
+					</button>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="container w-75 table-responsive py-5 border-0"> 
+			<table class="table table-bordered table-hover">
+			  <thead class="text-white bg-black m-5">
+			    <tr class="pt-2">
+			      <th scope="col">#</th>
+			      <th scope="col">First</th>
+			      <th scope="col">Last</th>
+			      <th scope="col">Handle</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">1</th>
+			      <td>Mark</td>
+			      <td>Otto</td>
+			      <td class="text-pink">
+			      	<i class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			    <tr>
+			      <th scope="row">2</th>
+			      <td>Jacob</td>
+			      <td>Thornton</td>
+			      <td class="text-pink">
+			      	<i class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			    <tr>
+			      <th scope="row">3</th>
+			      <td>Larry</td>
+			      <td>the Bird</td>
+			      <td class="text-pink">
+			      	<i class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			     <tr>
+			      <th scope="row">4</th>
+			      <td>Larry</td>
+			      <td>the Bird</td>
+			      <td class="text-pink">
+			      	<i class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			    <tr>
+			      <th scope="row">5</th>
+			      <td>Larry</td>
+			      <td>the Bird</td>
+			      <td class="text-pink">
+			      	<i class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			  </tbody>
+			</table>
+			</div>
+	</section>
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog w-75">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title text-pink fw-bold ps-5 mx-auto" id="exampleModalLabel">Nouveau Groupe</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <form>        	
+	          <div class="mb-3">
+	            <label for="recipient-name" class="col-form-label">Nom</label>
+	            <input type="text" class="form-control" id="recipient-name">
+	          </div>
+	          <div class="mb-3">
+	            <label for="recipient-name" class="col-form-label">Filière</label>
+	            <select class="form-control">
+	            	<option value="opt1">Option1</option>
+	            	<option value="opt1">Option1</option>
+	            	<option value="opt1">Option1</option>
+	            	<option value="opt1">Option1</option>
+	            </select>
+	          </div>        	
+	          <div class="mb-3">
+	            <label for="recipient-name" class="col-form-label">Capacité</label>
+	            <input type="number" class="form-control" id="recipient-name">
+	          </div>
+	        </form>
+	      </div>
+	      <div class="modal-footer mx-auto">
+	        <button type="button" class=" border-0">
+	        	<i class="fa fa-plus bg-pink text-white rounded-3 p-3" aria-hidden="true"></i>
+	        </button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 
 {% endblock %}
