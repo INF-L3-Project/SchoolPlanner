@@ -20,11 +20,11 @@
 					<i class="fa fa-chevron-right" aria-hidden="true"></i>
 									Dashboard 
 					<i class="fa fa-chevron-right" aria-hidden="true"></i>
-						 			<span class="fw-bold">Salles</span>
+						 			<span class="fw-bold">Enseignant</span>
 			</span>
 		</div>
 
-		<h1 class="fw-bold text-dark mt-5">Salles</h1>
+		<h1 class="fw-bold text-dark mt-5">Enseignant</h1>
 		<!-- **********************Search bar******************** -->
 
 		<div class="d-flex justify-content-between">
@@ -48,7 +48,6 @@
 							<select class="border-0 bg-light fs-5">
 								<option>Ordre alphabétique</option>
 								<option>Plus récent</option>
-								<option>Capacité</option>
 							</select>
 						</div>
 					</form>
@@ -69,7 +68,8 @@
 			    <tr class="pt-2">
 			      <th scope="col">#</th>
 			      <th scope="col">Nom</th>
-			      <th scope="col">Capacité</th>
+			      <th scope="col">Email </th>
+			      <th scope="col">Numéro</th>
 			      <th scope="col">Actions</th>
 			    </tr>
 			  </thead>
@@ -77,7 +77,8 @@
 			    <tr>
 			      <th scope="row">1</th>
 			      <td>Mark</td>
-			      <td>57</td>
+			      <td>mark@gmail.com</td>
+			      <td>6 76 64 45 00</td>
 			      <td class="text-pink">
 			      	<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
 			      	<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
@@ -86,37 +87,41 @@
 			    <tr>
 			      <th scope="row">2</th>
 			      <td>Jacob</td>
-			      <td>34</td>
+			      <td>jacob@gmail.com</td>
+			      <td>6 76 64 45 00</td>
 			      <td class="text-pink">
-			      	<i class="fa fa-pencil" aria-hidden="true"></i>
-			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      	<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
 			      </td>
 			    </tr>
 			    <tr>
 			      <th scope="row">3</th>
 			      <td>Larry</td>
-			      <td>60</td>
+			      <td>larry@gmail.com</td>
+			      <td>6 76 64 45 00</td>
 			      <td class="text-pink">
-			      	<i class="fa fa-pencil" aria-hidden="true"></i>
-			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      	<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
 			      </td>
 			    </tr>
 			     <tr>
 			      <th scope="row">4</th>
 			      <td>Larry</td>
-			      <td>100</td>
+			      <td>larruer@gmail.com</td>
+			      <td>6 76 64 45 00</td>
 			      <td class="text-pink">
-			      	<i class="fa fa-pencil" aria-hidden="true"></i>
-			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      	<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
 			      </td>
 			    </tr>
 			    <tr>
 			      <th scope="row">5</th>
 			      <td>Larry</td>
-			      <td>47</td>
+			      <td>mark@gmail.com</td>
+			      <td>6 76 64 45 00</td>
 			      <td class="text-pink">
-			      	<i class="fa fa-pencil" aria-hidden="true"></i>
-			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      	<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
 			      </td>
 			    </tr>
 			  </tbody>
@@ -127,103 +132,77 @@
 <!-- ********************** Add modal******************************* -->
 
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog w-75">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title text-pink fw-bold ps-5 mx-auto" id="exampleModalLabel">Nouvelle Salle</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        <form>
-	          <div class="mb-3">
-	            <label for="recipient-name" class="col-form-label">Nom de la salle</label>
-	            <select class="form-control">
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            </select>
-	          </div>
-	          <div class="mb-3">
-	            <label for="message-text" class="col-form-label">Capacité </label>
-	            <select class="form-control">
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            </select>
-	          </div>
-	        </form>
-	      </div>
-	      <div class="modal-footer mx-auto">
-		<button type="button" class="border-0 fs-5 p-2 pe-4 ps-4 bg-pink text-white  rounded-pill" >
-			<span class="border-0 p-0 me-2">
-				<i class="fa fa-plus ps-1" aria-hidden="true"></i>
-			</span>Ajouter
-		</button>
-	      </div>
-	    </div>
-	  </div>
+		<div class="modal-dialog">
+		  	<div class="modal-content">
+				<div class="modal-header bg-dark">
+					<h5 class="modal-title text-center text-white" id="exampleModalLabel">NOUVEL ENSEIGNANT</h5>
+					<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="form">
+						<form action="">
+							<div class="d-grid px-lg-5">
+					            <input type="text" placeholder="Nom" class="my-3 bg-dark p-2 border-0 text-white rounded">
+					            <input type="email" placeholder="email" class="my-3 bg-dark p-2 border-0 text-white rounded">
+					            <input type="number" placeholder="Numéro" class="my-3 bg-dark p-2 border-0 text-white rounded">							
+					        </div>
+							<div class="modal-footer d-flex justify-content-center px-5">
+								<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				
+		  	</div>
+		</div>
 	</div>
 <!-- 	**********************************Delete confirmation modal************************* -->
 
+
 <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-pink fw-bold text-center mx-auto" id="exampleModalToggleLabel">Confirmer la suppression</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Êtes-vous sûr de vouloir supprimer cet enseignant ?
-      </div>
-      <div class="modal-footer">
-        <button class="bg-pink text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Oui</button>
-        <button class="bg-black text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Non</button>
-      </div>
+    <div class="modal-dialog modal-dialog-centered">
+	  	<div class="modal-content">
+			<div class="modal-header bg-dark">
+				<h5 class="modal-title text-center text-white" id="exampleModalLabel">CONFIRMATION DE SUPPRESION</h5>
+				<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+		    <div class="modal-body">
+		        Êtes-vous sûr de vouloir supprimer cet enseignant ?
+		    </div>
+		    <div class="modal-footer">
+		        <button class="bg-pink text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Oui</button>
+		        <button class="bg-black text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Non</button>
+		    </div>
+	    </div>
     </div>
-  </div>
 </div>
 <!--**********************************Edit confirmation modal************************* -->
 
 	<div class="modal fade" id="editModalToggle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog w-75">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title text-pink fw-bold ps-5 mx-auto" id="exampleModalLabel">Edition de L'enseignant</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        <form>
-	          <div class="mb-3">
-	            <label for="recipient-name" class="col-form-label">Nom de l'enseignant</label>
-	            <select class="form-control">
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            </select>
-	          </div>
-	          <div class="mb-3">
-	            <label for="message-text" class="col-form-label">Capacité </label>
-	            <select class="form-control">
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            </select>
-	          </div>
-	        </form>
-	      </div>
-	      <div class="modal-footer mx-auto">
-		<button type="button" class="border-0 fs-5 p-2 pe-4 ps-4  bg-pink text-white rounded-pill">
-			<span class="border-0 pt-4 me-2">
-				Sauvegarder
-			</span>
-		</button>
-	      </div>
-	    </div>
-	  </div>
+
+		<div class="modal-dialog">
+		  	<div class="modal-content">
+				<div class="modal-header bg-dark">
+					<h5 class="modal-title text-center text-white" id="exampleModalLabel">EDITION D'ENSEIGNANT</h5>
+					<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="form">
+						<form action="">
+							<div class="d-grid px-lg-5">
+					            <input type="text" placeholder="Nom" class="my-3 bg-dark p-2 border-0 text-white rounded">
+					            <input type="email" placeholder="email" class="my-3 bg-dark p-2 border-0 text-white rounded">
+					            <input type="number" placeholder="Numéro" class="my-3 bg-dark p-2 border-0 text-white rounded">							
+					        </div>
+							<div class="modal-footer d-flex justify-content-center px-5">
+								<button type="button" class="btn bg-pink text-white px-lg-5">Sauvegarder</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				
+		  	</div>
+		</div>
 	</div>
 {% endblock %}
 

@@ -26,7 +26,6 @@
 
 		<h1 class="fw-bold text-dark mt-5">Groupes</h1>
 		<!-- **********************Search bar******************** -->
-
 		<div class="d-flex justify-content-between">
 			<div class="d-flex w-25">
 				<form>
@@ -41,19 +40,20 @@
 			<div class="d-flex p-5 pt-0 pb-0 justify-content-center w-50">
 				<div class="d-flex m-2">
 					<form>
-						<div class="mt-2 bg-light p-1 border-danger rounded-pill">
+						<div class="mt-2 bg-light p-2 ps-4 pe-4 border-danger rounded-pill">
 							<span class="border-0 bg-light p-0 me-3">
 								<i class="fa fa-filter fa text-dark" aria-hidden="true"></i>
 							</span>
 							<select class="border-0 bg-light fs-5">
-								<option>salut</option>
-								<option>Panda</option>
+								<option>Ordre alphabétique</option>
+								<option>Plus récent</option>
+								<option>Capacité</option>
 							</select>
 						</div>
 					</form>
 				</div>
 				<div class="d-flex m-2">
-					<button type="button" class="border-0 fs-5 pe-2 bg-pink text-white  rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+					<button type="button" class="border-0 fs-5 pe-4 ps-4 add bg-pink text-white  rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						<span class="border-0 p-0 me-2">
 							<i class="fa fa-plus ps-1" aria-hidden="true"></i>
 						</span>Ajouter
@@ -67,25 +67,25 @@
 			  <thead class="text-white bg-black m-5">
 			    <tr class="pt-2">
 			      <th scope="col">#</th>
-			      <th scope="col">First</th>
-			      <th scope="col">Last</th>
-			      <th scope="col">Handle</th>
+			      <th scope="col">Nom du groupe</th>
+			      <th scope="col">Capacité </th>
+			      <th scope="col">Actions</th>
 			    </tr>
 			  </thead>
 			  <tbody>
 			    <tr>
 			      <th scope="row">1</th>
-			      <td>Mark</td>
-			      <td>Otto</td>
+			      <td>A 350</td>
+			      <td>500</td>
 			      <td class="text-pink">
-			      	<i class="fa fa-pencil" aria-hidden="true"></i>
-			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      	<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
 			      </td>
 			    </tr>
 			    <tr>
 			      <th scope="row">2</th>
-			      <td>Jacob</td>
-			      <td>Thornton</td>
+			      <td>A 135</td>
+			      <td>34</td>
 			      <td class="text-pink">
 			      	<i class="fa fa-pencil" aria-hidden="true"></i>
 			      	<i class="fa fa-trash" aria-hidden="true"></i>
@@ -93,8 +93,8 @@
 			    </tr>
 			    <tr>
 			      <th scope="row">3</th>
-			      <td>Larry</td>
-			      <td>the Bird</td>
+			      <td>S006</td>
+			      <td>60</td>
 			      <td class="text-pink">
 			      	<i class="fa fa-pencil" aria-hidden="true"></i>
 			      	<i class="fa fa-trash" aria-hidden="true"></i>
@@ -102,8 +102,8 @@
 			    </tr>
 			     <tr>
 			      <th scope="row">4</th>
-			      <td>Larry</td>
-			      <td>the Bird</td>
+			      <td>A 250</td>
+			      <td>100</td>
 			      <td class="text-pink">
 			      	<i class="fa fa-pencil" aria-hidden="true"></i>
 			      	<i class="fa fa-trash" aria-hidden="true"></i>
@@ -111,8 +111,8 @@
 			    </tr>
 			    <tr>
 			      <th scope="row">5</th>
-			      <td>Larry</td>
-			      <td>the Bird</td>
+			      <td>S008</td>
+			      <td>47</td>
 			      <td class="text-pink">
 			      	<i class="fa fa-pencil" aria-hidden="true"></i>
 			      	<i class="fa fa-trash" aria-hidden="true"></i>
@@ -122,43 +122,92 @@
 			</table>
 			</div>
 	</section>
+
+<!-- ********************** Add modal******************************* -->
+
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog w-75">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title text-pink fw-bold ps-5 mx-auto" id="exampleModalLabel">Nouveau Groupe</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        <form>        	
-	          <div class="mb-3">
-	            <label for="recipient-name" class="col-form-label">Nom</label>
-	            <input type="text" class="form-control" id="recipient-name">
-	          </div>
-	          <div class="mb-3">
-	            <label for="recipient-name" class="col-form-label">Filière</label>
-	            <select class="form-control">
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            	<option value="opt1">Option1</option>
-	            </select>
-	          </div>        	
-	          <div class="mb-3">
-	            <label for="recipient-name" class="col-form-label">Capacité</label>
-	            <input type="number" class="form-control" id="recipient-name">
-	          </div>
-	        </form>
-	      </div>
-	      <div class="modal-footer mx-auto">
-	        <button type="button" class=" border-0">
-	        	<i class="fa fa-plus bg-pink text-white rounded-3 p-3" aria-hidden="true"></i>
-	        </button>
-	      </div>
+		<div class="modal-dialog">
+		  	<div class="modal-content">
+				<div class="modal-header bg-dark">
+					<h5 class="modal-title text-center text-white" id="exampleModalLabel">NOUVEAU GROUPE</h5>
+					<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="form">
+						<form action="">
+							<div class="d-grid px-lg-5">
+								<label>Nom du groupe</label>
+					            <input type="text" placeholder="Nom de la salle" class="my-3 bg-dark p-2 border-0 text-white rounded">
+					            <label>Capacité</label>
+					            <input type="number" placeholder="Nom de la salle" class="my-3 bg-dark p-2 border-0 text-white rounded">
+					            <label>Classe</label>
+								<select name="ue" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
+									<option value="">INFO l3</option>
+									<option value="">INFO l2</option>
+									<option value="">INFO l1</option>
+								</select>
+							</div>
+							<div class="modal-footer d-flex justify-content-center px-5">
+								<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+							</div>
+						</form>
+					</div>
+	      		</div>
+	    </div>>
+	  </div>
+	</div>
+<!-- 	**********************************Delete confirmation modal************************* -->
+
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+	  	<div class="modal-content">
+			<div class="modal-header bg-dark">
+				<h5 class="modal-title text-center text-white" id="exampleModalLabel">CONFIRMATION DE SUPPRESION</h5>
+				<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+		    <div class="modal-body">
+		        Êtes-vous sûr de vouloir supprimer ce groupe ?
+		    </div>
+		    <div class="modal-footer">
+		        <button class="bg-pink text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Oui</button>
+		        <button class="bg-black text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Non</button>
+		    </div>
+	    </div>
+    </div>
+</div>
+</div>
+<!--**********************************Edit confirmation modal************************* -->
+	<div class="modal fade" id="editModalToggle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  	<div class="modal-content">
+				<div class="modal-header bg-dark">
+					<h5 class="modal-title text-center text-white" id="exampleModalLabel">ÉDITION DE GROUPE</h5>
+					<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="form">
+						<form action="">
+							<div class="d-grid px-lg-5">
+								<label>Nom du groupe</label>
+					            <input type="text" placeholder="Nom de la salle" class="my-3 bg-dark p-2 border-0 text-white rounded">
+					            <label>Capacité</label>
+					            <input type="number" placeholder="Nom de la salle" class="my-3 bg-dark p-2 border-0 text-white rounded">
+					            <label>Classe</label>
+								<select name="ue" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
+									<option value="">INFO l3</option>
+									<option value="">INFO l2</option>
+									<option value="">INFO l1</option>
+								</select>
+							</div>
+							<div class="modal-footer d-flex justify-content-center px-5">
+								<button type="button" class="btn bg-pink text-white px-lg-5">Sauvegarder</button>
+							</div>
+						</form>
+					</div>
+	      		</div>
 	    </div>
 	  </div>
 	</div>
-
 
 {% endblock %}
 
