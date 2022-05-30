@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views import View
+from django.db.models import Q
 from django.views.generic import TemplateView
 from .models import Classroom, Field, Grade, Group, Level, Teacher, Unit
 from .forms import (
@@ -122,6 +123,16 @@ class GroupView(View):
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
+        searched = request.GET.get('searched')
+        trier_par_nom = request.GET.get('trier_par_nom')
+        if searched:
+            print(searched)
+            groups = Group.objects.filter(name__icontains=searched)
+        if trier_par_nom == 'a-z':
+            groups = Group.objects.order_by('name')
+        elif trier_par_nom == 'z-a':
+            groups = Group.objects.order_by('-name')
+        # if filtrer_par_grade:
         groups = Group.objects.all()
         return render(request, self.template_name, {"groups": groups})
 
@@ -170,6 +181,19 @@ class TeacherView(View):
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
+
+        searched = request.GET.get('searched')
+        trier_par_nom = request.GET.get('trier_par_nom')
+        if searched:
+            print(searched)
+            # je fais un filtre selon deux valeur, il s'agit enfait d'une Union
+            teachers = Teacher.objects.filter(
+                Q(name__icontains=searched) | Q(numero__icontains=searched))
+        if trier_par_nom == 'a-z':
+            teachers = Teacher.objects.order_by('name')
+        elif trier_par_nom == 'z-a':
+            teachers = Teacher.objects.order_by('-name')
+
         teachers = Teacher.objects.all()
         return render(request, self.template_name, {"teachers": teachers})
 
