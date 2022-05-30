@@ -5,6 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="{% static 'core/images/logo_white.png' %}">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<link type="text/css" rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}"  media="screen,projection"/>
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/style.css' %}">
@@ -38,57 +39,63 @@
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="{% url 'core:home' %}">
+								<span class="icon"><i class="fa fa-home"></i></span>
+								<span class="title">Accueil</span>
+							</a>
+						</li>
+						<li>
+							<a href="{% url 'core:contact' %}" title="UEs">
 								<span class="icon"><i class="fa fa-edit"></i></span>
 								<span class="title">UEs</span>
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="{% url 'core:field' %}" title="Filières">
 								<span class="icon"><i class="fa fa-book"></i></span>
 								<span class="title">Filières</span>
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="{% url 'core:teacher' %}" title="Enseignants">
 								<span class="icon"><i class="fa fa-male"></i></span>
 								<span class="title">Enseignants</span>
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="{% url 'core:classroom' %}" title="Salles">
 								<span class="icon"><i class="fa fa-building-o"></i></span>
 								<span class="title">Salles</span>
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="{% url 'core:level' %}" title="Niveaux">
 								<span class="icon"><i class="fa fa-line-chart"></i></span>
 								<span class="title">Niveaux</span>
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="{% url 'core:grade' %}" title="Classes">
 								<span class="icon"><i class="fa fa-university"></i></span>
 								<span class="title">Classes</span>
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="{% url 'core:group' %}" title="Goupes">
 								<span class="icon"><i class="fa fa-group"></i></span>
 								<span class="title">Groupe</span>
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="{% url 'core:timetable' %}" title="Emplois de temps">
 								<span class="icon"><i class="fa fa-calendar"></i></span>
 								<span class="title">Emplois de temps</span>
 							</a>
 						</li>
 						<li>
-							<a href="#">
-								<span class="icon"><i class="fa fa-user-circle-o"></i></span>
-								<span class="title">Mon compte</span>
+							<a href="{% url 'core:account' %}" title="Mon compte">
+								<span class="icon"><i class="fa fa-user-circle-o text-info"></i></span>
+								<span class="title text-info">Mon compte</span>
 							</a>
 						</li>
 					</ul>
@@ -96,6 +103,15 @@
 			</div>
 		{% endblock %}
 		<div class="container-fluid p-0">
+			{% block dashboard_nav %}
+				<div class="container d-flex justify-content-between" id="dashboard_nav">
+					<img src="/static/core/images/logo.png" alt="logo" width="100px" height="100px">
+					<div class="d-flex pt-4">
+						<img src="/static/core/images/jugalux.png" alt="user" width="35px" height="35px" class="mt-2 rounded-circle">
+						<p class="fw-bold mt-3 ms-2">Gaëlle Tamho</p>
+					</div>
+				</div>
+			{% endblock %}
 			{% block content %}
 
 			{% endblock %}
