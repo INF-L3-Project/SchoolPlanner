@@ -1,13 +1,79 @@
 {% extends 'core/base.html' %}
+{% load static %}
 {% block title %} SchoolPlanner - Fields {% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" type="text/css" href="{% static 'core/css/style_1.css' %}">
+{% endblock %}
 
 {% block content %}
 
 
 
-	<div class="container-fluid my-4 pt-4">
-		<h1>Hello Fields</h1>
-	</div>
+<div class="container-fluid my-4 pt-4 ps-lg-2 ms-lg-2">
+	<div class="container">
+		<span class="d-flex">
+			<i class="fa fa-home mx-2 mt-1" aria-hidden="true"></i>
+			<i class="fa fa-chevron-right mt-1" aria-hidden="true"></i>
+			<p class="mx-2">Dashboard</p>
+			<i class="fa fa-chevron-right mt-1" aria-hidden="true"></i>
+			<p class="fw-bold">Filieres</p>
+		</span>
+		<h3 class="fw-bold fs-1 space">Filieres</h3>
+		<div class="row row-cols-3 row-cols-lg-5 space g-2 g-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		  
+		  
+		  {% for field in fields %}
+		  <div class="col">
+			<div class="py-5 px-4 text-white text-center shadow forme">
+				<h3 class="fw-bold fs-5">{{field.name}}</h3>
+			</div>
+		  </div>
+			  
+		  {% endfor %}
+			  
+
+		  <div class="col">
+			<div class="p-4 text-white text-center shadow forme">
+				<h3><i class="fa fa-plus icon_field" aria-hidden="true"></i></h3>
+			</div>
+		  </div>
+		  <!-- Modal modification -->
+		  <div class="modal fade modifModal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header bg-dark">
+						<h5 class="modal-title text-center text-white" id="exampleModalLabel">MODIFICATION DE NIVEAUX</h5>
+						<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div>
+							<p class="mt-3">Licence 1</span></p>
+						</div>
+						<div>
+							<div class="d-flex justify-content-end">
+								<button onclick="show_hide()" class="bg-transparent border-0">
+									<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
+								</button>
+							</div>
+							<div id="forme">
+								<form action="">
+									<div class="d-grid px-lg-5">
+										<input type="text" placeholder="Nom du niveau" class="p-3 bg-light outline-none border-0" name="mod_level" >
+									</div>
+									<div class="modal-footer d-flex justify-content-center px-5">
+										<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	  </div>
+</div>
 
 
 
@@ -18,6 +84,43 @@
 {% block extra_script %}
 
 	<script type="text/javascript">
+		//Attribution des couleurs aux div de facon aleatoire
+		window.onload = function() {
+			let forme = document.querySelectorAll(".forme");
+
+			for(i=0; i<forme.length; i++){
+				let randomColor = "#" + (Math.floor(Math.random()*16777215)).toString(16);
+				while(randomColor.length<7){
+					randomColor = "#" + (Math.floor(Math.random()*16777215)).toString(16);
+				}
+				forme[i].style.backgroundColor = randomColor;
+			}
+		}
+
+		// Ouvrir la modal pour des modifications
+		let forme = document.querySelectorAll(".mod");
+		let modal = document.getElementsByClassName("modifModal");
+		for (let i = 0; i < forme.length; i++) {
+			forme[i].onclick = function() {
+				modal.style.display = 'block';
+				console.log(i);
+			};
+		}
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+
+		//cacher la modification
+		function show_hide() {
+			var y = document.getElementsById("forme");
+			if (y.style.display === "none") {
+				y.style.display = "block";
+			} else {
+				y.style.display = "none";
+			}
+		}
 	</script>
 	
 
