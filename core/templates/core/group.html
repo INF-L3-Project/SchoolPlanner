@@ -14,18 +14,10 @@
 
 	<section class="container-fluid my-4 pt-4 ps-lg-5">
 		<div class="ps-lg-5">
-		<div>
-			<span class="text-dark">
-				<i class="fa fa-home"></i>  
-					<i class="fa fa-chevron-right" aria-hidden="true"></i>
-									Dashboard 
-					<i class="fa fa-chevron-right" aria-hidden="true"></i>
-						 			<span class="fw-bold">Groupes</span>
-			</span>
-		</div>
+		<h3 class="fw-bold text-dark mt-5">Groupes</h3>
 
-		<h1 class="fw-bold text-dark mt-5">Groupes</h1>
 		<!-- **********************Search bar******************** -->
+
 		<div class="d-flex justify-content-between">
 			<div class="d-flex w-25">
 				<form>
@@ -33,7 +25,7 @@
 						<button type="submit" class=" border-0 bg-light p-0 me-3">
 							<i class="fa fa-search fa text-dark" aria-hidden="true"></i>
 						</button>
-						<input type="search" name="" class="border-0 w-75 bg-light fs-5">
+						<input type="search" name="" class="border-0 w-75 bg-light">
 					</div>
 				</form>
 			</div>
@@ -42,18 +34,17 @@
 					<form>
 						<div class="mt-2 bg-light p-2 ps-4 pe-4 border-danger rounded-pill">
 							<span class="border-0 bg-light p-0 me-3">
-								<i class="fa fa-filter fa text-dark" aria-hidden="true"></i>
+								<i class="fa fa-filter text-dark" aria-hidden="true"></i>
 							</span>
-							<select class="border-0 bg-light fs-5">
+							<select class="border-0 bg-light">
 								<option>Ordre alphabétique</option>
 								<option>Plus récent</option>
-								<option>Capacité</option>
 							</select>
 						</div>
 					</form>
 				</div>
 				<div class="d-flex m-2">
-					<button type="button" class="border-0 fs-5 pe-4 ps-4 add bg-pink text-white  rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+					<button type="button" class="border-0 pe-3 ps-3 add bg-pink text-white  rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						<span class="border-0 p-0 me-2">
 							<i class="fa fa-plus ps-1" aria-hidden="true"></i>
 						</span>Ajouter
@@ -62,7 +53,7 @@
 			</div>
 		</div>
 		</div>
-		<div class="container w-75 table-responsive py-5 border-0"> 
+		<div class="container table-responsive py-5 border-0"> 
 			<table class="table table-bordered table-hover">
 			  <thead class="text-white bg-black m-5">
 			    <tr class="pt-2">
@@ -133,7 +124,7 @@
 					<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<div id="form">
+					<div>
 						<form action="">
 							<div class="d-grid px-lg-5">
 								<label>Nom du groupe</label>
@@ -153,7 +144,7 @@
 						</form>
 					</div>
 	      		</div>
-	    </div>>
+	    </div>
 	  </div>
 	</div>
 <!-- 	**********************************Delete confirmation modal************************* -->
@@ -185,7 +176,7 @@
 					<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<div id="form">
+					<div>
 						<form action="">
 							<div class="d-grid px-lg-5">
 								<label>Nom du groupe</label>
@@ -205,8 +196,8 @@
 						</form>
 					</div>
 	      		</div>
+	    	</div>
 	    </div>
-	  </div>
 	</div>
 
 {% endblock %}
