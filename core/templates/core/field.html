@@ -22,54 +22,77 @@
 		<h3 class="fw-bold">Filières</h3>
 		<div class="row row-cols-md-3 row-cols-sm-2  row-cols-lg-5 space g-2 g-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
 			<div class="col">
-				<div class="py-4 px-1 shadow forme mod" >
+				<div class="py-4 px-1 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
 					<p class="text-white text-center fs-4">INFORMATIQUE</p>
 				</div>
 			</div>
 			<div class="col">
-				<div class="p-4 shadow forme mod" >
+				<div class="py-4 px-1 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
 					<p class="text-white text-center fs-4">MATHEMATIQUE</p>
 				</div>
 			</div>
 			<div class="col">
-				<div class="p-4 shadow  forme mod" >
+				<div class="p-4 shadow  forme mod"  data-bs-toggle="modal" href="#modifModal">
 					<p class="text-white text-center fs-4">PHYSIQUE</p>
 				</div>
 			</div>
 			<div class="col">
-				<div class="p-4 shadow  forme mod" >
+				<div class="p-4 shadow  forme mod"  data-bs-toggle="modal" href="#modifModal">
 					<p class="text-white text-center fs-4">CHIMIE</p>
 				</div>
 			</div>
 			<div class="col">
-				<div class="p-4 shadow  forme mod" >
+				<div class="p-4 shadow  forme mod"  data-bs-toggle="modal" href="#modifModal">
 					<p class="text-white text-center fs-4">BIOLOGIE</p>
 				</div>
 			</div>
 			<div class="col">
-				<div class="p-4 shadow  forme mod" >
+				<div class="p-4 shadow  forme mod"  data-bs-toggle="modal" href="#modifModal">
 					<p class="text-white text-center fs-4">HISTOIRE</p>
 				</div>
 			</div>
 			<div class="col">
-				<div class="p-4 shadow  forme mod" >
+				<div class="p-4 shadow  forme mod"  data-bs-toggle="modal" href="#modifModal">
 					<p class="text-white text-center fs-4">GEOGRAPHIE</p>
 				</div>
 			</div>
 			<div class="col">
-				<div class="p-4 shadow  forme mod" >
+				<div class="p-4 shadow  forme mod"  data-bs-toggle="modal" href="#modifModal">
 					<p class="text-white text-center fs-4">SOCIOLOGIE</p>
 				</div>
 			</div>
-			<div class="col" data-bs-toggle="modal" data-bs-target="#exampleModal">
-				<div class="p-4 shadow forme ajout">
+			<div class="col">
+				<div class="p-4 shadow forme ajout" data-bs-toggle="modal" href="#ajoutModal">
 					<p class="text-center">
-						<i class="fa fa-plus fs-2 text-white icon_field" aria-hidden="true"></i>
+						<i class="fa fa-plus fs-2 text-white" aria-hidden="true"></i>
 					</p>
 				</div>
 			</div>
-		  <!-- Modal modification -->
-		  <div class="modal fade modifModal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <!-- Modal d'ajout -->
+		  <div class="modal fade" id="ajoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header bg-dark">
+						<h5 class="modal-title text-center text-white" id="exampleModalLabel">NOUVEAU NIVEAU</h5>
+						<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div id="form">
+							<form action="">
+								<div class="d-grid px-lg-5">
+									<input type="text" placeholder="Nom du niveau" class="p-3 bg-light outline-none m-2 new border-0" name="mod_level" >
+								</div>
+								<div class="modal-footer d-flex justify-content-center px-5">
+									<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal de modification -->
+		<div class="modal fade" id="modifModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header bg-dark">
@@ -78,18 +101,19 @@
 					</div>
 					<div class="modal-body">
 						<div>
-							<p class="mt-3">Nom: <span class="fw-bold">Informatique</span></p>
+							<p class="mt-3">Nom: <span class="fw-bold"> Licence 1</span></p>
 						</div>
 						<div>
 							<div class="d-flex justify-content-end">
 								<button onclick="show_hide()" class="bg-transparent border-0">
-									<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
+									<i class="fa fa-pencil text-pink2 fs-5"></i>
+									<span class="ms-2">Modifier</span>
 								</button>
 							</div>
 							<div id="form">
 								<form action="">
 									<div class="d-grid px-lg-5">
-										<input type="text" placeholder="Nom du niveau" class="p-3 m-2 new bg-light outline-none border-0" name="mod_level" >
+										<input type="text" placeholder="Nom du niveau" class="p-3 bg-light outline-none m-2 new border-0" name="mod_level" >
 									</div>
 									<div class="modal-footer d-flex justify-content-center px-5">
 										<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
