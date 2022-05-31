@@ -1,11 +1,131 @@
 {% extends 'core/base.html' %}
-{% block title %} SchoolPlanner - Classrooms {% endblock %}
+
+
+{% load static %}
+{% block title %} SchoolPlanner - Salles{% endblock %}
+
+    {% block extra_style %}
+    	<link rel="stylesheet" type="text/css" href="{% static 'core/css/style2.css' %}">
+    {% endblock %}
+	
 
 {% block content %}
 
-	<div class="container-fluid my-4 pt-4">
-		<h1>Hello Classrooms</h1>
-	</div>
+
+
+	<section class="container-fluid my-4 pt-4 ps-lg-5">
+		<div class="ps-lg-5">
+		<div>
+			<span class="text-dark">
+				<i class="fa fa-home"></i>  
+					<i class="fa fa-chevron-right" aria-hidden="true"></i>
+									Dashboard 
+					<i class="fa fa-chevron-right" aria-hidden="true"></i>
+						 			<span class="fw-bold">Salles</span>
+			</span>
+		</div>
+
+		<h1 class="fw-bold text-dark mt-5">Salles</h1>
+		<!-- **********************Search bar******************** -->
+
+		<div class="d-flex justify-content-between">
+			<div class="d-flex w-25">
+				<form>
+					<div class="mt-2 bg-light border-1 p-1 border-danger rounded-pill">
+						<button type="submit" class=" border-0 bg-light p-0 me-3">
+							<i class="fa fa-search fa text-dark" aria-hidden="true"></i>
+						</button>
+						<input type="search" name="" class="border-0 w-75 bg-light fs-5">
+					</div>
+				</form>
+			</div>
+			<div class="d-flex p-5 pt-0 pb-0 justify-content-center w-50">
+				<div class="d-flex m-2">
+					<form>
+						<div class="mt-2 bg-light p-2 ps-4 pe-4 border-danger rounded-pill">
+							<span class="border-0 bg-light p-0 me-3">
+								<i class="fa fa-filter fa text-dark" aria-hidden="true"></i>
+							</span>
+							<select class="border-0 bg-light fs-5">
+								<option>Ordre alphabétique</option>
+								<option>Plus récent</option>
+								<option>Capacité</option>
+							</select>
+						</div>
+					</form>
+				</div>
+				<div class="d-flex m-2">
+					<button type="button" class="border-0 fs-5 pe-4 ps-4 add bg-pink text-white  rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						<span class="border-0 p-0 me-2">
+							<i class="fa fa-plus ps-1" aria-hidden="true"></i>
+						</span>Ajouter
+					</button>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="container w-75 table-responsive py-5 border-0"> 
+			<table class="table table-bordered table-hover">
+			  <thead class="text-white bg-black m-5">
+			    <tr class="pt-2">
+			      <th scope="col">#</th>
+			      <th scope="col">Nom de la salle</th>
+			      <th scope="col">Capacité </th>
+			      <th scope="col">Actions</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">1</th>
+			      <td>A 350</td>
+			      <td>500</td>
+			      <td class="text-pink">
+			      	<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			    <tr>
+			      <th scope="row">2</th>
+			      <td>A 135</td>
+			      <td>34</td>
+			      <td class="text-pink">
+			      	<i class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			    <tr>
+			      <th scope="row">3</th>
+			      <td>S006</td>
+			      <td>60</td>
+			      <td class="text-pink">
+			      	<i class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			     <tr>
+			      <th scope="row">4</th>
+			      <td>A 250</td>
+			      <td>100</td>
+			      <td class="text-pink">
+			      	<i class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			    <tr>
+			      <th scope="row">5</th>
+			      <td>S008</td>
+			      <td>47</td>
+			      <td class="text-pink">
+			      	<i class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			  </tbody>
+			</table>
+			</div>
+	</section>
+
+<!-- ********************** Add modal******************************* -->
 
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -87,3 +207,4 @@
 	</script>
 
 {% endblock %}
+
