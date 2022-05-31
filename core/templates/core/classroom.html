@@ -1,6 +1,12 @@
 {% extends 'core/base.html' %}
+
 {% load static %}
-{% block title %} SchoolPlanner - Classrooms {% endblock %}
+{% block title %} SchoolPlanner - Levels {% endblock %}
+
+    {% block extra_style %}
+    	<link rel="stylesheet" type="text/css" href="{% static 'core/css/style2.css' %}">
+    {% endblock %}
+	
 
 {% block extra_style %}
 <link rel="stylesheet" type="text/css" href="{% static 'core/css/style_1.css' %}">
@@ -11,101 +17,191 @@
 
 
 
-<div class="container-fluid my-4 pt-4 ps-lg-2 ms-lg-2">
-	<div class="container">
-		<span class="d-flex">
-			<i class="fa fa-home mx-2 mt-1" aria-hidden="true"></i>
-			<i class="fa fa-chevron-right mt-1" aria-hidden="true"></i>
-			<p class="mx-2">Dashboard</p>
-			<i class="fa fa-chevron-right mt-1" aria-hidden="true"></i>
-			<p class="fw-bold">Classes</p>
-		</span>
-		<h3 class="fw-bold fs-1 space">Classes</h3>
-		<div class="row row-cols-3 row-cols-lg-5 space g-2 g-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
-		  <div class="col">
-			<div class="p-5 text-white text-center shadow forme">
-				<h3 class="fw-bold fs-5">Amphi 350</h3>
-			</div>
-		  </div>
-		  <div class="col">
-			<div class="py-5 px-4 text-white text-center shadow forme">
-				<h3 class="fw-bold fs-5">Amphi 250</h3>
-			</div>
-		  </div>
-		  <div class="col">
-			<div class="p-5 text-white text-center shadow forme">
-				<h3 class="fw-bold fs-5">Amphi 150</h3>
-			</div>
-		  </div>
-		  <div class="col">
-			<div class="p-5 text-white text-center shadow forme">
-				<h3 class="fw-bold fs-5">Amphi III</h3>
-			</div>
-		  </div>
-		  <div class="col">
-			<div class="p-5 text-white text-center shadow forme">
-				<h3 class="fw-bold fs-5">Amphi II</h3>
-			</div>
-		  </div>
-		  <div class="col">
-			<div class="p-5 text-white text-center shadow forme">
-				<h3 class="fw-bold fs-5">Amphi I</h3>
-			</div>
-		  </div>
-		  <div class="col">
-			<div class="p-5 text-white text-center shadow forme">
-				<h3 class="fw-bold fs-5">Amphi 501</h3>
-			</div>
-		  </div>
-		  <div class="col">
-			<div class="p-5 text-white text-center shadow forme">
-				<h3 class="fw-bold fs-5">Amphi 502</h3>
-			</div>
-		  </div>
-		  <div class="col">
-			<div class="p-4 text-white text-center shadow forme">
-				<h3><i class="fa fa-plus icon_class" aria-hidden="true"></i></h3>
-			</div>
-		  </div>
-		  <!-- Modal modification -->
-		  <div class="modal fade modifModal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header bg-dark">
-						<h5 class="modal-title text-center text-white" id="exampleModalLabel">MODIFICATION DE NIVEAUX</h5>
-						<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+	<section class="container-fluid my-4 pt-4 ps-lg-5">
+		<div class="ps-lg-5">
+		<div>
+			<span class="text-dark">
+				<i class="fa fa-home"></i>  
+					<i class="fa fa-chevron-right" aria-hidden="true"></i>
+									Dashboard 
+					<i class="fa fa-chevron-right" aria-hidden="true"></i>
+						 			<span class="fw-bold">Salles</span>
+			</span>
+		</div>
+
+		<h1 class="fw-bold text-dark mt-5">Salles</h1>
+		<!-- **********************Search bar******************** -->
+
+		<div class="d-flex justify-content-between">
+			<div class="d-flex w-25">
+				<form>
+					<div class="mt-2 bg-light border-1 p-1 border-danger rounded-pill">
+						<button type="submit" class=" border-0 bg-light p-0 me-3">
+							<i class="fa fa-search fa text-dark" aria-hidden="true"></i>
+						</button>
+						<input type="search" name="" class="border-0 w-75 bg-light fs-5">
 					</div>
-					<div class="modal-body">
-						<div>
-							<p class="mt-3">Amphi 250</span></p>
+				</form>
+			</div>
+			<div class="d-flex p-5 pt-0 pb-0 justify-content-center w-50">
+				<div class="d-flex m-2">
+					<form>
+						<div class="mt-2 bg-light p-2 ps-4 pe-4 border-danger rounded-pill">
+							<span class="border-0 bg-light p-0 me-3">
+								<i class="fa fa-filter fa text-dark" aria-hidden="true"></i>
+							</span>
+							<select class="border-0 bg-light fs-5">
+								<option>Ordre alphabétique</option>
+								<option>Plus récent</option>
+								<option>Capacité</option>
+							</select>
 						</div>
-						<div>
-							<div class="d-flex justify-content-end">
-								<button onclick="show_hide()" class="bg-transparent border-0">
-									<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
-								</button>
-							</div>
-							<div id="forme">
-								<form action="">
-									<div class="d-grid px-lg-5">
-										<input type="text" placeholder="Nom du niveau" class="p-3 bg-light outline-none border-0" name="mod_level" >
-									</div>
-									<div class="modal-footer d-flex justify-content-center px-5">
-										<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
+					</form>
+				</div>
+				<div class="d-flex m-2">
+					<button type="button" class="border-0 fs-5 pe-4 ps-4 add bg-pink text-white  rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						<span class="border-0 p-0 me-2">
+							<i class="fa fa-plus ps-1" aria-hidden="true"></i>
+						</span>Ajouter
+					</button>
 				</div>
 			</div>
 		</div>
 		</div>
+		<div class="container w-75 table-responsive py-5 border-0"> 
+			<table class="table table-bordered table-hover">
+			  <thead class="text-white bg-black m-5">
+			    <tr class="pt-2">
+			      <th scope="col">#</th>
+			      <th scope="col">Nom de la salle</th>
+			      <th scope="col">Capacité </th>
+			      <th scope="col">Actions</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">1</th>
+			      <td>A 350</td>
+			      <td>500</td>
+			      <td class="text-pink">
+			      	<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			    <tr>
+			      <th scope="row">2</th>
+			      <td>A 135</td>
+			      <td>34</td>
+			      <td class="text-pink">
+			      	<i class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			    <tr>
+			      <th scope="row">3</th>
+			      <td>S006</td>
+			      <td>60</td>
+			      <td class="text-pink">
+			      	<i class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			     <tr>
+			      <th scope="row">4</th>
+			      <td>A 250</td>
+			      <td>100</td>
+			      <td class="text-pink">
+			      	<i class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			    <tr>
+			      <th scope="row">5</th>
+			      <td>S008</td>
+			      <td>47</td>
+			      <td class="text-pink">
+			      	<i class="fa fa-pencil" aria-hidden="true"></i>
+			      	<i class="fa fa-trash" aria-hidden="true"></i>
+			      </td>
+			    </tr>
+			  </tbody>
+			</table>
+			</div>
+	</section>
+
+<!-- ********************** Add modal******************************* -->
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  	<div class="modal-content">
+				<div class="modal-header bg-dark">
+					<h5 class="modal-title text-center text-white" id="exampleModalLabel">NOUVELLE SALLE</h5>
+					<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="form">
+						<form action="">
+							<div class="d-grid px-lg-5">
+								<label>Nom de la salle</label>
+					            <input type="text" placeholder="Nom de la salle" class="my-3 bg-dark p-2 border-0 text-white rounded">
+					            <label>Capacité</label>
+					            <input type="number" placeholder="Nom de la salle" class="my-3 bg-dark p-2 border-0 text-white rounded">
+							</div>
+							<div class="modal-footer d-flex justify-content-center px-5">
+								<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+							</div>
+						</form>
+					</div>
+	      		</div>
+	    </div>
 	  </div>
+	</div>
+<!-- 	**********************************Delete confirmation modal************************* -->
+
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+	  	<div class="modal-content">
+			<div class="modal-header bg-dark">
+				<h5 class="modal-title text-center text-white" id="exampleModalLabel">CONFIRMATION DE SUPPRESION</h5>
+				<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+		    <div class="modal-body">
+		        Êtes-vous sûr de vouloir supprimer cette salle ?
+		    </div>
+		    <div class="modal-footer">
+		        <button class="bg-pink text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Oui</button>
+		        <button class="bg-black text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Non</button>
+		    </div>
+	    </div>
+    </div>
 </div>
-
-
-
+</div>
+<!--**********************************Edit confirmation modal************************* -->
+	<div class="modal fade" id="editModalToggle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  	<div class="modal-content">
+				<div class="modal-header bg-dark">
+					<h5 class="modal-title text-center text-white" id="exampleModalLabel">ÉDITION DE SALLE</h5>
+					<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="form">
+						<form action="">
+							<div class="d-grid px-lg-5">
+								<label>Nom de la salle</label>
+					            <input type="text" placeholder="Nom de la salle" class="my-3 bg-dark p-2 border-0 text-white rounded">
+					            <label>Capacité</label>
+					            <input type="number" placeholder="Nom de la salle" class="my-3 bg-dark p-2 border-0 text-white rounded">
+							</div>
+							<div class="modal-footer d-flex justify-content-center px-5">
+								<button type="button" class="btn bg-pink text-white px-lg-5">Sauvegarder</button>
+							</div>
+						</form>
+					</div>
+	      		</div>
+	    </div>
+	  </div>
+	</div>
 {% endblock %}
 
 
