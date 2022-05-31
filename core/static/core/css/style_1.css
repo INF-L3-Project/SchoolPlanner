@@ -1,7 +1,3 @@
-/*
-Titre: Style de la page level.html 
--forme 
-*/
 .bg-dark{
     background-color: #37354A !important;
 }
@@ -14,25 +10,17 @@ Titre: Style de la page level.html
 }
 
 .icon_level{
-    font-size: 4.6rem;
+    font-size: 3rem;
 }
 .icon_field{
-    font-size: 4.5rem;
+    font-size: 2.7rem;
 }
 .icon_class{
-    font-size: 4.5rem;
+    font-size: 3rem;
 }
-/* .icon_field{
-    font-size: 4rem;
-} */
 .space{
     margin-top: 3rem;
 }
-.new_level{
+.new{
     border-radius: 0.8rem;
-    margin-left: 7rem;
 }
-/*
-Titre: Style de la page field.html 
--forme 
-*/

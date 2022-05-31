@@ -6,10 +6,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'core/css/style_1.css' %}">
 {% endblock %}
 
-
 {% block content %}
-
-
 
 	<div class="container-fluid my-4 pt-4 ps-lg-2 ms-lg-2">
 		<div class="container">
@@ -23,33 +20,40 @@
 			<h3 class="fw-bold fs-1 space">Niveaux</h3>
 			<div class="row row-cols-3 row-cols-lg-5 space g-2 g-lg-5 color" data-bs-toggle="modal" data-bs-target="#exampleModal">
 				<div class="col">
-					<div class="p-5 text-white text-center shadow forme mod" >
-						<h3 class="fw-bold fs-2">Licence 1</h3>
+					<div class="px-4 py-5 shadow forme mod" >
+						<p class="text-white text-center fs-2">Licence 1</p>
 					</div>
 				</div>
 				<div class="col">
-					<div class="p-5 text-white text-center shadow forme mod" >
-						<h3 class="fw-bold fs-2">Licence 2</h3>
+					<div class="px-4 py-5 shadow forme mod" >
+						<p class="text-white text-center fs-2">Licence 2</p>
 					</div>
 				</div>
 				<div class="col">
-					<div class="p-5 text-white text-center shadow  forme mod" >
-						<h3 class="fw-bold fs-2">Licence 3</h3>
+					<div class="px-4 py-5 shadow  forme mod" >
+						<p class="text-white text-center fs-2">Licence 3</p>
 					</div>
 				</div>
 				<div class="col">
-					<div class="p-5 text-white text-center shadow  forme mod" >
-						<h3 class="fw-bold fs-2">Master 1</h3>
+					<div class="px-4 py-5 shadow  forme mod" >
+						<p class="text-white text-center fs-2">Master 1</p>
 					</div>
 				</div>
 				<div class="col">
-					<div class="p-5 text-white text-center shadow  forme mod" >
-						<h3 class="fw-bold fs-2">Master 2</h3>
+					<div class="px-4 py-5 shadow  forme mod" >
+						<p class="text-white text-center fs-2">Master 2</p>
 					</div>
 				</div>
 				<div class="col">
-					<div class="px-4 py-5 text-white text-center shadow  forme mod" >
-						<h3 class="fw-bold fs-2">Doctorat PhD</h3>
+					<div class="px-4 py-4 shadow  forme mod" >
+						<p class="text-white text-center fs-2">Doctorat PhD</p>
+					</div>
+				</div>
+				<div class="col">
+					<div class="p-5 shadow forme ajout">
+						<p class="text-center">
+							<i class="fa fa-plus text-white icon_level" aria-hidden="true"></i>
+						</p>
 					</div>
 				</div>
 				<!-- Modal modification -->
@@ -62,18 +66,19 @@
 							</div>
 							<div class="modal-body">
 								<div>
-									<p class="mt-3">Licence 1</span></p>
+									<p class="mt-3">Nom: <span class="fw-bold"> Licence 1</span></p>
 								</div>
 								<div>
 									<div class="d-flex justify-content-end">
 										<button onclick="show_hide()" class="bg-transparent border-0">
-											<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
+											<i class="fa fa-pencil text-pink2 fs-5"></i>
+											<span class="ms-2">Modifier</span>
 										</button>
 									</div>
-									<div id="forme">
+									<div id="form">
 										<form action="">
 											<div class="d-grid px-lg-5">
-												<input type="text" placeholder="Nom du niveau" class="p-3 bg-light outline-none border-0" name="mod_level" >
+												<input type="text" placeholder="Nom du niveau" class="p-3 bg-light outline-none m-2 new border-0" name="mod_level" >
 											</div>
 											<div class="modal-footer d-flex justify-content-center px-5">
 												<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
@@ -84,30 +89,6 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col" data-bs-toggle="modal" data-bs-target="#exampleModal">
-					<div class="p-5 text-white text-center shadow forme ajout">
-						<h3><i class="fa fa-plus icon_level" aria-hidden="true"></i></h3>
-					</div>
-			  		<!-- Modal Ajout -->
-					<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header bg-dark">
-								<h5 class="modal-title text-uppercase text-white" id="exampleModalLabel">NOUVEAU NIVEAU</h5>
-								<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
-								</div>
-								<form action="">
-									<div class="modal-body">
-										<input type="text" placeholder="Nom du niveau" class="p-3 bg-light outline-none border-0 new_level" name="new_level" >
-									</div>
-									<div class="modal-footer d-flex justify-content-center px-5">
-										<button type="button" class="btn btn-primary text-white border-0 px-lg-5 bg-pink">Enregistrer</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div> -->
 				</div>
 			</div>
 		  </div>
@@ -122,10 +103,12 @@
 {% block extra_script %}
 
 	<script type="text/javascript">
+		
+		let forme = document.querySelectorAll(".forme");
+		let mod = document.querySelectorAll(".mod");
+		let popup = document.getElementById('exampleModal');
 		//Attribution des couleurs aux div de facon aleatoire
 		window.onload = function() {
-			let forme = document.querySelectorAll(".forme");
-
 			for(i=0; i<forme.length; i++){
 				let randomColor = "#" + (Math.floor(Math.random()*16777215)).toString(16);
 				while(randomColor.length<7){
@@ -135,28 +118,35 @@
 			}
 		}
 
-		// Ouvrir la modal pour des modifications
-		let forme = document.querySelectorAll(".mod");
-		let modal = document.getElementsByClassName("modifModal");
-		for (let i = 0; i < forme.length; i++) {
-			forme[i].onclick = function() {
-				modal.style.display = 'block';
+		// When the user clicks on the button, open the modal 
+		for (let i = 0; i < mod.length; i++) {
+			mod[i].onclick = function() {
+				popup.style.display = "block";
 				console.log(i);
 			};
 		}
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+			popup.style.display = "block";
+		}
+		// When the user clicks anywhere outside of the modal, close it
 		window.onclick = function(event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
+			if (event.target == popup) {
+				popup.style.display = "none";
 			}
 		}
+		document.onkeydown = function(evt) {
+			if (evt.keyCode == 27) {
+				popup.style.display = "none";
+			}
+		};
 
-		//cacher la modification
 		function show_hide() {
-			var y = document.getElementsById("forme");
-			if (y.style.display === "none") {
-				y.style.display = "block";
+			var x = document.getElementById("form");
+			if (x.style.display === "none") {
+				x.style.display = "block";
 			} else {
-				y.style.display = "none";
+				x.style.display = "none";
 			}
 		}
 	</script>
