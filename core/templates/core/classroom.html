@@ -1,9 +1,13 @@
 {% extends 'core/base.html' %}
 <<<<<<< HEAD
+<<<<<<< HEAD
 {% load static %}
+=======
+>>>>>>> 46d75a412ff502e5d7cb42663e1de4a172f8903a
 {% block title %} SchoolPlanner - Classrooms {% endblock %}
 =======
 
+<<<<<<< HEAD
 {% load static %}
 {% block title %} SchoolPlanner - Levels {% endblock %}
 
@@ -233,6 +237,13 @@
 	</section>
 
 <!-- ********************** Add modal******************************* -->
+=======
+{% block content %}
+
+	<div class="container-fluid my-4 pt-4">
+		<h1>Hello Classrooms</h1>
+	</div>
+>>>>>>> 46d75a412ff502e5d7cb42663e1de4a172f8903a
 
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -308,48 +319,9 @@
 {% endblock %}
 
 
-
 {% block extra_script %}
 
 	<script type="text/javascript">
-		//Attribution des couleurs aux div de facon aleatoire
-		window.onload = function() {
-			let forme = document.querySelectorAll(".forme");
-
-			for(i=0; i<forme.length; i++){
-				let randomColor = "#" + (Math.floor(Math.random()*16777215)).toString(16);
-				while(randomColor.length<7){
-					randomColor = "#" + (Math.floor(Math.random()*16777215)).toString(16);
-				}
-				forme[i].style.backgroundColor = randomColor;
-			}
-		}
-
-		// Ouvrir la modal pour des modifications
-		let forme = document.querySelectorAll(".mod");
-		let modal = document.getElementsByClassName("modifModal");
-		for (let i = 0; i < forme.length; i++) {
-			forme[i].onclick = function() {
-				modal.style.display = 'block';
-				console.log(i);
-			};
-		}
-		window.onclick = function(event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
-			}
-		}
-
-		//cacher la modification
-		function show_hide() {
-			var y = document.getElementsById("forme");
-			if (y.style.display === "none") {
-				y.style.display = "block";
-			} else {
-				y.style.display = "none";
-			}
-		}
 	</script>
-	
 
 {% endblock %}
