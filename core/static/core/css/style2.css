@@ -1,0 +1,29 @@
+.text-pink{
+	color: #FF0052;
+}
+.text-black{
+	color: #37354A;
+}
+.bg-pink{
+	background-color: #FF0052;
+}
+.bg-black{
+	background-color: #37354A;
+}
+.add{
+	cursor: pointer;
+}
+tr, th, td, table{
+	border: none;
+	text-align: center;
+}
+thead{
+	height: 50px;
+	margin: 3rem;
+	border-radius: 20%;
+}
+td > i {
+	cursor: pointer;
+	padding-left: 1.4rem;
+
+}
