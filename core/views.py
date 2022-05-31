@@ -212,12 +212,16 @@ class UnitView(View):
             return render(request, self.template_name,
                           {"units": Unit.objects.all()})
         else:
-            messages(request, form.errors)
-            return render(request, self.template_name, {})
+            print(form.errors)
+            return render(request, self.template_name, {'form': form})
 
     def get(self, request, *args, **kwargs):
+        grades = Grade.objects.all()
         units = Unit.objects.all()
-        return render(request, self.template_name, {"units": units})
+        return render(request, self.template_name, {
+            "units": units,
+            "grades": grades
+        })
 
 
 @method_decorator(decorators, name='get')

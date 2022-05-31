@@ -11,7 +11,7 @@ urlpatterns = [
     path('group/', GroupView.as_view(), name='group'),
     path('level/', LevelView.as_view(), name='level'),
     path('teacher/', TeacherView.as_view(), name='teacher'),
-    path('unit/', UnitView.as_view(), name='contact'),
+    path('unit/', UnitView.as_view(), name='create_unit'),
     path('timetable/', TimetableView.as_view(), name='timetable'),
     path('error/', NotFoundView.as_view(), name='notFound'),
 ]

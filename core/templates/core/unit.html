@@ -20,62 +20,18 @@
 		</span> -->
 		<h3 class="fw-bold">Unités d'Enseignement</h3>
 		<div class="row row-cols-md-3 row-cols-sm-2  row-cols-lg-5 space g-2 g-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
-			<div class="col">
-				<div class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<h4 class="fw-bold text-white">INF 3036</h4>
-					<p class="text-white">Base de données & SQL</p>
-					<p class="text-white">L3 inf fonda, semestre 1</p>
+			<!-- Boucle pour afficher l'ensemble des cours -->
+			
+			{% for unit  in units %}
+				<div class="col">
+					<div class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
+						<h4 class="fw-bold text-white">{{unit.code}}</h4>
+						<p class="text-white">{{unit.name}}</p>
+						<p class="text-white">{{unit.grade.level.abr}},  {{unit.grade.field.abr}}</p>
+					</div>
 				</div>
-			</div>
-			<div class="col">
-				<div class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<h4 class="fw-bold text-white">INF 3036</h4>
-					<p class="text-white">Base de données & SQL</p>
-					<p class="text-white">L3 inf fonda, semestre 1</p>
-				</div>
-			</div>
-			<div class="col">
-				<div class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<h4 class="fw-bold text-white">INF 3036</h4>
-					<p class="text-white">Base de données & SQL</p>
-					<p class="text-white">L3 inf fonda, semestre 1</p>
-				</div>
-			</div>
-			<div class="col">
-				<div class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<h4 class="fw-bold text-white">INF 3036</h4>
-					<p class="text-white">Base de données & SQL</p>
-					<p class="text-white">L3 inf fonda, semestre 1</p>
-				</div>
-			</div>
-			<div class="col">
-				<div class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<h4 class="fw-bold text-white">INF 3036</h4>
-					<p class="text-white">Base de données & SQL</p>
-					<p class="text-white">L3 inf fonda, semestre 1</p>
-				</div>
-			</div>
-			<div class="col">
-				<div class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<h4 class="fw-bold text-white">INF 3036</h4>
-					<p class="text-white">Base de données & SQL</p>
-					<p class="text-white">L3 inf fonda, semestre 1</p>
-				</div>
-			</div>
-			<div class="col">
-				<div class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<h4 class="fw-bold text-white">INF 3036</h4>
-					<p class="text-white">Base de données & SQL</p>
-					<p class="text-white">L3 inf fonda, semestre 1</p>
-				</div>
-			</div>
-			<div class="col">
-				<div class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<h4 class="fw-bold text-white">INF 3036</h4>
-					<p class="text-white">Base de données & SQL</p>
-					<p class="text-white">L3 inf fonda, semestre 1</p>
-				</div>
-			</div>
+			{% endfor %}
+			<!-- FIN Boucle pour afficher l'ensemble des cours -->
 			<div class="col">
 				<div class="p-5 shadow forme ajout" data-bs-toggle="modal" href="#ajoutModal">
 					<p class="text-center">
@@ -92,14 +48,22 @@
 						<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<form action="">
+						<form action="{%url 'core:create_unit' %}" method='post'>
+							{% csrf_token %}
 							<div class="d-grid px-lg-5">
-								<input type="text" placeholder="Nom du code" class="my-3 bg-dark p-2 border-0 text-white rounded" name="mod_level">
-								<input type="text" placeholder="Nom de l'intitule" class="my-3 bg-dark p-2 border-0 text-white rounded" name="mod_level">
-								<input type="text" placeholder="Nom de cycle" class="my-3 bg-dark p-2 border-0 text-white rounded" name="mod_level">
+								<input type="text" placeholder="Code de l'unité"  class="my-3 bg-dark p-2 border-0 text-white rounded" name="code">
+								<input type="text" placeholder="Intitulé du cour" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name">
+								<select name="type" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
+									<option value="TP">TP</option>
+									<option value="td">TD</option>
+									<option value="cour">Cour</option>
+								</select>
+								<select name="grade" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
+									{% for grade in  grades %}<option value="{{grade.id}}">{{grade.name}}</option>{% endfor %}
+								</select>
 							</div>
 							<div class="modal-footer d-flex justify-content-center px-5">
-								<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+								<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
 							</div>
 						</form>
 					</div>
@@ -116,9 +80,9 @@
 					</div>
 					<div class="modal-body">
 						<div>
-							<p class="mt-3">Code: <span class="fw-bold">INF 3036</span></p>
-							<p class="mt-3">Intitule: <span class="fw-bold">Base de données & SQL</span></p>
-							<p class="mt-3">Cycle: <span class="fw-bold">L3 inf fonda, semestre 1</span></p>
+							<p class="mt-3">Code: <span class="fw-bold">{{unit.code}}</span></p>
+							<p class="mt-3">Intitule: <span class="fw-bold">{{unit.name}}</span></p>
+							<p class="mt-3">Cycle: <span class="fw-bold">{{unit.grade.level.abr}},  {{unit.grade.field.abr}}</span></p>
 						</div>
 						<div>
 							<div class="d-flex justify-content-end">
