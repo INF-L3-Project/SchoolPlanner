@@ -63,11 +63,11 @@ class Teacher(models.Model):
 
 
 class Unit(models.Model):
-    TYPE = [("TP", "tp"), ("TD", "td"), ("Cours", "cours")]
+    TYPE = [("TP", "TP"), ("TD", "TD"), ("Cours", "Cours")]
 
     name = models.CharField(max_length=255, null=False, unique=True)
     code = models.CharField(max_length=100, null=False, unique=True)
-    _type = models.CharField(max_length=10, choices=TYPE, default="cour")
+    _type = models.CharField(max_length=10, choices=TYPE, default="Cours")
     grade = models.ForeignKey(Grade, models.CASCADE)
     institution = models.ForeignKey(Institution, models.CASCADE)
 

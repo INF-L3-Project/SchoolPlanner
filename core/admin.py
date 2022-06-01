@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import Classroom, Field, Grade, Group, Level, PlanningGrade, Provide, Teacher, Planning, Unit
+from .models import Classroom, Field, Grade, Group, Level, Provide, Teacher, Planning, Unit
 
 
 class GradeAdmin(admin.ModelAdmin):
@@ -15,9 +15,9 @@ class GroupAdmin(admin.ModelAdmin):
 
 
 class UnitAdmin(admin.ModelAdmin):
-    list_display = ("name", "code", "type")
+    list_display = ("name", "code", "_type")
     list_search = ("name", "code")
-    list_filter = ("type", )
+    list_filter = ("_type", )
 
 
 
