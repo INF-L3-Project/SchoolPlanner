@@ -63,19 +63,22 @@ class Teacher(models.Model):
 
 
 class Unit(models.Model):
-    TYPE = [('TP', 'tp'), ('TD', 'td'), ('Cour', 'cour')]
+    TYPE = [("TP", "tp"), ("TD", "td"), ("Cours", "cours")]
 
     name = models.CharField(max_length=255, null=False, unique=True)
     code = models.CharField(max_length=100, null=False, unique=True)
-    type = models.CharField(max_length=10, choices=TYPE, default='cour')
+    _type = models.CharField(max_length=10, choices=TYPE, default="cour")
     grade = models.ForeignKey(Grade, models.CASCADE)
+    institution = models.ForeignKey(Institution, models.CASCADE)
 
     def __str__(self):
-        return f"{self.code}-{self.name}--{self.type}"
+        return f"{self.code}-{self.name}--{self._type}"
 
 
 class Planning(models.Model):
     name = models.CharField(max_length=100, null=False)
+    school_year = models.CharField(max_length=50, null=False)
+    semestre = models.CharField(max_length=20, null=False)
     institution = models.ForeignKey(Institution, models.CASCADE)
     grade = models.ForeignKey(Grade, models.CASCADE)
 
@@ -91,25 +94,21 @@ class Provide(models.Model):
     planning = models.ForeignKey(Planning, on_delete=models.CASCADE)
     day = models.CharField(
         max_length=100,
-        choices=[(day, day) for day in [
-            "Lundi",
-            "Mardi",
-            "Mercredi",
-            "Jeudi",
-            "Vendredi",
-            "Samedi",
-            "Dimanche",
-        ]],
+        choices=[
+            (day, day)
+            for day in [
+                "Lundi",
+                "Mardi",
+                "Mercredi",
+                "Jeudi",
+                "Vendredi",
+                "Samedi",
+                "Dimanche",
+            ]
+        ],
     )
     start_time = models.TimeField()
     end_time = models.TimeField()
 
     def __str__(self):
         return f"{self.teacher}|{self.unit.code}|{self.classroom}|{self.group.name}"
-
-
-class PlanningGrade(models.Model):
-    grade = models.ForeignKey(Grade, models.CASCADE)
-    planning = models.ForeignKey(Planning, models.CASCADE)
-    school_year = models.CharField(max_length=50, null=False)
-    semestre = models.CharField(max_length=20, null=False)
