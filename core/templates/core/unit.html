@@ -24,10 +24,56 @@
 			
 			{% for unit  in units %}
 				<div class="col">
-					<div id='{{unit.id}}'class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
+					<div id='{{unit.id}}'class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal{{unit.id}}">
 						<h4 class="fw-bold text-white">{{unit.code}}</h4>
 						<p class="text-white">{{unit.name}}</p>
 						<p class="text-white">{{unit.grade.level.abr}},  {{unit.grade.field.abr}}</p>
+					</div>
+				</div>
+				<!-- Modal de modification -->
+				<div class="modal fade" id="modifModal{{unit.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header bg-dark">
+								<h5 class="modal-title text-center text-white" id="exampleModalLabel">MODIFICATION DE L'UNITÉ</h5>
+								<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div>
+									<p class="mt-3">Code: <span class="fw-bold">{{unit.code}}</span></p>
+									<p class="mt-3">Intitule: <span class="fw-bold">{{unit.name}}</span></p>
+									<p class="mt-3">Cycle: <span class="fw-bold">{{unit.grade.level.abr}},  {{unit.grade.field.abr}}</span></p>
+								</div>
+								<div>
+									<div class="d-flex justify-content-end">
+										<button onclick="show_hide('{{unit.id}}')" class="bg-transparent border-0">
+											<i class="fa fa-pencil text-pink2 fs-5"></i>
+											<span class="ms-2">Modifier</span>
+										</button>
+									</div>
+									<div id="form-{{unit.id}}" class="form_popup" >
+										<form action="{#% url 'core:update_unit' {{unit.name|slugify}}-{{unit.id}} %#}" method='put'>
+											{% csrf_token %}
+											<div class="d-grid px-lg-5">
+												<input type="text" placeholder="Code de l'unité"  class="my-3 bg-dark p-2 border-0 text-white rounded" name="code">
+												<input type="text" placeholder="Intitulé du cour" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name">
+												<select name="type" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
+													<option value="TP">TP</option>
+													<option value="td">TD</option>
+													<option value="cour">Cour</option>
+												</select>
+												<select name="grade" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
+													{% for grade in  grades %}<option value="{{grade.id}}">{{grade.name}}</option>{% endfor %}
+												</select>
+											</div>
+											<div class="modal-footer d-flex justify-content-center px-5">
+												<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			{% endfor %}
@@ -70,52 +116,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- Modal de modification -->
-		<div class="modal fade" id="modifModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header bg-dark">
-						<h5 class="modal-title text-center text-white" id="exampleModalLabel">MODIFICATION DE L'UNITÉ</h5>
-						<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<div>
-							<p class="mt-3">Code: <span class="fw-bold">{{unit.code}}</span></p>
-							<p class="mt-3">Intitule: <span class="fw-bold">{{unit.name}}</span></p>
-							<p class="mt-3">Cycle: <span class="fw-bold">{{unit.grade.level.abr}},  {{unit.grade.field.abr}}</span></p>
-						</div>
-						<div>
-							<div class="d-flex justify-content-end">
-								<button onclick="show_hide()" class="bg-transparent border-0">
-									<i class="fa fa-pencil text-pink2 fs-5"></i>
-									<span class="ms-2">Modifier</span>
-								</button>
-							</div>
-							<div id="form">
-								<form action="{#% url 'core:update_unit' {{unit.name|slugify}}-{{unit.id}} %#}" method='put'>
-									{% csrf_token %}
-									<div class="d-grid px-lg-5">
-										<input type="text" placeholder="Code de l'unité"  class="my-3 bg-dark p-2 border-0 text-white rounded" name="code">
-										<input type="text" placeholder="Intitulé du cour" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name">
-										<select name="type" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
-											<option value="TP">TP</option>
-											<option value="td">TD</option>
-											<option value="cour">Cour</option>
-										</select>
-										<select name="grade" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
-											{% for grade in  grades %}<option value="{{grade.id}}">{{grade.name}}</option>{% endfor %}
-										</select>
-									</div>
-									<div class="modal-footer d-flex justify-content-center px-5">
-										<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 		</div>
 	  </div>
 </div>
@@ -142,8 +142,8 @@
 			}
 		}
 
-		function show_hide() {
-			var x = document.getElementById("form");
+		function show_hide(id_form) {
+			var x = document.getElementById("form-"+id_form);
 			if (x.style.display === "none") {
 				x.style.display = "block";
 			} else {
