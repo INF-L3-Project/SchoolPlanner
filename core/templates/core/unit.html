@@ -51,23 +51,31 @@
 											<span class="ms-2">Modifier</span>
 										</button>
 									</div>
-									<div id="form-{{unit.id}}" class="form_popup" >
-										<form action="{#% url 'core:update_unit' {{unit.name|slugify}}-{{unit.id}} %#}" method='put'>
+									<div id="form-{{unit.id}}" class="form_popup">
+										<form action="{% url 'core:update_unit' unit.id %}" method='post'>
 											{% csrf_token %}
-											<div class="d-grid px-lg-5">
-												<input type="text" placeholder="Code de l'unité"  class="my-3 bg-dark p-2 border-0 text-white rounded" name="code">
-												<input type="text" placeholder="Intitulé du cour" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name">
-												<select name="type" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
+											<div class="d-grid px-lg-5"> 
+												<span class="span1 ms-2 text-danger" >{% for error in form.code.errors %}{{error}}{% endfor %}</span>
+												<input type="text" placeholder="Code de l'unité"  class="my-3 bg-dark p-2 border-0 text-white rounded" name="code" value="{{unit.code|default_if_none:''}}">
+												
+												<span class="span2 ms-2 text-danger" >{% for error in form.name.errors %}{{error}}{% endfor %}</span>
+												<input type="text" placeholder="Intitulé du cour" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name" value="{{unit.name|default_if_none:''}}">
+												
+												{% for error in form.type.errors %}<span id='span3' class="ms-2 text-danger" >{{error}}</span>{% endfor %}
+												<select name="type" id="" class="my-3 bg-dark p-2 border-0 text-white rounded" value="{{unit.type|default_if_none:''}}">
 													<option value="TP">TP</option>
-													<option value="td">TD</option>
-													<option value="cour">Cour</option>
+													<option value="Td">TD</option>
+													<option value="Cour">Cours</option>
 												</select>
-												<select name="grade" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
+												
+												{% for error in form.grade.errors %}<span id='span4' class="ms-2 text-danger" >{{error}}</span>{% endfor %}
+												<select name="grade" id="" class="my-3 bg-dark p-2 border-0 text-white rounded" value="{{unit.grade|default_if_none:''}}">
 													{% for grade in  grades %}<option value="{{grade.id}}">{{grade.name}}</option>{% endfor %}
 												</select>
+											
 											</div>
 											<div class="modal-footer d-flex justify-content-center px-5">
-												<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+												<button type="submit" class=" btn bg-pink text-white px-lg-5">Enregistrer</button>
 											</div>
 										</form>
 									</div>
@@ -150,6 +158,28 @@
 				x.style.display = "none";
 			}
 		}
+
+		function show_errors(){
+			const error1 = document.querySelector('.span1');
+			const error2 = document.querySelector('.span2');
+			var error = false
+			console.log(error1)
+			if(error1.textContent){
+				error = false;
+			}
+			else{
+				true
+			}
+			if(error2.textContent){
+				error = false;
+			}
+			else{
+				true
+			}
+			console.log(error)
+			return error
+		}
+		
 	</script>
 	
 

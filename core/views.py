@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.db.models import Q
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, UpdateView
 from .models import Classroom, Field, Grade, Group, Level, Teacher, Unit
 from .forms import (
     ClassroomForm,
@@ -220,25 +220,43 @@ class UnitView(View):
         grades = Grade.objects.all()
         units = Unit.objects.all()
         serializer_data = []
-        for elt in units:
-            grade = get_object_or_404(Grade, id=elt.grade.id)
-            grade = {
-                'id': grade.id,
-                'name': grade.name,
-            }
-            serializer_data.append({
-                'name': elt.name,
-                'code': elt.code,
-                'type': elt.type,
-                'grade': grade
-            })
-        print(serializer_data)
-        serializer_data = json.dumps(serializer_data)
-        print(serializer_data)
         return render(request, self.template_name, {
             "units": units,
             "grades": grades,
-            "data": serializer_data
+        })
+
+
+@method_decorator(decorators, name='get')
+class UnitUpdateView(View):
+
+    template_name = 'core/unit.html'
+    form_class = UnitForm
+    grades = Grade.objects.all()
+    units = Unit.objects.all()
+
+    def post(self, request, *args, **kwargs):
+
+        unit = Unit.objects.get(id=kwargs['pk'])
+        form = self.form_class(request.POST, instance=unit)
+        if form.is_valid():
+            form = form.save()
+            return redirect('core:create_unit')
+        else:
+            print(form.errors)
+            return render(request, self.template_name, {
+                "form": form,
+                "units": self.units,
+                "grades": self.grades,
+            })
+
+    def get(self, request, *args, **kwargs):
+
+        unit = Unit.objects.get(id=kwargs['pk'])
+        form = self.form_class(request.POST, instance=unit)
+        return render(request, self.template_name, {
+            "form": form,
+            "units": self.units,
+            "grades": self.grades,
         })
 
 
