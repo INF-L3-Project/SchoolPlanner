@@ -17,60 +17,52 @@
 			<p class="fw-bold">Classes</p>
 		</span> -->
 		<h3 class="fw-bold">Classes</h3>
-		<div class="row justify-content-end">
-			<div class="col-2">
-				
-			</div>
-			<div class="col-2">
-				
-			</div>
-		  </div>
 		<div class="row row-cols-md-3 row-cols-sm-2 row-cols-lg-5 space g-2 g-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		<!-- Boucle pour afficher l'ensemble des classes -->
 			<div class="col">
+				<!-- <div id='{{unit.id}}'class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal{{unit.id}}"></div> -->
 				<div class="p-4 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
 					<p class="text-white text-center fs-4">A I</p>
 				</div>
 			</div>
-			<div class="col">
-				<div class="p-4 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<p class="text-white text-center fs-4">A II</p>
+		<!-- Modal de modification -->
+			<!-- <div class="modal fade" id="modifModal{{unit.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+			<div class="modal fade" id="modifModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header bg-dark">
+							<h5 class="modal-title text-center text-white" id="exampleModalLabel">MODIFICATION DE CLASSE</h5>
+							<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div>
+								<p class="mt-3">Nom: <span class="fw-bold"> A 250</span></p>
+							</div>
+							<div>
+								<div class="d-flex justify-content-end">
+									<!-- <button onclick="show_hide('{{unit.id}}')" class="bg-transparent border-0"></button> -->
+									<button onclick="show_hide()" class="bg-transparent border-0">
+										<i class="fa fa-pencil text-pink2 fs-5"></i>
+										<span class="ms-2">Modifier</span>
+									</button>
+								</div>
+								<div id="form">
+									<!-- <div id="form-{{unit.id}}" class="form_popup" > -->
+									<form action="" class="form_popup">
+										<div class="d-grid px-lg-5">
+											<input type="text" placeholder="Nom de la classe" class="my-3 bg-dark p-2 border-0 text-white rounded" name="mod_level">
+										</div>
+										<div class="modal-footer d-flex justify-content-center px-5">
+											<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="col">
-				<div class="p-4 shadow  forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<p class="text-white text-center fs-4">A III</p>
-				</div>
-			</div>
-			<div class="col">
-				<div class="p-4 shadow  forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<p class="text-white text-center fs-4">A 150</p>
-				</div>
-			</div>
-			<div class="col">
-				<div class="p-4 shadow  forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<p class="text-white text-center fs-4">A 250</p>
-				</div>
-			</div>
-			<div class="col">
-				<div class="p-4 shadow  forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<p class="text-white text-center fs-4">A 350</p>
-				</div>
-			</div>
-			<div class="col">
-				<div class="p-4 shadow  forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<p class="text-white text-center fs-4">A 501</p>
-				</div>
-			</div>
-			<div class="col">
-				<div class="p-4 shadow  forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<p class="text-white text-center fs-4">A 502</p>
-				</div>
-			</div>
-			<div class="col">
-				<div class="p-4 shadow  forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<p class="text-white text-center fs-4">A 1001</p>
-				</div>
-			</div>
+		<!-- FIN Boucle pour afficher l'ensemble des filières -->
 			<div class="col">
 				<div class="p-4 shadow forme ajout" data-bs-toggle="modal" href="#ajoutModal">
 					<p class="text-center">
@@ -99,40 +91,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- Modal de modification -->
-		<div class="modal fade" id="modifModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header bg-dark">
-						<h5 class="modal-title text-center text-white" id="exampleModalLabel">MODIFICATION DE CLASSE</h5>
-						<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<div>
-							<p class="mt-3">Nom: <span class="fw-bold"> A 250</span></p>
-						</div>
-						<div>
-							<div class="d-flex justify-content-end">
-								<button onclick="show_hide()" class="bg-transparent border-0">
-									<i class="fa fa-pencil text-pink2 fs-5"></i>
-									<span class="ms-2">Modifier</span>
-								</button>
-							</div>
-							<div id="form">
-								<form action="">
-									<div class="d-grid px-lg-5">
-										<input type="text" placeholder="Nom de la classe" class="my-3 bg-dark p-2 border-0 text-white rounded" name="mod_level">
-									</div>
-									<div class="modal-footer d-flex justify-content-center px-5">
-										<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 		</div>
 	</div>
 </div>
@@ -157,8 +115,8 @@
 			}
 		}
 
-		function show_hide() {
-			var x = document.getElementById("form");
+		function show_hide(id_form) {
+			var x = document.getElementById("form-"+id_form);
 			if (x.style.display === "none") {
 				x.style.display = "block";
 			} else {
