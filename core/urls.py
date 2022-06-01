@@ -1,5 +1,5 @@
 from django.urls import path
-from core.views import HomeView, AccountView, FieldView, GradeView, ClassroomView, GroupView, LevelView, TeacherView, UnitView, TimetableView, NotFoundView
+from core.views import HomeView, AccountView, FieldView, GradeView, ClassroomView, GroupView, LevelView, TeacherView, UnitUpdateView, UnitView, TimetableView, NotFoundView
 
 app_name = 'core'
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
     path('level/', LevelView.as_view(), name='level'),
     path('teacher/', TeacherView.as_view(), name='teacher'),
     path('unit/', UnitView.as_view(), name='create_unit'),
+    path('unit/<int:pk>/update', UnitUpdateView.as_view(), name='update_unit'),
     path('timetable/', TimetableView.as_view(), name='timetable'),
     path('error/', NotFoundView.as_view(), name='notFound'),
 ]

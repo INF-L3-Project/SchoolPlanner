@@ -85,7 +85,6 @@ class Planning(models.Model):
     def __str__(self):
         return self.name
 
-
 class Provide(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)

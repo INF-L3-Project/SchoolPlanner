@@ -15,3 +15,7 @@
 .new{
     border-radius: 0.8rem;
 }
+
+.form_popup{
+    display: none;
+}
