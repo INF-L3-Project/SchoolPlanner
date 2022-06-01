@@ -24,7 +24,7 @@
 			
 			{% for unit  in units %}
 				<div class="col">
-					<div class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
+					<div id='{{unit.id}}'class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
 						<h4 class="fw-bold text-white">{{unit.code}}</h4>
 						<p class="text-white">{{unit.name}}</p>
 						<p class="text-white">{{unit.grade.level.abr}},  {{unit.grade.field.abr}}</p>
@@ -55,8 +55,8 @@
 								<input type="text" placeholder="Intitulé du cour" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name">
 								<select name="type" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
 									<option value="TP">TP</option>
-									<option value="td">TD</option>
-									<option value="cour">Cour</option>
+									<option value="TD">TD</option>
+									<option value="Cour">Cour</option>
 								</select>
 								<select name="grade" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
 									{% for grade in  grades %}<option value="{{grade.id}}">{{grade.name}}</option>{% endfor %}
@@ -92,14 +92,22 @@
 								</button>
 							</div>
 							<div id="form">
-								<form action="">
+								<form action="{#% url 'core:update_unit' {{unit.name|slugify}}-{{unit.id}} %#}" method='put'>
+									{% csrf_token %}
 									<div class="d-grid px-lg-5">
-										<input type="text" placeholder="Nom du code" class="my-3 bg-dark p-2 border-0 text-white rounded" name="mod_level">
-										<input type="text" placeholder="Nom de l'intitule" class="my-3 bg-dark p-2 border-0 text-white rounded" name="mod_level">
-										<input type="text" placeholder="Nom de cycle" class="my-3 bg-dark p-2 border-0 text-white rounded" name="mod_level">
+										<input type="text" placeholder="Code de l'unité"  class="my-3 bg-dark p-2 border-0 text-white rounded" name="code">
+										<input type="text" placeholder="Intitulé du cour" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name">
+										<select name="type" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
+											<option value="TP">TP</option>
+											<option value="td">TD</option>
+											<option value="cour">Cour</option>
+										</select>
+										<select name="grade" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
+											{% for grade in  grades %}<option value="{{grade.id}}">{{grade.name}}</option>{% endfor %}
+										</select>
 									</div>
 									<div class="modal-footer d-flex justify-content-center px-5">
-										<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+										<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
 									</div>
 								</form>
 							</div>

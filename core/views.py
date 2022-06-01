@@ -1,7 +1,7 @@
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.db.models import Q
 from django.views.generic import TemplateView
@@ -15,6 +15,7 @@ from .forms import (
     TeacherForm,
     UnitForm,
 )
+import json
 
 decorators = [
     login_required(login_url="authentication:login",
@@ -218,9 +219,26 @@ class UnitView(View):
     def get(self, request, *args, **kwargs):
         grades = Grade.objects.all()
         units = Unit.objects.all()
+        serializer_data = []
+        for elt in units:
+            grade = get_object_or_404(Grade, id=elt.grade.id)
+            grade = {
+                'id': grade.id,
+                'name': grade.name,
+            }
+            serializer_data.append({
+                'name': elt.name,
+                'code': elt.code,
+                'type': elt.type,
+                'grade': grade
+            })
+        print(serializer_data)
+        serializer_data = json.dumps(serializer_data)
+        print(serializer_data)
         return render(request, self.template_name, {
             "units": units,
-            "grades": grades
+            "grades": grades,
+            "data": serializer_data
         })
 
 
