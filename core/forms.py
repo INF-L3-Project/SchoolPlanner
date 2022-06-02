@@ -21,9 +21,9 @@ class GradeForm(forms.ModelForm):
         fields = ("field", "level", "capacity")
 
     def save(self, commit=True):
-        field = get_object_or_404(Field, id=self.cleaned_data['field'])
-        level = get_object_or_404(Level, id=self.cleaned_data['level'])
-        name = str(field.abr).upper() +"-"+ str(level.abr).upper()
+        field = get_object_or_404(Field, id=self.cleaned_data["field"])
+        level = get_object_or_404(Level, id=self.cleaned_data["level"])
+        name = str(field.abr).upper() + "-" + str(level.abr).upper()
         return Grade.objects.create(
             name=name,
             capacity=self.cleaned_data["capacity"],
