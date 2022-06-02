@@ -5,6 +5,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.db.models import Q
 from django.views.generic import TemplateView, UpdateView
+from django.contrib.auth.models import User
+
+from authentication.models import Institution
 from .models import Classroom, Field, Grade, Group, Level, Teacher, Unit
 from .forms import (
     ClassroomForm,
@@ -35,16 +38,21 @@ class FieldView(View):
     form_class = FieldForm
 
     def post(self, request, *args, **kwargs):
+        user = get_object_or_404(User, id=request.user.id)
+        institution = get_object_or_404(Institution, user=user)
         form = self.form_class(data=request.POST)
         if form.is_valid():
-            form.save()
+            field = form.save(commit=False)
+            field.institution = institution
+            field.save()
             return render(request, self.template_name,
                           {"fields": Field.objects.all()})
         else:
-            messages(request, form.errors)
+            print(form.errors)
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
+
         print(request.user.institution.name)
         form = self.form_class()
         fields = Field.objects.all()

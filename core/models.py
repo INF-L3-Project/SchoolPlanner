@@ -4,7 +4,7 @@ from authentication.models import Institution
 
 class Field(models.Model):
     name = models.CharField(max_length=100, null=False)
-    abr = models.CharField(max_length=50, null=False)
+    abr = models.CharField(max_length=50, null=True, blank=True)
     institution = models.ForeignKey(Institution, models.CASCADE)
 
     def __str__(self):
@@ -67,12 +67,12 @@ class Unit(models.Model):
 
     name = models.CharField(max_length=255, null=False, unique=True)
     code = models.CharField(max_length=100, null=False, unique=True)
-    _type = models.CharField(max_length=10, choices=TYPE, default="Cours")
+    type = models.CharField(max_length=10, choices=TYPE, default="Cours")
     grade = models.ForeignKey(Grade, models.CASCADE)
     institution = models.ForeignKey(Institution, models.CASCADE)
 
     def __str__(self):
-        return f"{self.code}-{self.name}--{self._type}"
+        return f"{self.code}-{self.name}--{self.type}"
 
 
 class Planning(models.Model):
@@ -85,6 +85,7 @@ class Planning(models.Model):
     def __str__(self):
         return self.name
 
+
 class Provide(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
@@ -93,18 +94,15 @@ class Provide(models.Model):
     planning = models.ForeignKey(Planning, on_delete=models.CASCADE)
     day = models.CharField(
         max_length=100,
-        choices=[
-            (day, day)
-            for day in [
-                "Lundi",
-                "Mardi",
-                "Mercredi",
-                "Jeudi",
-                "Vendredi",
-                "Samedi",
-                "Dimanche",
-            ]
-        ],
+        choices=[(day, day) for day in [
+            "Lundi",
+            "Mardi",
+            "Mercredi",
+            "Jeudi",
+            "Vendredi",
+            "Samedi",
+            "Dimanche",
+        ]],
     )
     start_time = models.TimeField()
     end_time = models.TimeField()
