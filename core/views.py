@@ -264,23 +264,84 @@ class AccountView(TemplateView):
 @method_decorator(decorators, name="get")
 class ClassroomView(View):
     """Cette vue c'est pour les salles de classe (exemple : Amphi 350, A250)."""
-
     template_name = "core/classroom.html"
     form_class = ClassroomForm
 
     def post(self, request, *args, **kwargs):
+        user = get_object_or_404(User, id=request.user.id)
+        institution = get_object_or_404(Institution, user=user)
         form = self.form_class(data=request.POST)
         if form.is_valid():
-            form.save()
+            field = form.save(commit=False)
+            field.institution = institution
+            field.save()
             return render(request, self.template_name,
                           {"classrooms": Classroom.objects.all()})
         else:
-            messages(request, form.errors)
+            print(form.errors)
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
-        classrooms = Classroom.objects.all()
-        return render(request, self.template_name, {"classrooms": classrooms})
+        classroom = Classroom.objects.all()
+
+        searched = request.GET.get("searched")
+        trier_par_capacite = request.GET.get("trier_par_capacite")
+        filtrer_par_capacite = request.GET.get("filtrer_par_capacite")
+        print(request.GET)
+
+        if searched:
+            print(searched)
+            classroom = Classroom.objects.filter(name__icontains=searched)
+
+        if filtrer_par_capacite == "gt_500":
+            classroom = Classroom.objects.filter(capacity__gt=500)
+        elif filtrer_par_capacite == "lt_500":
+            classroom = Classroom.objects.filter(capacity__lt=500)
+        elif filtrer_par_capacite == "lt_100":
+            classroom = Classroom.objects.filter(capacity__lt=100)
+
+        if trier_par_capacite == "cc":
+            classroom = Classroom.objects.order_by("capacity")
+        elif trier_par_capacite == "cd":
+            classroom = Classroom.objects.order_by("-capacity")
+        form = self.form_class()
+
+        return render(request, self.template_name, {
+            "classrooms": classroom,
+            "form": form
+        })
+
+
+@method_decorator(decorators, name="get")
+class ClassroomUpdateView(View):
+
+    template_name = "core/classroom.html"
+    form_class = ClassroomForm
+    classroom = Classroom.objects.all()
+
+    def post(self, request, *args, **kwargs):
+
+        classroom = Classroom.objects.get(id=kwargs["pk"])
+        form = self.form_class(request.POST, instance=classroom)
+        if form.is_valid():
+            form = form.save()
+            print(form)
+            return redirect("core:classroom")
+        else:
+            print(form.errors)
+            return render(request, self.template_name, {
+                "form": form,
+                "classrooms": self.classroom,
+            })
+
+    def get(self, request, *args, **kwargs):
+
+        classroom = Classroom.objects.get(id=kwargs["pk"])
+        form = self.form_class(request.POST, instance=classroom)
+        return render(request, self.template_name, {
+            "form": form,
+            "classrooms": self.classroom,
+        })
 
 
 @method_decorator(decorators, name="get")

@@ -46,21 +46,15 @@
 							</a>
 						</li>
 						<li>
-							<a href="{% url 'core:create_unit' %}" title="UEs">
-								<span class="icon"><i class="fa fa-edit"></i></span>
-								<span class="title">UEs</span>
-							</a>
-						</li>
-						<li>
 							<a href="{% url 'core:field' %}" title="Filières">
 								<span class="icon"><i class="fa fa-book"></i></span>
 								<span class="title">Filières</span>
 							</a>
 						</li>
 						<li>
-							<a href="{% url 'core:teacher' %}" title="Enseignants">
-								<span class="icon"><i class="fa fa-male"></i></span>
-								<span class="title">Enseignants</span>
+							<a href="{% url 'core:level' %}" title="Niveaux">
+								<span class="icon"><i class="fa fa-line-chart"></i></span>
+								<span class="title">Niveaux</span>
 							</a>
 						</li>
 						<li>
@@ -70,9 +64,9 @@
 							</a>
 						</li>
 						<li>
-							<a href="{% url 'core:level' %}" title="Niveaux">
-								<span class="icon"><i class="fa fa-line-chart"></i></span>
-								<span class="title">Niveaux</span>
+							<a href="{% url 'core:teacher' %}" title="Enseignants">
+								<span class="icon"><i class="fa fa-male"></i></span>
+								<span class="title">Enseignants</span>
 							</a>
 						</li>
 						<li>
@@ -87,6 +81,14 @@
 								<span class="title">Groupe</span>
 							</a>
 						</li>
+						<li>
+							<a href="{% url 'core:create_unit' %}" title="UEs">
+								<span class="icon"><i class="fa fa-edit"></i></span>
+								<span class="title">UEs</span>
+							</a>
+						</li>
+						
+						
 						<li>
 							<a href="{% url 'core:timetable' %}" title="Emplois de temps">
 								<span class="icon"><i class="fa fa-calendar"></i></span>

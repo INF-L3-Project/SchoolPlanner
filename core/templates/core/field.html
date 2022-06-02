@@ -19,7 +19,8 @@
 			{% for field in fields %}
 				<div class="col">
 					<div id='{{field.id}}' class="py-4 px-1 shadow forme mod"  data-bs-toggle="modal" href="#modifModal{{field.id}}">
-						<p class="text-white text-center fs-4">{{field.name}}</p>
+						<h4 class="fw-bold text-white">{{field.name}}</h4>	
+						<p class="text-white">{{field.abr}}</p>
 					</div>
 				</div>
 			<!-- Modal de modification -->
