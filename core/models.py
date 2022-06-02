@@ -78,7 +78,7 @@ class Unit(models.Model):
 class Planning(models.Model):
     name = models.CharField(max_length=100, null=False)
     school_year = models.CharField(max_length=50, null=False)
-    semestre = models.CharField(max_length=20, null=False)
+    semester = models.CharField(max_length=20, null=False)
     institution = models.ForeignKey(Institution, models.CASCADE)
     grade = models.ForeignKey(Grade, models.CASCADE)
 

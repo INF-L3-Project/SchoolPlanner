@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from .models import Classroom, Field, Grade, Group, Level, Provide, Teacher, Unit
+from .models import Classroom, Field, Grade, Group, Level, Planning, Provide, Teacher, Unit
 from django import forms
 
 
@@ -130,3 +130,9 @@ class ProvideForm(forms.ModelForm):
             raise forms.ValidationError(
                 "Ce professeur est déjà pris à cette plage horaire."
             )
+
+
+class PlanningForm(forms.ModelForm):
+    class Meta:
+        model = Planning
+        fields = ("name", "school_year", "semester", "grade")
