@@ -1,4 +1,6 @@
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
+from authentication.models import Institution
 from .models import Classroom, Field, Grade, Group, Level, Planning, Provide, Teacher, Unit
 from django import forms
 
@@ -136,3 +138,13 @@ class PlanningForm(forms.ModelForm):
     class Meta:
         model = Planning
         fields = ("name", "school_year", "semester", "grade")
+
+
+class AccountForm(forms.Form):
+    last_name = forms.CharField(max_length=200)
+    name = forms.CharField(max_length=255)
+    logo = forms.ImageField()
+
+    class Meta:
+        fields = ("last_name", "name", "logo")
+

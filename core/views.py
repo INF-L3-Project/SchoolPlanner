@@ -9,6 +9,7 @@ from django.views.generic import TemplateView, UpdateView
 from authentication.models import Institution
 from .models import Classroom, Field, Grade, Group, Level, Planning, Teacher, Unit
 from .forms import (
+    AccountForm,
     ClassroomForm,
     FieldForm,
     GradeForm,
@@ -159,8 +160,16 @@ class GroupView(View):
         return render(request, self.template_name, {"groups": groups, "grades": grades})
 
 
-class AccountView(TemplateView):
+@method_decorator(decorators, name="get")
+class AccountView(View):
     template_name = "core/account.html"
+    form_class = AccountForm
+
+    def post(self, request, *args, **kwargs):
+        return render(request, self.template_name, {})
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {})
 
 
 @method_decorator(decorators, name="get")
