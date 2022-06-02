@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from .models import Classroom, Field, Grade, Group, Level, Provide, Teacher, Unit
+from .models import Classroom, Field, Grade, Group, Level, Planning, Provide, Teacher, Unit
 from django import forms
 
 
@@ -29,8 +29,8 @@ class GradeForm(forms.ModelForm):
         fields = ("field", "level", "capacity")
 
     def save(self, commit=True):
-        field = get_object_or_404(Field, id=self.cleaned_data['field'])
-        level = get_object_or_404(Level, id=self.cleaned_data['level'])
+        field = get_object_or_404(Field, id=self.cleaned_data["field"])
+        level = get_object_or_404(Level, id=self.cleaned_data["level"])
         name = str(field.abr).upper() + "-" + str(level.abr).upper()
         return Grade.objects.create(
             name=name,
@@ -77,7 +77,6 @@ class TeacherForm(forms.ModelForm):
     class Meta:
         model = Teacher
         fields = ("name", "email", "number")
-
 
 class UnitForm(forms.ModelForm):
 
@@ -126,4 +125,11 @@ class ProvideForm(forms.ModelForm):
                 end_time=self.data["end_time"],
         ).exists()):
             raise forms.ValidationError(
-                "Ce professeur est déjà pris à cette plage horaire.")
+                "Ce professeur est déjà pris à cette plage horaire."
+            )
+
+
+class PlanningForm(forms.ModelForm):
+    class Meta:
+        model = Planning
+        fields = ("name", "school_year", "semester", "grade")
