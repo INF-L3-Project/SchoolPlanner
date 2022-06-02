@@ -19,20 +19,20 @@
 		<!-- **********************Search bar******************** -->
 
 		<div class="container table-responsive py-5 border-0">
-		<div class="d-flex container bg-dark text-white border border-secondary border-1 border-end rounded-1 mt-2 shadow">
+		<div class="d-flex container bg-dark text-white border border-secondary border-1 border-end rounded-1 mt-2 shadow mx-auto">
 			<form class="d-flex row p-2 w-100 mx-auto">
-				<div class=" col-lg-3">
+				<div class="ps-3 ps-lg-4 col-lg-3 col-md-12">
 					<label>Rechercher</label>
 					<div class="mt-2 bg-light border-1 p-1 border-danger rounded-1">
-						<button type="submit" class=" border-0 bg-light p-0 me-3">
-							<i class="fa fa-search fa text-dark" aria-hidden="true"></i>
+						<button type="submit" class=" border-0 bg-light ps-3 me-3">
+							<i class="fa fa-search text-dark" aria-hidden="true"></i>
 						</button>
 						<input type="search" name="" class="border-0 p-1 w-75 bg-light">
 					</div>
 					
 				</div>
-				<div class=" col-lg-2">
-					<label>Filtrer par nom</label>
+				<div class=" col-lg-2 col-md-6">
+					<label class="mt-2 mt-lg-0">Filtrer par nom</label>
 						<div class="mt-2 bg-light border-1 p-1 border-danger rounded-1">
 							<select name="ue" id="" class="bg-light text-dark border-0 text-white w-100 rounded p-2">
 								<option value="">A3</option>
@@ -41,8 +41,8 @@
 							</select>
 						</div>
 				</div>
-				<div class=" col-lg-2">
-					<label>Filtrer par capacité</label>
+				<div class=" col-lg-2 col-md-6">
+					<label class="mt-2 mt-lg-0">Filtrer par capacité</label>
 						<div class="mt-2 bg-light border-1 p-1 border-danger rounded-1">
 							<select name="ue" id="" class="bg-light text-dark border-0 text-white w-100 rounded p-2">
 								<option value="">> 500</option>
@@ -51,15 +51,16 @@
 							</select>
 						</div>
 				</div>
-				<div class="col-lg-2 px-3 pe-5 pt-2 mx-auto">
-					<button type="button" class="	mt-4 btn bg-pink text-white px-lg-5">Rechecher</button>
+				<div class="col-lg-5 d-flex">
+					<div class="col px-3 pt-2 pe-lg-3 mx-auto">
+						<button type="button" class="mt-4 btn bg-pink text-white px-5">Rechecher</button>
+					</div>
+					<div class="col ms-4 ps-5 pt-2 add" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						<button type="button" class="mt-4 btn bg-pink text-white px-4">
+							<i class="fa fa-plus ps-1" aria-hidden="true"></i>
+						    Ajouter </button>
+					</div>
 				</div>
-				<div class="col-lg-3 mx-auto ps-5 pt-2 add" data-bs-toggle="modal" data-bs-target="#exampleModal">
-					<button type="button" class="mt-4 btn bg-pink text-white px-lg-3">
-						<i class="fa fa-plus ps-1" aria-hidden="true"></i>
-					    Ajouter </button>
-				</div>
-				
 			</form>
 		</div> 
 			<table class="table table-bordered table-hover">
