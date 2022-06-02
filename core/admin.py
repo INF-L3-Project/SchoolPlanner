@@ -15,9 +15,9 @@ class GroupAdmin(admin.ModelAdmin):
 
 
 class UnitAdmin(admin.ModelAdmin):
-    list_display = ("name", "code", "_type")
+    list_display = ("name", "code", "type")
     list_search = ("name", "code")
-    list_filter = ("_type", )
+    list_filter = ("type", )
 
 
 class TeacherAdmin(admin.ModelAdmin):
