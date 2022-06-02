@@ -139,13 +139,17 @@ class LevelView(View):
     form_class = LevelForm
 
     def post(self, request, *args, **kwargs):
+        user = get_object_or_404(User, id=request.user.id)
+        institution = get_object_or_404(Institution, user=user)
         form = self.form_class(data=request.POST)
         if form.is_valid():
-            form.save()
+            field = form.save(commit=False)
+            field.institution = institution
+            field.save()
             return render(request, self.template_name,
                           {"levels": Level.objects.all()})
         else:
-            messages(request, form.errors)
+            print(form.errors)
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
@@ -154,6 +158,38 @@ class LevelView(View):
         return render(request, self.template_name, {
             "levels": levels,
             "form": form
+        })
+
+
+@method_decorator(decorators, name="get")
+class LevelUpdateView(View):
+
+    template_name = "core/level.html"
+    form_class = LevelForm
+    level = Level.objects.all()
+
+    def post(self, request, *args, **kwargs):
+
+        level = Level.objects.get(id=kwargs["pk"])
+        form = self.form_class(request.POST, instance=level)
+        if form.is_valid():
+            form = form.save()
+            print(form)
+            return redirect("core:level")
+        else:
+            print(form.errors)
+            return render(request, self.template_name, {
+                "form": form,
+                "level": self.level,
+            })
+
+    def get(self, request, *args, **kwargs):
+
+        level = Level.objects.get(id=kwargs["pk"])
+        form = self.form_class(request.POST, instance=level)
+        return render(request, self.template_name, {
+            "form": form,
+            "level": self.level,
         })
 
 
