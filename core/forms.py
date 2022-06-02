@@ -12,7 +12,9 @@ class FieldForm(forms.ModelForm):
     def clean_abr(self):
         if self.data['abr'] == '':
             abr = self.data['name'][:4]
-        return abr
+            return abr
+        else:
+            return self.data['abr']
 
 
 class LevelForm(forms.ModelForm):
@@ -78,6 +80,7 @@ class TeacherForm(forms.ModelForm):
         model = Teacher
         fields = ("name", "email", "number")
 
+
 class UnitForm(forms.ModelForm):
 
     class Meta:
@@ -125,11 +128,11 @@ class ProvideForm(forms.ModelForm):
                 end_time=self.data["end_time"],
         ).exists()):
             raise forms.ValidationError(
-                "Ce professeur est déjà pris à cette plage horaire."
-            )
+                "Ce professeur est déjà pris à cette plage horaire.")
 
 
 class PlanningForm(forms.ModelForm):
+
     class Meta:
         model = Planning
         fields = ("name", "school_year", "semester", "grade")

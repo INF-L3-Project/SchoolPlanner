@@ -45,11 +45,11 @@
 									</div>
 									
 									<div id="form-{{field.id}}" class="form_popup">
-										<form action="">
+										<form action="{% url 'core:update_field' field.id %}" method='post'>
 											{% csrf_token %}
 											<div class="d-grid px-lg-5">
-												<input type="text" placeholder="Nom de la filière *" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name">
-												<input type="text" placeholder="Abréviation" class="my-3 bg-dark p-2 border-0 text-white rounded" name="abr">
+												<input type="text" placeholder="Nom de la filière *" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name" value="{{field.name|default_if_none:''}}" required>
+												<input type="text" placeholder="Abréviation" class="my-3 bg-dark p-2 border-0 text-white rounded" name="abr" value="{{field.abr|default_if_none:''}}">
 											</div>
 											<div class="modal-footer d-flex justify-content-center px-5">
 												<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
