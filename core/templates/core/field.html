@@ -12,61 +12,84 @@
 
 <div class="container-fluid my-4 pt-4 ps-lg-2 ms-lg-2">
 	<div class="container">
-		<span class="d-flex">
-			<i class="fa fa-home mx-2 mt-1" aria-hidden="true"></i>
-			<i class="fa fa-chevron-right mt-1" aria-hidden="true"></i>
-			<p class="mx-2">Dashboard</p>
-			<i class="fa fa-chevron-right mt-1" aria-hidden="true"></i>
-			<p class="fw-bold">Filieres</p>
-		</span>
-		<h3 class="fw-bold fs-1 space">Filieres</h3>
-		<div class="row row-cols-3 row-cols-lg-5 space g-2 g-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
-		  
-		  
-		  {% for field in fields %}
-		  <div class="col">
-			<div class="py-5 px-4 text-white text-center shadow forme">
-				<h3 class="fw-bold fs-5">{{field.name}}</h3>
+		<h3 class="fw-bold">Filières</h3>
+		<div class="row row-cols-md-3 row-cols-sm-2  row-cols-lg-5 space g-2 g-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		<!-- Boucle pour afficher l'ensemble des filières -->	
+			
+			{% for field in fields %}
+				<div class="col">
+					<div id='{{field.id}}' class="py-4 px-1 shadow forme mod"  data-bs-toggle="modal" href="#modifModal{{field.id}}">
+						<h4 class="fw-bold text-white">{{field.name}}</h4>	
+						<p class="text-white">{{field.abr}}</p>
+					</div>
+				</div>
+			<!-- Modal de modification -->
+				<div class="modal fade" id="modifModal{{field.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header bg-dark">
+								<h5 class="modal-title text-center text-white" id="exampleModalLabel">MODIFICATION DE FILIÈRE</h5>
+								<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div>
+									<p class="mt-3">Nom: <span class="fw-bold">{{field.name}}</span></p>
+									<p class="mt-3">Abr: <span class="fw-bold">{{field.abr}}</span></p>
+								</div>
+								<div>
+									<div class="d-flex justify-content-end">
+										
+										<button onclick="show_hide('{{field.id}}')" class="bg-transparent border-0">
+											<i class="fa fa-pencil text-pink2 fs-5"></i>
+											<span class="ms-2">Modifier</span>
+										</button>
+									</div>
+									
+									<div id="form-{{field.id}}" class="form_popup">
+										<form action="{% url 'core:update_field' field.id %}" method='post'>
+											{% csrf_token %}
+											<div class="d-grid px-lg-5">
+												<input type="text" placeholder="Nom de la filière *" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name" value="{{field.name|default_if_none:''}}" required>
+												<input type="text" placeholder="Abréviation" class="my-3 bg-dark p-2 border-0 text-white rounded" name="abr" value="{{field.abr|default_if_none:''}}">
+											</div>
+											<div class="modal-footer d-flex justify-content-center px-5">
+												<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		<!-- FIN Boucle pour afficher l'ensemble des filières -->	
+			<div class="col">
+				<div class="p-4 shadow forme ajout" data-bs-toggle="modal" href="#ajoutModal">
+					<p class="text-center">
+						<i class="fa fa-plus fs-2 text-white" aria-hidden="true"></i>
+					</p>
+				</div>
 			</div>
-		  </div>
-			  
-		  {% endfor %}
-			  
-
-		  <div class="col">
-			<div class="p-4 text-white text-center shadow forme">
-				<h3><i class="fa fa-plus icon_field" aria-hidden="true"></i></h3>
-			</div>
-		  </div>
-		  <!-- Modal modification -->
-		  <div class="modal fade modifModal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <!-- Modal d'ajout -->
+		  <div class="modal fade" id="ajoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header bg-dark">
-						<h5 class="modal-title text-center text-white" id="exampleModalLabel">MODIFICATION DE NIVEAUX</h5>
+						<h5 class="modal-title text-center text-white" id="exampleModalLabel">NOUVELLE FILIÈRE</h5>
 						<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<div>
-							<p class="mt-3">Licence 1</span></p>
-						</div>
-						<div>
-							<div class="d-flex justify-content-end">
-								<button onclick="show_hide()" class="bg-transparent border-0">
-									<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
-								</button>
+						<form action="{% url 'core:field' %}" method='post'>
+							{% csrf_token %}
+							<div class="d-grid px-lg-5">
+								<input type="text" placeholder="Nom de la filière *" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name" required>
+								<input type="text" placeholder="Abréviation" class="my-3 bg-dark p-2 border-0 text-white rounded" name="abr">
 							</div>
-							<div id="forme">
-								<form action="">
-									<div class="d-grid px-lg-5">
-										<input type="text" placeholder="Nom du niveau" class="p-3 bg-light outline-none border-0" name="mod_level" >
-									</div>
-									<div class="modal-footer d-flex justify-content-center px-5">
-										<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
-									</div>
-								</form>
+							<div class="modal-footer d-flex justify-content-center px-5">
+								<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
 							</div>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -84,10 +107,9 @@
 {% block extra_script %}
 
 	<script type="text/javascript">
+		let forme = document.querySelectorAll(".forme");
 		//Attribution des couleurs aux div de facon aleatoire
 		window.onload = function() {
-			let forme = document.querySelectorAll(".forme");
-
 			for(i=0; i<forme.length; i++){
 				let randomColor = "#" + (Math.floor(Math.random()*16777215)).toString(16);
 				while(randomColor.length<7){
@@ -97,28 +119,12 @@
 			}
 		}
 
-		// Ouvrir la modal pour des modifications
-		let forme = document.querySelectorAll(".mod");
-		let modal = document.getElementsByClassName("modifModal");
-		for (let i = 0; i < forme.length; i++) {
-			forme[i].onclick = function() {
-				modal.style.display = 'block';
-				console.log(i);
-			};
-		}
-		window.onclick = function(event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
-			}
-		}
-
-		//cacher la modification
-		function show_hide() {
-			var y = document.getElementsById("forme");
-			if (y.style.display === "none") {
-				y.style.display = "block";
+		function show_hide(id_form) {
+			var x = document.getElementById("form-"+id_form);
+			if (x.style.display === "none") {
+				x.style.display = "block";
 			} else {
-				y.style.display = "none";
+				x.style.display = "none";
 			}
 		}
 	</script>
