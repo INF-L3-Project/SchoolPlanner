@@ -13,12 +13,12 @@
 <div class="container-fluid my-4 pt-4 ps-lg-2 ms-lg-2">
 	<div class="container">
 		<h3 class="fw-bold">Filières</h3>
-		<div class="row row-cols-md-3 row-cols-sm-2  row-cols-lg-5 space g-2 g-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		<div class="row row-cols-md-3 row-cols-sm-2 d_field row-cols-lg-4 space g-2 g-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
 		<!-- Boucle pour afficher l'ensemble des filières -->	
 			
 			{% for field in fields %}
 				<div class="col">
-					<div id='{{field.id}}' class="py-4 px-1 shadow forme mod"  data-bs-toggle="modal" href="#modifModal{{field.id}}">
+					<div id='{{field.id}}' class="py-4 px-3 shadow forme mod"  data-bs-toggle="modal" href="#modifModal{{field.id}}">
 						<h4 class="fw-bold text-white">{{field.name}}</h4>	
 						<p class="text-white">{{field.abr}}</p>
 					</div>
@@ -65,9 +65,9 @@
 			{% endfor %}
 		<!-- FIN Boucle pour afficher l'ensemble des filières -->	
 			<div class="col">
-				<div class="p-4 shadow forme ajout" data-bs-toggle="modal" href="#ajoutModal">
+				<div class="pt-5 px-4 shadow forme forme_field ajout" data-bs-toggle="modal" href="#ajoutModal">
 					<p class="text-center">
-						<i class="fa fa-plus fs-2 text-white" aria-hidden="true"></i>
+						<i class="fa fa-plus fa_field fs-2 text-white" aria-hidden="true"></i>
 					</p>
 				</div>
 			</div>
