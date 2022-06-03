@@ -399,9 +399,13 @@ class UnitView(View):
     form_class = UnitForm
 
     def post(self, request, *args, **kwargs):
+        current_user = get_object_or_404(User, id=request.user.id)
+        institution = get_object_or_404(Institution, user=current_user)
         form = self.form_class(data=request.POST)
         if form.is_valid():
-            form.save()
+            unit = form.save(commit=False)
+            unit.institution = institution
+            unit.save()
             return render(request, self.template_name,
                           {"units": Unit.objects.all()})
         else:
@@ -411,7 +415,6 @@ class UnitView(View):
     def get(self, request, *args, **kwargs):
         grades = Grade.objects.all()
         units = Unit.objects.all()
-        serializer_data = []
         return render(
             request,
             self.template_name,
