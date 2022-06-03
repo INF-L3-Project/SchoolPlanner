@@ -20,6 +20,10 @@ class UnitAdmin(admin.ModelAdmin):
     list_filter = ("type", )
 
 
+class TeacherAdmin(admin.ModelAdmin):
+    list_display = ("name", "institution")
+    list_search = ("name",)
+    list_filter = ("institution__name",)
 
 
 class ProvideAdmin(admin.ModelAdmin):
@@ -34,7 +38,7 @@ admin.site.register(Grade, GradeAdmin)
 admin.site.register(Level)
 admin.site.register(Group, GroupAdmin)
 admin.site.register(Classroom)
-admin.site.register(Teacher)
+admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Planning)
 admin.site.register(Unit, UnitAdmin)
 admin.site.register(Provide, ProvideAdmin)

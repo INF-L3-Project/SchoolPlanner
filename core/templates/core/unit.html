@@ -59,13 +59,13 @@
 												<input type="text" placeholder="Code de l'unité"  class="my-3 bg-dark p-2 border-0 text-white rounded" name="code" value="{{unit.code|default_if_none:''}}">
 												
 												<span class="span2 ms-2 text-danger" >{% for error in form.name.errors %}{{error}}{% endfor %}</span>
-												<input type="text" placeholder="Intitulé du cour" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name" value="{{unit.name|default_if_none:''}}">
+												<input type="text" placeholder="Intitulé du cours" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name" value="{{unit.name|default_if_none:''}}">
 												
 												{% for error in form.type.errors %}<span id='span3' class="ms-2 text-danger" >{{error}}</span>{% endfor %}
 												<select name="type" id="" class="my-3 bg-dark p-2 border-0 text-white rounded" value="{{unit.type|default_if_none:''}}">
 													<option value="TP">TP</option>
 													<option value="Td">TD</option>
-													<option value="Cour">Cour</option>
+													<option value="Cours">Cours</option>
 												</select>
 												
 												{% for error in form.grade.errors %}<span id='span4' class="ms-2 text-danger" >{{error}}</span>{% endfor %}
@@ -106,11 +106,11 @@
 							{% csrf_token %}
 							<div class="d-grid px-lg-5">
 								<input type="text" placeholder="Code de l'unité"  class="my-3 bg-dark p-2 border-0 text-white rounded" name="code">
-								<input type="text" placeholder="Intitulé du cour" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name">
+								<input type="text" placeholder="Intitulé du cours" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name">
 								<select name="type" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
 									<option value="TP">TP</option>
 									<option value="TD">TD</option>
-									<option value="Cour">Cour</option>
+									<option value="Cours">Cours</option>
 								</select>
 								<select name="grade" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
 									{% for grade in  grades %}<option value="{{grade.id}}">{{grade.name}}</option>{% endfor %}
