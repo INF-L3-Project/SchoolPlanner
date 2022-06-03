@@ -73,8 +73,7 @@ class FieldView(View):
             field = form.save(commit=False)
             field.institution = institution
             field.save()
-            return render(request, self.template_name,
-                          {"fields": Field.objects.all()})
+            return redirect('core:field')
         else:
             print(form.errors)
             return render(request, self.template_name, {})
@@ -137,8 +136,7 @@ class LevelView(View):
             field = form.save(commit=False)
             field.institution = institution
             field.save()
-            return render(request, self.template_name,
-                          {"levels": Level.objects.all()})
+            return redirect('core:level')
         else:
             print(form.errors)
             return render(request, self.template_name, {})
@@ -252,11 +250,10 @@ class GradeUpdateView(View):
     template_name = "core/grade.html"
     form_class = GradeForm
     grade = Grade.objects.all()
-    fields = Field.objects.all()
-    levels = Level.objects.all()
 
     def post(self, request, *args, **kwargs):
-
+        fields = Field.objects.all()
+        levels = Level.objects.all()
         grade = Grade.objects.get(id=kwargs["pk"])
         form = self.form_class(request.POST, instance=grade)
         if form.is_valid():
@@ -269,20 +266,21 @@ class GradeUpdateView(View):
                 request, self.template_name, {
                     "form": form,
                     "grades": self.grade,
-                    "fields": self.fields,
-                    "levels": self.levels,
+                    "fields": fields,
+                    "levels": levels,
                 })
 
     def get(self, request, *args, **kwargs):
-
+        fields = Field.objects.all()
+        levels = Level.objects.all()
         grade = Grade.objects.get(id=kwargs["pk"])
         form = self.form_class(request.POST, instance=grade)
         return render(
             request, self.template_name, {
                 "form": form,
                 "grades": self.grade,
-                "fields": self.fields,
-                "levels": self.levels,
+                "fields": fields,
+                "levels": levels,
             })
 
 
@@ -336,7 +334,9 @@ class AccountView(View):
         # if request.FILES['logo']:
         #     current_account.logo = request.FILES['logo']
         current_account.name = name
-        current_account.user.last_name = last_name
+        request.user.last_name = last_name
+        request.user.save()
+        current_account.user = request.user
         current_account.save()
         messages.success(request, 'mise a jour avec succès')
         return redirect('core:account')
