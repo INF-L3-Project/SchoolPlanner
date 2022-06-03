@@ -47,6 +47,11 @@
         grid-template-columns: repeat(2,1fr);
     }
  }
+ @media screen and (min-width: 216px) and (max-width: 354px) { 
+    .d_field { 
+        display: block;
+    }
+ }
  @media screen and (min-width: 355px) and (max-width: 574px) { 
     .d_field { 
         display: grid;
