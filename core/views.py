@@ -11,6 +11,7 @@ from authentication.models import Institution
 from authentication.models import Institution
 from .models import Classroom, Field, Grade, Group, Level, Planning, Teacher, Unit
 from .forms import (
+    AccountForm,
     ClassroomForm,
     FieldForm,
     GradeForm,
@@ -331,8 +332,16 @@ class GroupView(View):
         })
 
 
-class AccountView(TemplateView):
+@method_decorator(decorators, name="get")
+class AccountView(View):
     template_name = "core/account.html"
+    form_class = AccountForm
+
+    def post(self, request, *args, **kwargs):
+        return render(request, self.template_name, {})
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {})
 
 
 @method_decorator(decorators, name="get")
@@ -464,9 +473,13 @@ class UnitView(View):
     form_class = UnitForm
 
     def post(self, request, *args, **kwargs):
+        current_user = get_object_or_404(User, id=request.user.id)
+        institution = get_object_or_404(Institution, user=current_user)
         form = self.form_class(data=request.POST)
         if form.is_valid():
-            form.save()
+            unit = form.save(commit=False)
+            unit.institution = institution
+            unit.save()
             return render(request, self.template_name,
                           {"units": Unit.objects.all()})
         else:
@@ -476,7 +489,6 @@ class UnitView(View):
     def get(self, request, *args, **kwargs):
         grades = Grade.objects.all()
         units = Unit.objects.all()
-        serializer_data = []
         return render(
             request,
             self.template_name,
