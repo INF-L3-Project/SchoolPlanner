@@ -1,3 +1,4 @@
+import re
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -5,23 +6,12 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.db.models import Q
-from django.views.generic import TemplateView, UpdateView
+from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from authentication.models import Institution
-from authentication.models import Institution
 from .models import Classroom, Field, Grade, Group, Level, Planning, Teacher, Unit
-from .forms import (
-    AccountForm,
-    ClassroomForm,
-    FieldForm,
-    GradeForm,
-    GroupForm,
-    LevelForm,
-    PlanningForm,
-    TeacherForm,
-    UnitForm,
-)
-import json
+from .forms import (AccountForm, ClassroomForm, FieldForm, GradeForm,
+                    GroupForm, LevelForm, PlanningForm, TeacherForm, UnitForm)
 
 decorators = [
     login_required(login_url="authentication:login",
@@ -221,6 +211,8 @@ class GradeView(View):
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
+        grade = Grade.objects.all()
+
         searched = request.GET.get("searched")
         trier = request.GET.get("trier")
         filtrer_par_capacite = request.GET.get("filtrer_par_capacite")
@@ -338,10 +330,21 @@ class AccountView(View):
     form_class = AccountForm
 
     def post(self, request, *args, **kwargs):
-        return render(request, self.template_name, {})
-    
+        current_account = get_object_or_404(Institution, user=request.user.id)
+        last_name = request.POST['last_name']
+        name = request.POST['name']
+        # if request.FILES['logo']:
+        #     current_account.logo = request.FILES['logo']
+        current_account.name = name
+        current_account.user.last_name = last_name
+        current_account.save()
+        messages.success(request, 'mise a jour avec succès')
+        return redirect('core:account')
+
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {})
+        current_account = get_object_or_404(Institution, user=request.user.id)
+        return render(request, self.template_name,
+                      {'current_account': current_account})
 
 
 @method_decorator(decorators, name="get")

@@ -135,11 +135,11 @@ class PlanningForm(forms.ModelForm):
         fields = ("name", "school_year", "semester", "grade")
 
 
-class AccountForm(forms.Form):
+class AccountForm(forms.ModelForm):
     last_name = forms.CharField(max_length=200)
     name = forms.CharField(max_length=255)
     logo = forms.ImageField()
 
     class Meta:
+        model = Institution
         fields = ("last_name", "name", "logo")
-
