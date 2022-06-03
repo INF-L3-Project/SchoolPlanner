@@ -31,12 +31,17 @@ class GradeForm(forms.ModelForm):
     class Meta:
         model = Grade
         fields = ("field", "level", "capacity")
-
-    def clean_name(self):
+    
+    def save(self, commit=True):
         field = self.cleaned_data["field"]
         level = self.cleaned_data["level"]
         name = str(field.abr).upper() + "-" + str(level.abr).upper()
-        return name
+        return Grade.objects.create(
+            name=name,
+            field=self.cleaned_data['field'],
+            level=self.cleaned_data['level'],
+            capacity=self.cleaned_data['capacity']
+            )
 
 
 class GroupForm(forms.ModelForm):
