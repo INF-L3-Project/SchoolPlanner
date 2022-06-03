@@ -19,3 +19,29 @@
 .form_popup{
     display: none;
 }
+@media screen and (min-width: 1000px) and (max-width: 1199px) { 
+    .p_field{
+        font-size: 1rem !important;
+    }
+    .fa_field{
+        font-size: 1rem !important;
+    }
+ }
+
+ @media screen and (min-width: 1210px) and (max-width: 1399px) { 
+    .p_field{
+        font-size: 1.4rem !important;
+    }
+ }
+ 
+ @media screen and (min-width: 216px) and (max-width: 354px) { 
+    .d_unit { 
+        display: block;
+    }
+ }
+ @media screen and (min-width: 355px) and (max-width: 574px) { 
+    .d_unit { 
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+    }
+ }

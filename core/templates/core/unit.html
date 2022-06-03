@@ -19,12 +19,12 @@
 			<p class="fw-bold">Filieres</p>
 		</span> -->
 		<h3 class="fw-bold">Unités d'Enseignement</h3>
-		<div class="row row-cols-md-3 row-cols-sm-2  row-cols-lg-5 space g-2 g-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		<div class="row row-cols-md-3 row-cols-sm-2 row-cols-lg-4 d_unit space g-2 g-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
 			<!-- Boucle pour afficher l'ensemble des cours -->
 			
 			{% for unit  in units %}
-				<div class="col">
-					<div id='{{unit.id}}'class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal{{unit.id}}">
+				<div class="col cards">
+					<div id='{{unit.id}}'class="py-4 px-4 shadow forme mod"  data-bs-toggle="modal" href="#modifModal{{unit.id}}">
 						<h4 class="fw-bold text-white">{{unit.code}}</h4>
 						<p class="text-white">{{unit.name}}</p>
 						<p class="text-white">{{unit.grade.level.abr}},  {{unit.grade.field.abr}}</p>
