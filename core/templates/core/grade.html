@@ -1,129 +1,190 @@
 {% extends 'core/base.html' %}
+
 {% load static %}
-{% block title %} SchoolPlanner - Grades {% endblock %}
-{% block extra_style %}
-<link rel="stylesheet" type="text/css" href="{% static 'core/css/style_1.css' %}">
-{% endblock %}
+{% block title %} SchoolPlanner - Classes{% endblock %}
+
+    {% block extra_style %}
+    	<link rel="stylesheet" type="text/css" href="{% static 'core/css/style2.css' %}">
+    {% endblock %}
+	
 
 {% block content %}
 
-<div class="container-fluid my-4 pt-4 ps-lg-2 ms-lg-2">
-	<div class="container">
-		<!-- <span class="d-flex">
-			<i class="fa fa-home mx-2 mt-1" aria-hidden="true"></i>
-			<i class="fa fa-chevron-right mt-1" aria-hidden="true"></i>
-			<p class="mx-2">Dashboard</p>
-			<i class="fa fa-chevron-right mt-1" aria-hidden="true"></i>
-			<p class="fw-bold">Classes</p>
-		</span> -->
-		<h3 class="fw-bold">Classes</h3>
-		<div class="row row-cols-md-3 row-cols-sm-2 row-cols-lg-5 space g-2 g-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
-		<!-- Boucle pour afficher l'ensemble des classes -->
-			<div class="col">
-				<!-- <div id='{{unit.id}}'class="py-4 px-2 shadow forme mod"  data-bs-toggle="modal" href="#modifModal{{unit.id}}"></div> -->
-				<div class="p-4 shadow forme mod"  data-bs-toggle="modal" href="#modifModal">
-					<p class="text-white text-center fs-4">A I</p>
+
+
+	<section class="container-fluid my-4 pt-4 ps-lg-5">
+		<div class="ps-lg-5">
+		<h3 class="fw-bold text-dark mt-5">Classes</h3>
+
+		<!-- **********************Search bar******************** -->
+
+		<div class="container table-responsive py-5 border-0">
+		<div class="d-flex container bg-dark text-white border border-secondary border-1 border-end rounded-1 mt-2 shadow mx-auto">
+			<form class="d-flex row p-2 w-100 mx-auto" action="{%url 'core:grade' %}" method='get'>
+				
+				<div class="ps-3 ps-lg-4 col-lg-3 col-md-12">
+					<div class="mt-2 bg-light border-1 p-1 border-danger rounded-1">
+						<button type="submit"  class=" border-0 bg-light ps-3 me-3">
+							<i class="fa fa-search text-dark" aria-hidden="true"></i>
+						</button>
+						<input type="search" placeholder='Rechercher' name="searched" class="border-0 p-1 w-75 bg-light" value='{{searched}}'>
+					</div>
+					
 				</div>
-			</div>
-		<!-- Modal de modification -->
-			<!-- <div class="modal fade" id="modifModal{{unit.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-			<div class="modal fade" id="modifModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header bg-dark">
-							<h5 class="modal-title text-center text-white" id="exampleModalLabel">MODIFICATION DE CLASSE</h5>
-							<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+				<div class=" col-lg-2 col-md-6">
+						<div class="mt-2 bg-light border-1 p-1 border-danger rounded-1">
+							<select name="trier" id="" placeholder="Trier par capacité" class="bg-light text-dark border-0 text-white w-100 rounded p-2">
+								<option value="" selected disabled hidden>Trier </option>
+								<option value="niveau">trier par niveau</option>
+								<option value="filiere">trier par filière</option>
+							</select>
 						</div>
-						<div class="modal-body">
-							<div>
-								<p class="mt-3">Nom: <span class="fw-bold"> A 250</span></p>
-							</div>
-							<div>
-								<div class="d-flex justify-content-end">
-									<!-- <button onclick="show_hide('{{unit.id}}')" class="bg-transparent border-0"></button> -->
-									<button onclick="show_hide()" class="bg-transparent border-0">
-										<i class="fa fa-pencil text-pink2 fs-5"></i>
-										<span class="ms-2">Modifier</span>
-									</button>
-								</div>
-								<div id="form">
-									<!-- <div id="form-{{unit.id}}" class="form_popup" > -->
-									<form action="" class="form_popup">
-										<div class="d-grid px-lg-5">
-											<input type="text" placeholder="Nom de la classe" class="my-3 bg-dark p-2 border-0 text-white rounded" name="mod_level">
-										</div>
-										<div class="modal-footer d-flex justify-content-center px-5">
-											<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
-										</div>
-									</form>
-								</div>
-							</div>
+				</div>
+				<div class=" col-lg-2 col-md-6">
+						<div class="mt-2 bg-light border-1 p-1 border-danger rounded-1">
+							<select name="filtrer_par_capacite" id="" placeholder="Filtrer selon les  capacités" class="bg-light text-dark border-0 text-white w-100 rounded p-2">
+								<option value="" selected disabled hidden>Filtrer par capacité</option>
+								<option value="gt_500">capacité > 500</option>
+								<option value="lt_500">capacité < 500</option>
+								<option value="lt_100">capacité < 100</option>
+								
+							</select>
 						</div>
+				</div>
+				<div class="col-lg-5 d-flex">
+					<div class="col px-3 pt-2 pe-lg-3 mx-auto">
+						<button type="submit" class="mt-4 btn bg-pink text-white px-5">Rechecher</button>
+					</div>
+					<div class="col ms-4 ps-5 pt-2 add" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						<button type="button" class="mt-4 btn bg-pink text-white px-4">
+							<i class="fa fa-plus ps-1" aria-hidden="true"></i>
+						    Ajouter </button>
 					</div>
 				</div>
+			</form>
+		</div> 
+			<table class="table table-bordered table-hover">
+			  <thead class="text-white bg-black m-5">
+			    <tr class="pt-2">
+			      <th scope="col">#</th>
+			      <th scope="col">Nom de la classe</th>
+				  <th scope="col">Filière</th>
+			      <th scope="col">Niveau </th>
+				  <th scope="col">Capacité </th>
+			      <th scope="col">Actions</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    
+				{% for grade in grades %}
+					<tr>
+						<th scope="row">{{ forloop.counter }}</th>
+						<td>{{grade.name}}</td>
+						<td>{{grade.field.abr}}</td>
+						<td>{{grade.level.abr}}</td>
+						<td>{{grade.capacity}}</td>
+						<td class="text-pink">
+							<i data-bs-toggle="modal" href="#editModalToggle{{grade.id}}" class="fa fa-pencil" aria-hidden="true"></i>
+							<!--**********************************Edit confirmation modal************************* -->
+							<div class="modal fade" id="editModalToggle{{grade.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header bg-dark">
+											<h5 class="modal-title text-center text-white" id="exampleModalLabel">ÉDITION DE SALLE</h5>
+											<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<div id="form-{{grade.id}}">
+												<form  action="{% url 'core:update_grade' grade.id %}" method='post'>
+													{% csrf_token %}
+													<div class="d-grid px-lg-5">
+														<select name="field" id="" class="my-3 bg-dark p-2 border-0 text-white rounded" value="{{grade.field|default_if_none:''}}">
+															{% for field in  fields %}<option value="{{field.id}}">{{field.name}}</option>{% endfor %}
+														</select>
+														<select name="level" id="" class="my-3 bg-dark p-2 border-0 text-white rounded" value="{{grade.level|default_if_none:''}}">
+															{% for level in  levels %}<option value="{{level.id}}">{{level.name}}</option>{% endfor %}
+														</select>
+														<input type="number" placeholder="Capacité de la salle" class="my-3 bg-dark p-2 border-0 text-white rounded" name='capacity' value="{{grade.capacity|default_if_none:''}}"required>
+													</div>
+													<div class="modal-footer d-flex justify-content-center px-5">
+														<button type="submit" class="btn bg-pink text-white px-lg-5">Sauvegarder</button>
+													</div>
+												</form>
+											</div>
+										</div>
+								</div>
+							</div>
+							</div>
+							<i data-bs-toggle="modal" href="#exampleModalToggle{{grade.id}}" role="button" class="fa fa-trash" aria-hidden="true"></i>
+							<!-- 	**********************************Delete confirmation modal************************* -->
+
+							<div class="modal fade" id="exampleModalToggle{{grade.id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+								<div class="modal-dialog modal-dialog-centered">
+									<div class="modal-content">
+										<div class="modal-header bg-dark">
+											<h5 class="modal-title text-center text-white" id="exampleModalLabel">CONFIRMATION DE SUPPRESION</h5>
+											<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											Êtes-vous sûr de vouloir supprimer la salle "{{grade.name}}"?
+										</div>
+										<div class="modal-footer">
+											<button class="bg-pink text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Oui</button>
+											<button class="bg-black text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Non</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+					
+			  </tbody>
+			</table>
 			</div>
-		<!-- FIN Boucle pour afficher l'ensemble des filières -->
-			<div class="col">
-				<div class="p-4 shadow forme ajout" data-bs-toggle="modal" href="#ajoutModal">
-					<p class="text-center">
-						<i class="fa fa-plus text-white fs-2" aria-hidden="true"></i>
-					</p>
+	</section>
+
+<!-- ********************** Add modal******************************* -->
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  	<div class="modal-content">
+				<div class="modal-header bg-dark">
+					<h5 class="modal-title text-center text-white" id="exampleModalLabel">NOUVELLE SALLE</h5>
+					<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-			</div>
-		  <!-- Modal d'ajout -->
-		  <div class="modal fade" id="ajoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header bg-dark">
-						<h5 class="modal-title text-center text-white" id="exampleModalLabel">NOUVELLE CLASSE</h5>
-						<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<form action="">
+				<div class="modal-body">
+					<div>
+						<form  action="{% url 'core:grade'  %}" method='post'>
+							{% csrf_token %}
 							<div class="d-grid px-lg-5">
-								<input type="text" placeholder="Nom de la classe" class="my-3 bg-dark p-2 border-0 text-white rounded" name="mod_level">
+								<select name="field" id="" class="my-3 bg-dark p-2 border-0 text-white rounded" value="{{grade.field|default_if_none:''}}">
+									{% for field in  fields %}<option value="{{field.id}}">{{field.name}}</option>{% endfor %}
+								</select>
+								<select name="level" id="" class="my-3 bg-dark p-2 border-0 text-white rounded" value="{{grade.level|default_if_none:''}}">
+									{% for level in  levels %}<option value="{{level.id}}">{{level.name}}</option>{% endfor %}
+								</select>
+								<input type="number" placeholder="Capacité de la salle" class="my-3 bg-dark p-2 border-0 text-white rounded" name='capacity' required>
 							</div>
 							<div class="modal-footer d-flex justify-content-center px-5">
-								<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+								<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
 							</div>
 						</form>
 					</div>
-				</div>
-			</div>
-		</div>
-		</div>
+	      		</div>
+	    </div>
+	  </div>
 	</div>
+
 </div>
 
-
 {% endblock %}
-
 
 
 {% block extra_script %}
 
 	<script type="text/javascript">
-		let forme = document.querySelectorAll(".forme");
-		//Attribution des couleurs aux div de facon aleatoire
-		window.onload = function() {
-			for(i=0; i<forme.length; i++){
-				let randomColor = "#" + (Math.floor(Math.random()*16777215)).toString(16);
-				while(randomColor.length<7){
-					randomColor = "#" + (Math.floor(Math.random()*16777215)).toString(16);
-				}
-				forme[i].style.backgroundColor = randomColor;
-			}
-		}
-
-		function show_hide(id_form) {
-			var x = document.getElementById("form-"+id_form);
-			if (x.style.display === "none") {
-				x.style.display = "block";
-			} else {
-				x.style.display = "none";
-			}
-		}
 	</script>
-	
 
 {% endblock %}
+

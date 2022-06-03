@@ -200,24 +200,98 @@ class GradeView(View):
 
     template_name = "core/grade.html"
     form_class = GradeForm
+    fields = Field.objects.all()
+    levels = Level.objects.all()
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(data=request.POST)
+        user = get_object_or_404(User, id=request.user.id)
+        institution = get_object_or_404(Institution, user=user)
+        form = self.form_class(request.POST)
         if form.is_valid():
-            form.save()
-            return render(request, self.template_name,
-                          {"grades": Grade.objects.all()})
+            form.save(commit=False)
+            form.instution = institution
+            return render(
+                request, self.template_name, {
+                    "fields": self.fields,
+                    "levels": self.levels,
+                    "grades": Grade.objects.all()
+                })
         else:
-            messages(request, form.errors)
+            print(form.errors)
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
+        searched = request.GET.get("searched")
+        trier = request.GET.get("trier")
+        filtrer_par_capacite = request.GET.get("filtrer_par_capacite")
+        print(request.GET)
+
+        if searched:
+            print(searched)
+            grade = Grade.objects.filter(
+                Q(name__icontains=searched)
+                | Q(field__name__icontains=searched)
+                | Q(level__name__icontains=searched))
+
+        if filtrer_par_capacite == "gt_500":
+            grade = Grade.objects.filter(capacity__gt=500)
+        elif filtrer_par_capacite == "lt_500":
+            grade = Grade.objects.filter(capacity__lt=500)
+        elif filtrer_par_capacite == "lt_100":
+            grade = Grade.objects.filter(capacity__lt=100)
+
+        if trier == "niveau":
+            grade = Grade.objects.order_by("level__abr")
+        elif trier == "filiere":
+            grade = Grade.objects.order_by("field__abr")
         form = self.form_class()
-        grades = Grade.objects.all()
-        return render(request, self.template_name, {
-            "grades": grades,
-            "form": form
-        })
+        return render(
+            request, self.template_name, {
+                "grades": grade,
+                "form": form,
+                "fields": self.fields,
+                "levels": self.levels,
+            })
+
+
+@method_decorator(decorators, name="get")
+class GradeUpdateView(View):
+
+    template_name = "core/grade.html"
+    form_class = GradeForm
+    grade = Grade.objects.all()
+    fields = Field.objects.all()
+    levels = Level.objects.all()
+
+    def post(self, request, *args, **kwargs):
+
+        grade = Grade.objects.get(id=kwargs["pk"])
+        form = self.form_class(request.POST, instance=grade)
+        if form.is_valid():
+            form = form.save()
+            print(form)
+            return redirect("core:grade")
+        else:
+            print(form.errors)
+            return render(
+                request, self.template_name, {
+                    "form": form,
+                    "grades": self.grade,
+                    "fields": self.fields,
+                    "levels": self.levels,
+                })
+
+    def get(self, request, *args, **kwargs):
+
+        grade = Grade.objects.get(id=kwargs["pk"])
+        form = self.form_class(request.POST, instance=grade)
+        return render(
+            request, self.template_name, {
+                "form": form,
+                "grades": self.grade,
+                "fields": self.fields,
+                "levels": self.levels,
+            })
 
 
 @method_decorator(decorators, name="get")
