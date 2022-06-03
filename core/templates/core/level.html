@@ -11,7 +11,7 @@
 	<div class="container-fluid my-4 pt-4 ps-lg-2 ms-lg-2">
 		<div class="container">
 			<h3 class="fw-bold ">Niveaux</h3>
-			<div class="row  row-cols-md-3 row-cols-sm-2 row-cols-lg-5 space g-2 g-lg-5 color">
+			<div class="row  row-cols-md-3 row-cols-sm-2 row-cols-lg-4 space g-2 g-lg-5 color">
 			<!-- Boucle pour afficher l'ensemble des niveaux -->
 			
 			{% for level in levels %}
@@ -64,7 +64,7 @@
 				{% endfor %}
 			<!-- FIN Boucle pour afficher l'ensemble des filières -->
 				<div class="col ">
-					<div class="p-4 shadow forme ajout d-flex justify-content-center" data-bs-toggle="modal" href="#ajoutModal">
+					<div class="pt-5 px-4 shadow forme forme_field ajout d-flex justify-content-center" data-bs-toggle="modal" href="#ajoutModal">
 						<p class="text-center">
 							<i class="fa fa-plus affiche fs-2 text-white" aria-hidden="true"></i>
 						</p>
@@ -83,7 +83,7 @@
 									{% csrf_token %}
 									<div class="d-grid px-lg-5">
 										<input type="text" placeholder="Nom du niveau *" class="my-3 bg-dark p-2 border-0 text-white rounded" name="name" required>
-										<input type="text" placeholder="Abréviation" class="my-3 bg-dark p-2 border-0 text-white rounded" name="abr" >
+										<input type="text" placeholder="Abréviation *" class="my-3 bg-dark p-2 border-0 text-white rounded" name="abr" required>
 									</div>
 									<div class="modal-footer d-flex justify-content-center px-5">
 										<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
