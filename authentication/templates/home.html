@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} SchoolPlanner - Sign-in {% endblock %}
+
+{% block nav %}{% endblock %}
+
+{% block dashboard_nav %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid my-5 ps-lg-5 pe-4">
+
+    <div class="row ps-lg-5">
+
+        <div class="col-lg-8">
+            <img src="/static/core/images/home.jpg" alt="logo" class="img-fluid">
+        </div>
+        <div class="col-lg-4 pt-5 px-0 text-center">
+            <h1 class="fw-bold text-dark mt-5">School Planner</h1>
+            <h4 class="text-dark mt-3">Générateur d'emplois de temps académique</h4>
+            <p class="text-pink mt-5">Créez, Générez et imprimez vos emplois de temps en toute sécurité</p>
+            <div class="d-flex justify-content-center">
+                <button class="border-0 bg-pink p-2 fw-bold text-light px-5 rounded" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                    Commencer 
+                </button>
+                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-dark">
+                                <h5 class="modal-title text-white" id="exampleModalLabel">BIENVENUE SUR <span class="fw-bold text-pink2">SCHOOL PLANNER</span></h5>
+                                <button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="">
+                                    <div class="d-grid px-lg-5 my-5 mt-3">
+                                        <label for="" class="text-start mt-3">Que souhaitez vous faire ?</label>
+                                        <select id="selectAction" name="class" class="mt-4 bg-dark p-2 border-0 text-white rounded">
+                                            <option value="new">Créer un nouvel emplois de temps</option>
+                                            <option value="all">Consulter Mes emplois de temps</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-center px-5">
+                                        <button type="button" id="submit" class="btn bg-pink text-white px-lg-5">Continuer</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
