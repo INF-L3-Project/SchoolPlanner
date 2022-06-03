@@ -10,11 +10,17 @@
 {% block content %}
 
 	<div class="ps-lg-5">
-		<div class="container-fluid my-4 pt-4 ps-lg-5 w-100">
-			<h3 class="mb-5 fw-bold">Emplois de temps</h3>
+		<div class="container-fluid my-4 ps-lg-5 w-100">
 
 			<div class="container">
-				
+				<div class="text-center">
+					<h6 class="mb-4 fw-bold">
+						<p>EMPLOIS DU TEMPS : TIMETABLE</p>
+						<p>SEMESTRE__2__ANNEE ACADEMIQUE 2021 - 2022 ACADEMIC YEAR__2__SEMESTER</p>
+						<p>FILIÈRE INFORMATIQUE (INFO)</p>
+						<p>INFO - L3</p>
+					</h6>
+				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<table class="table table-bordered" id="editableTable">
@@ -164,7 +170,7 @@
 									</td>
 								</tr>
 								<tr data-id="3">
-									<td data-field="name" class="fw-bold text-center">13h15-15h55</td>
+									<td data-field="name" class="fw-bold text-center">13h05-15h55</td>
 									<td class="text-decoration-none" data-field="monday">
 										<a title="Détails">
 											<div class="p-2 text-center">
@@ -295,6 +301,72 @@
 										</a>
 									</td>
 								</tr>
+								<tr data-id="5">
+									<td data-field="name" class="fw-bold text-center">19h05-21h55</td>
+									<td class="text-decoration-none" data-field="monday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="tuesday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="wednesday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="thursday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="friday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="saturday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="sunday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -311,7 +383,8 @@
 											<p class="mt-3">Salle: <span id="classroom" class="fw-bold"></span></p>
 										</div>
 										<div>
-											<div class="d-flex justify-content-end">
+											<div class="d-flex justify-content-between mt-4">
+												<button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button>
 												<button onclick="show_hide()" class="bg-transparent border-0">
 													<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
 												</button>
