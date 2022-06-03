@@ -1,4 +1,5 @@
 from enum import Flag
+from pprint import pprint
 from authentication.models import Institution
 from django.contrib.auth.models import User
 from django import forms
@@ -13,7 +14,6 @@ class RegisterForm(forms.Form):
     description = forms.CharField(widget=forms.Textarea(), required=False)
 
     class Meta:
-        model = Institution
         fields = ('last_name', 'email', 'password', 'name', 'logo',
                   'description')
 
@@ -25,7 +25,6 @@ class RegisterForm(forms.Form):
         return email
 
     def save(self, commit=True):
-
         last_name = self.cleaned_data['last_name']
         username = self.cleaned_data['email']
         email = self.cleaned_data['email']

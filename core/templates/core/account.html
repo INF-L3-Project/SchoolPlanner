@@ -8,26 +8,31 @@
 	<div class="container-fluid mt-4 ps-lg-5">
 		<div class="ps-lg-5 pt-3">
 
-			<form action="">
+			<form action="{% url 'core:account' %}" method="POST">
+				{% csrf_token %}
 				<div class="row ps-2">
 					<div class="col-lg-5 rounded shadow mt-lg-0 pt-3 pt-lg-5 bg-pink2">
 						<div class="d-flex justify-content-start ps-lg-4">
 							<div class="avatar-upload">
 								<div class="avatar-edit">
-									<input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+									<input name="logo" type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
 									<label for="imageUpload"></label>
 								</div>
 								<div class="avatar-preview">
-									<div id="imagePreview" style="background-image: url('/static/core/images/jugalux.png'); width: 110px; height: 110px;">
+									<div id="imagePreview" style="background-image: url({{user.institution.logo.url}}); width: 110px; height: 110px;">
 									</div>
 								</div>
 							</div>
 						</div>
 
 						<div class="p-lg-4 mt-lg-3">
-							<p class="mt-2">Nom complet: <span class="text-uppercase fw-bold text-dark">Gaëlle Tamho</span> </p>
-							<p class="mt-4">Email: <span class="fw-bold text-dark">jugalux111@gmail.com</span> </p>
-							<p class="mt-4">Institution: <span class="text-uppercase fw-bold text-dark">Université de Yaounde 1</span> </p>
+						{% if user.is_authenticated %}
+							<p class="mt-2">Nom complet: <span class="text-uppercase fw-bold text-dark">{{user.last_name}}</span> </p>
+							<p class="mt-4">Email: <span class="fw-bold text-dark">{{user.email}}</span> </p>
+							<p class="mt-4">Institution: <span class="text-uppercase fw-bold text-dark">{{user.institution.name}}</span> </p>
+						{% else %}
+							
+						{% endif %}
 						</div>
 					</div>
 					<div class="col-lg-1"></div>
@@ -36,18 +41,14 @@
 						<div class="">
 							<div class="d-grid px-lg-5 mt-4">
 								<label for="">Nom complet :</label>
-								<input type="text" placeholder="Entrez votre nom complet" class="mt-2 bg-dark p-2 border-0 text-white rounded">
-							</div>
-							<div class="d-grid px-lg-5 mt-3">
-								<label for="">Adresse Email :</label>
-								<input type="text" placeholder="Entrez votre adresse email" class="mt-2 bg-dark p-2 border-0 text-white rounded">
+								<input name="last_name" type="text" placeholder="Entrez votre nom complet" class="mt-2 bg-dark p-2 border-0 text-white rounded">
 							</div>
 							<div class="d-grid px-lg-5 mt-3">
 								<label for="">Institution :</label>
-								<input type="text" placeholder="Entrez lz nom de votre établissement" class="mt-2 bg-dark p-2 border-0 text-white rounded">
+								<input name="name" type="text" placeholder="Entrez le nom de votre établissement" class="mt-2 bg-dark p-2 border-0 text-white rounded">
 							</div>
 							<div class="d-flex justify-content-center px-5 mt-5">
-								<button type="button" class="btn bg-pink text-white px-lg-5 w-100">Enregistrer</button>
+								<button type="submit" class="btn bg-pink text-white px-lg-5 w-100">Modifier</button>
 							</div>
 						</div>
 					</div>

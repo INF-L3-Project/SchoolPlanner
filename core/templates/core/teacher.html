@@ -55,69 +55,31 @@
 		</div>
 		<div class="container table-responsive py-5 border-0"> 
 			<table class="table table-bordered table-hover">
-			  <thead class="text-white bg-black m-5">
-			    <tr class="pt-2">
-			      <th scope="col">#</th>
-			      <th scope="col">Nom</th>
-			      <th scope="col">Email </th>
-			      <th scope="col">Numéro</th>
-			      <th scope="col">Actions</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr>
-			      <th scope="row">1</th>
-			      <td>Mark</td>
-			      <td>mark@gmail.com</td>
-			      <td>6 76 64 45 00</td>
-			      <td class="text-pink">
-			      	<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
-			      	<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
-			      </td>
-			    </tr>
-			    <tr>
-			      <th scope="row">2</th>
-			      <td>Jacob</td>
-			      <td>jacob@gmail.com</td>
-			      <td>6 76 64 45 00</td>
-			      <td class="text-pink">
-			      	<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
-			      	<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
-			      </td>
-			    </tr>
-			    <tr>
-			      <th scope="row">3</th>
-			      <td>Larry</td>
-			      <td>larry@gmail.com</td>
-			      <td>6 76 64 45 00</td>
-			      <td class="text-pink">
-			      	<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
-			      	<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
-			      </td>
-			    </tr>
-			     <tr>
-			      <th scope="row">4</th>
-			      <td>Larry</td>
-			      <td>larruer@gmail.com</td>
-			      <td>6 76 64 45 00</td>
-			      <td class="text-pink">
-			      	<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
-			      	<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
-			      </td>
-			    </tr>
-			    <tr>
-			      <th scope="row">5</th>
-			      <td>Larry</td>
-			      <td>mark@gmail.com</td>
-			      <td>6 76 64 45 00</td>
-			      <td class="text-pink">
-			      	<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
-			      	<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
-			      </td>
-			    </tr>
-			  </tbody>
+				<thead class="text-white bg-black m-5">
+			    	<tr class="pt-2">
+						{% comment %} <th scope="col">#</th> {% endcomment %}
+						<th scope="col">Nom</th>
+						<th scope="col">Email </th>
+						<th scope="col">Numéro</th>
+						<th scope="col">Actions</th>
+			    	</tr>
+			  	</thead>
+			  	<tbody>
+				{% for teacher in teachers %}
+					<tr>
+						{% comment %} <th scope="row">1</th> {% endcomment %}
+						<td>{{teacher.name}}</td>
+						<td>{{teacher.email}}</td>
+						<td>{{teacher.number}}</td>
+						<td class="text-pink">
+							<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
+							<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
+						</td>
+			    	</tr>
+				{% endfor %}
+			  	</tbody>
 			</table>
-			</div>
+		</div>
 	</section>
 
 <!-- ********************** Add modal******************************* -->
@@ -131,14 +93,19 @@
 				</div>
 				<div class="modal-body">
 					<div>
-						<form action="">
+						<form action="{% url 'core:teacher' %}" method="POST">
+							{% csrf_token %}
 							<div class="d-grid px-lg-5">
-					            <input type="text" placeholder="Nom" class="my-3 bg-dark p-2 border-0 text-white rounded">
-					            <input type="email" placeholder="email" class="my-3 bg-dark p-2 border-0 text-white rounded">
-					            <input type="number" placeholder="Numéro" class="my-3 bg-dark p-2 border-0 text-white rounded">							
+					            <input name="name" type="text" placeholder="Nom complet" class="my-3 bg-dark p-2 border-0 text-white rounded">
+					        </div> 
+							<div class="d-grid px-lg-5">   
+								<input name="email" type="email" placeholder="email" class="my-3 bg-dark p-2 border-0 text-white rounded">
+					        </div>  
+							<div class="d-grid px-lg-5">  
+								<input name ="number" type="number" placeholder="Numéro" class="my-3 bg-dark p-2 border-0 text-white rounded">							
 					        </div>
 							<div class="modal-footer d-flex justify-content-center px-5">
-								<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+								<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
 							</div>
 						</form>
 					</div>

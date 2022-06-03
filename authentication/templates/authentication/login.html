@@ -27,11 +27,10 @@
 						<h7 class="text-pink">Gérer les plannings de votre établissement n'a jamais été aussi facile et rapide<br /> </h7>
 					</div>
 					<div class="mt-5">
-
-						<center><span class='text-danger'> {{error}}</span></center>
 						<form class="container px-lg-5 mx-lg-5" id="needs-validation"  method='post' novalidate >
 							{% csrf_token %}
 							<div class="form-group">
+								{% include 'core/message.html' %}
 								<label class="text-inverse mb-2" for="inputEmail4">Adresse email</label>
 								<input type="email" class="form-control" id="inputEmail4" placeholder="email" name='username' value="{{form.username.value|default_if_none:''}}"  required>
 								<div class="invalid-feedback">

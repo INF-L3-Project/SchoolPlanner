@@ -46,21 +46,15 @@
 							</a>
 						</li>
 						<li>
-							<a href="{% url 'core:contact' %}" title="UEs">
-								<span class="icon"><i class="fa fa-edit"></i></span>
-								<span class="title">UEs</span>
-							</a>
-						</li>
-						<li>
 							<a href="{% url 'core:field' %}" title="Filières">
 								<span class="icon"><i class="fa fa-book"></i></span>
 								<span class="title">Filières</span>
 							</a>
 						</li>
 						<li>
-							<a href="{% url 'core:teacher' %}" title="Enseignants">
-								<span class="icon"><i class="fa fa-male"></i></span>
-								<span class="title">Enseignants</span>
+							<a href="{% url 'core:level' %}" title="Niveaux">
+								<span class="icon"><i class="fa fa-line-chart"></i></span>
+								<span class="title">Niveaux</span>
 							</a>
 						</li>
 						<li>
@@ -70,9 +64,9 @@
 							</a>
 						</li>
 						<li>
-							<a href="{% url 'core:level' %}" title="Niveaux">
-								<span class="icon"><i class="fa fa-line-chart"></i></span>
-								<span class="title">Niveaux</span>
+							<a href="{% url 'core:teacher' %}" title="Enseignants">
+								<span class="icon"><i class="fa fa-male"></i></span>
+								<span class="title">Enseignants</span>
 							</a>
 						</li>
 						<li>
@@ -87,6 +81,14 @@
 								<span class="title">Groupe</span>
 							</a>
 						</li>
+						<li>
+							<a href="{% url 'core:create_unit' %}" title="UEs">
+								<span class="icon"><i class="fa fa-edit"></i></span>
+								<span class="title">UEs</span>
+							</a>
+						</li>
+						
+						
 						<li>
 							<a href="{% url 'core:timetable' %}" title="Emplois de temps">
 								<span class="icon"><i class="fa fa-calendar"></i></span>
@@ -107,10 +109,17 @@
 			{% block dashboard_nav %}
 				<div class="container d-flex justify-content-between" id="dashboard_nav">
 					<img src="/static/core/images/logo.png" alt="logo" width="100px" height="100px">
-					<div class="d-flex pt-4">
-						<img src="/static/core/images/jugalux.png" alt="user" width="35px" height="35px" class="mt-2 rounded-circle">
-						<p class="fw-bold mt-3 ms-2">Gaëlle Tamho</p>
-					</div>
+					
+					{% if user.is_authenticated %}
+						<div class="d-flex pt-4">
+							<img src="{{user.institution.logo.url|default_if_none:'/static/core/images/logo.png'}}" alt="user" width="35px" height="35px" class="mt-2 rounded-circle">
+							<p class="fw-bold mt-3 ms-2">{{user.last_name}}</p>
+						</div>
+					{% else %}
+						
+					{% endif %}
+
+						
 				</div>
 			{% endblock %}
 			{% block content %}
