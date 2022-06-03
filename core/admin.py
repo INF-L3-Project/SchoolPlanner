@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import Classroom, Field, Grade, Group, Level, PlanningGrade, Provide, Teacher, Planning, Unit
+from .models import Classroom, Field, Grade, Group, Level, Provide, Teacher, Planning, Unit
 
 
 class GradeAdmin(admin.ModelAdmin):

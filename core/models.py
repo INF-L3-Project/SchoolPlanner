@@ -4,7 +4,7 @@ from authentication.models import Institution
 
 class Field(models.Model):
     name = models.CharField(max_length=100, null=False)
-    abr = models.CharField(max_length=50, null=False)
+    abr = models.CharField(max_length=50, null=True, blank=True)
     institution = models.ForeignKey(Institution, models.CASCADE)
 
     def __str__(self):
@@ -63,12 +63,13 @@ class Teacher(models.Model):
 
 
 class Unit(models.Model):
-    TYPE = [('TP', 'tp'), ('TD', 'td'), ('Cour', 'cour')]
+    TYPE = [("TP", "TP"), ("TD", "TD"), ("Cours", "Cours")]
 
     name = models.CharField(max_length=255, null=False, unique=True)
     code = models.CharField(max_length=100, null=False, unique=True)
-    type = models.CharField(max_length=10, choices=TYPE, default='cour')
+    type = models.CharField(max_length=10, choices=TYPE, default="Cours")
     grade = models.ForeignKey(Grade, models.CASCADE)
+    institution = models.ForeignKey(Institution, models.CASCADE)
 
     def __str__(self):
         return f"{self.code}-{self.name}--{self.type}"
@@ -76,6 +77,8 @@ class Unit(models.Model):
 
 class Planning(models.Model):
     name = models.CharField(max_length=100, null=False)
+    school_year = models.CharField(max_length=50, null=False)
+    semester = models.CharField(max_length=20, null=False)
     institution = models.ForeignKey(Institution, models.CASCADE)
     grade = models.ForeignKey(Grade, models.CASCADE)
 
@@ -106,10 +109,3 @@ class Provide(models.Model):
 
     def __str__(self):
         return f"{self.teacher}|{self.unit.code}|{self.classroom}|{self.group.name}"
-
-
-class PlanningGrade(models.Model):
-    grade = models.ForeignKey(Grade, models.CASCADE)
-    planning = models.ForeignKey(Planning, models.CASCADE)
-    school_year = models.CharField(max_length=50, null=False)
-    semestre = models.CharField(max_length=20, null=False)

@@ -142,6 +142,13 @@ header {
     display: none;
 }
 
+.bg_home{
+    /* background-image: url('/static/core/images/bg_home.jpg'); 
+    background-size: cover;
+    min-height: 100vh; */
+    background: rgb(255, 249, 253);
+}
+
 @media (max-width: 768px) {
     header {
         display: flex;

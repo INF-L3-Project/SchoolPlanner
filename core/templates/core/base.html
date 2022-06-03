@@ -23,7 +23,7 @@
         <div class="toggle">
             <i class="fa fa-bars"></i>
         </div>
-        <h3>Dashboard</h3>
+        <h3 class="my-auto text-light">SchoolPlanner</h3>
         <a href="#">
             <i class="fa fa-sign-out"></i>
         </a>
@@ -46,21 +46,15 @@
 							</a>
 						</li>
 						<li>
-							<a href="{% url 'core:create_unit' %}" title="UEs">
-								<span class="icon"><i class="fa fa-edit"></i></span>
-								<span class="title">UEs</span>
-							</a>
-						</li>
-						<li>
 							<a href="{% url 'core:field' %}" title="Filières">
 								<span class="icon"><i class="fa fa-book"></i></span>
 								<span class="title">Filières</span>
 							</a>
 						</li>
 						<li>
-							<a href="{% url 'core:teacher' %}" title="Enseignants">
-								<span class="icon"><i class="fa fa-male"></i></span>
-								<span class="title">Enseignants</span>
+							<a href="{% url 'core:level' %}" title="Niveaux">
+								<span class="icon"><i class="fa fa-line-chart"></i></span>
+								<span class="title">Niveaux</span>
 							</a>
 						</li>
 						<li>
@@ -70,9 +64,9 @@
 							</a>
 						</li>
 						<li>
-							<a href="{% url 'core:level' %}" title="Niveaux">
-								<span class="icon"><i class="fa fa-line-chart"></i></span>
-								<span class="title">Niveaux</span>
+							<a href="{% url 'core:teacher' %}" title="Enseignants">
+								<span class="icon"><i class="fa fa-male"></i></span>
+								<span class="title">Enseignants</span>
 							</a>
 						</li>
 						<li>
@@ -87,6 +81,14 @@
 								<span class="title">Groupe</span>
 							</a>
 						</li>
+						<li>
+							<a href="{% url 'core:create_unit' %}" title="UEs">
+								<span class="icon"><i class="fa fa-edit"></i></span>
+								<span class="title">UEs</span>
+							</a>
+						</li>
+						
+						
 						<li>
 							<a href="{% url 'core:timetable' %}" title="Emplois de temps">
 								<span class="icon"><i class="fa fa-calendar"></i></span>
@@ -103,7 +105,7 @@
 				</nav>
 			</div>
 		{% endblock %}
-		<div class="container-fluid p-0">
+		<div class="container-fluid p-0 bg_home">
 			{% block dashboard_nav %}
 				<div class="container d-flex justify-content-between" id="dashboard_nav">
 					<img src="/static/core/images/logo.png" alt="logo" width="100px" height="100px">
