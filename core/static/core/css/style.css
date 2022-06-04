@@ -1,3 +1,6 @@
+*{
+    transition: .3s ease-in-out;
+}
 .text-dark{
     color: #37354A !important;
 }
@@ -152,6 +155,11 @@ header {
     background-image: url('/static/core/images/bg_home2.jpg');
     background-size: cover;
 }
+
+#classrooms, #teachers{
+    display: block;
+}
+
 
 /* account page */
 
