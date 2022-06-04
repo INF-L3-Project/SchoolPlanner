@@ -1,7 +1,16 @@
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import User
 from authentication.models import Institution
-from .models import Classroom, Field, Grade, Group, Level, Planning, Provide, Teacher, Unit
+from .models import (
+    Classroom,
+    Field,
+    Grade,
+    Group,
+    Level,
+    Planning,
+    Provide,
+    Teacher,
+    Unit,
+)
 from django import forms
 
 
@@ -12,11 +21,11 @@ class FieldForm(forms.ModelForm):
         fields = ("name", "abr")
 
     def clean_abr(self):
-        if self.data['abr'] == '':
-            abr = self.data['name'][:4]
+        if self.data["abr"] == "":
+            abr = str(self.data["name"][:4]).upper()
             return abr
         else:
-            return self.data['abr']
+            return str(self.data["abr"]).upper()
 
 
 class LevelForm(forms.ModelForm):
@@ -31,17 +40,6 @@ class GradeForm(forms.ModelForm):
     class Meta:
         model = Grade
         fields = ("field", "level", "capacity")
-    
-    def save(self, commit=True):
-        field = self.cleaned_data["field"]
-        level = self.cleaned_data["level"]
-        name = str(field.abr).upper() + "-" + str(level.abr).upper()
-        return Grade.objects.create(
-            name=name,
-            field=self.cleaned_data['field'],
-            level=self.cleaned_data['level'],
-            capacity=self.cleaned_data['capacity']
-            )
 
 
 class GroupForm(forms.ModelForm):

@@ -103,7 +103,6 @@ class FieldUpdateView(View):
         form = self.form_class(request.POST, instance=field)
         if form.is_valid():
             form = form.save()
-            print(form)
             return redirect("core:field")
         else:
             print(form.errors)
@@ -208,7 +207,9 @@ class GradeView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            form.save()
+            grade = form.save(commit=False)
+            grade.name = str(grade.field.abr).upper() + "-" + str(grade.level.abr).upper()
+            grade.save()
             return redirect("core:grade")
         else:
             print(form.errors)
@@ -246,8 +247,8 @@ class GradeView(View):
             {
                 "grades": grade,
                 "form": form,
-                "fields": self.fields,
-                "levels": self.levels,
+                "fields": Field.objects.all(),
+                "levels": Level.objects.all(),
             },
         )
 
@@ -265,8 +266,9 @@ class GradeUpdateView(View):
         grade = Grade.objects.get(id=kwargs["pk"])
         form = self.form_class(request.POST, instance=grade)
         if form.is_valid():
-            form = form.save()
-            print(form)
+            grade = form.save(commit=False)
+            grade.name = str(grade.field.abr).upper() + "-" + str(grade.level.abr).upper()
+            grade.save()
             return redirect("core:grade")
         else:
             print(form.errors)

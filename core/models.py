@@ -24,7 +24,6 @@ class Grade(models.Model):
     name = models.CharField(
         max_length=100,
         null=False,
-        unique=True,
     )
     capacity = models.IntegerField(null=False, default=100)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
