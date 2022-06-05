@@ -156,9 +156,10 @@ header {
     background-size: cover;
 }
 
-#all_timetable{
-    display: none;
+#classrooms, #teachers{
+    display: block;
 }
+
 
 /* account page */
 

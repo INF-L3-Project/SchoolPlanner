@@ -13,15 +13,24 @@
 
 		<div class="container-fluid ps-lg-5">
 
-			<h3 class="fw-bold mb-4">Mes emplois de temps</h3>
-
+			<div class="d-flex justify-content-between">
+				<h3 class="fw-bold mb-4">Mes emplois de temps</h3>
+				<div>
+					<select id="selectAction" name="class" class="mt-4 bg-dark p-2 border-0 text-white rounded">
+						<option value="class">Afficher par Classe</option>
+						<option value="classroom">Afficher par Salle</option>
+						<option value="teacher">Afficher par Enseignant</option>
+					</select>
+				</div>
+			</div>
+		
 			<div class="row">
 			{% for planning in plannings %}
-				<div class="col-lg-3 bg-pink p-3 m-3 rounded shadow">
+				<div class="col-lg-3 bg_multi_color p-3 m-3 rounded shadow">
 					<a href="#" class="text-decoration-none">
 						<p class="text-light fs-5 fw-bold">{{planning.name}}</p>
 						<p class="text-light">Semestre: {{planning.semester}}</p>
-						<p class="text-light">Année académique: {{planning.school_year}}</p>
+						<p class="text-light my-0">Année académique: {{planning.school_year}}</p>
 					</a>
 				</div>
 			{% endfor %}
@@ -79,6 +88,32 @@
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+
+
+			<!-- Affichage par Salle -->
+			<div id="classrooms" class="row mt-5">
+				<p class="fw-bold fs-5 my-0">Affichage par classe</p>
+				<div class="col-lg-3 bg_multi_color p-3 m-3 rounded shadow">
+					<a href="#" class="text-decoration-none">
+						<p class="text-light fs-5 fw-bold">Emplois de temps 1</p>
+						<p class="text-light">Semestre: S1</p>
+						<p class="text-light my-0">Année académique: 2021 - 2022</p>
+					</a>
+				</div>
+			</div>
+
+			<!-- Affichage par Enseignant -->
+			<div id="teachers" class="row mt-5">
+				<p class="fw-bold fs-5 my-0">Affichage par enseignant</p>
+				<div class="col-lg-3 bg_multi_color p-3 m-3 rounded shadow">
+					<a href="#" class="text-decoration-none">
+						<p class="text-light fs-5 fw-bold">Emplois de temps 1</p>
+						<p class="text-light">Semestre: S1</p>
+						<p class="text-light my-0">Année académique: 2021 - 2022</p>
+					</a>
+				</div>
 			</div>
 
 		</div>
@@ -91,25 +126,37 @@
 
 	<script type="text/javascript">
 
-		$(document).ready(function () {
-            $("#submit").click(function () {
+		let box = document.querySelectorAll(".bg_multi_color");
+		//Attribution des couleurs aux div de facon aleatoire
+		window.onload = function() {
+			for(i=0; i<box.length; i++){
+				let randomColor = "#" + (Math.floor(Math.random()*16777215)).toString(16);
+				while(randomColor.length<7){
+					randomColor = "#" + (Math.floor(Math.random()*16777215)).toString(16);
+				}
+				box[i].style.backgroundColor = randomColor;
+			}
+		}
+
+		//$(document).ready(function () {
+            $("#selectAction").change(function () {
                 const vals =
 					$("#selectAction").find(
 						"option:selected"
 					).val();
 
-				if(vals == "new"){
-					console.log("choix = new");
-					top.location.href="/timetable";
+				if(vals == "teacher"){
+					console.log(vals)
+					$("teachers").css("display", "block");
+					top.location.href="#teachers";
 				}
-				if(vals == "all"){
-					console.log("choix = all");
-					$("all_timetable").css("display", "block");
-					$("home").css("display", "none");
-					top.location.href="#all_timetable";
+				if(vals == "classroom"){
+					console.log(vals)
+					$("classrooms").css("display", "block");
+					top.location.href="#classrooms";
 				}
             });
-        });
+        //});
 
 	</script>
 
