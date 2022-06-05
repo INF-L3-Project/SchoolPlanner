@@ -23,7 +23,8 @@ from .forms import (
 )
 
 decorators = [
-    login_required(login_url="authentication:login", redirect_field_name="next")
+    login_required(login_url="authentication:login",
+                   redirect_field_name="next")
 ]
 
 
@@ -45,11 +46,7 @@ class HomeView(View):
             planning.institution = institution
             # Sauvegarde définitive en BD
             planning.save()
-            return render(
-                request,
-                self.template_name,
-                {"plannings": Planning.objects.all(), "grades": Grade.objects.all()},
-            )
+            return redirect("core:home")
         else:
             messages(request, form.errors)
             return render(request, self.template_name, {})
@@ -57,9 +54,10 @@ class HomeView(View):
     def get(self, request, *args, **kwargs):
         plannings = Planning.objects.all()
         grades = Grade.objects.all()
-        return render(
-            request, self.template_name, {"plannings": plannings, "grades": grades}
-        )
+        return render(request, self.template_name, {
+            "plannings": plannings,
+            "grades": grades
+        })
 
 
 @method_decorator(decorators, name="get")
@@ -83,11 +81,13 @@ class FieldView(View):
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
-
         print(request.user.institution.name)
         form = self.form_class()
         fields = Field.objects.all()
-        return render(request, self.template_name, {"fields": fields, "form": form})
+        return render(request, self.template_name, {
+            "fields": fields,
+            "form": form
+        })
 
 
 @method_decorator(decorators, name="get")
@@ -98,7 +98,6 @@ class FieldUpdateView(View):
     field = Field.objects.all()
 
     def post(self, request, *args, **kwargs):
-
         field = Field.objects.get(id=kwargs["pk"])
         form = self.form_class(request.POST, instance=field)
         if form.is_valid():
@@ -116,7 +115,6 @@ class FieldUpdateView(View):
             )
 
     def get(self, request, *args, **kwargs):
-
         field = Field.objects.get(id=kwargs["pk"])
         form = self.form_class(request.POST, instance=field)
         return render(
@@ -152,7 +150,10 @@ class LevelView(View):
     def get(self, request, *args, **kwargs):
         form = self.form_class()
         levels = Level.objects.all()
-        return render(request, self.template_name, {"levels": levels, "form": form})
+        return render(request, self.template_name, {
+            "levels": levels,
+            "form": form
+        })
 
 
 @method_decorator(decorators, name="get")
@@ -163,7 +164,6 @@ class LevelUpdateView(View):
     level = Level.objects.all()
 
     def post(self, request, *args, **kwargs):
-
         level = Level.objects.get(id=kwargs["pk"])
         form = self.form_class(request.POST, instance=level)
         if form.is_valid():
@@ -182,7 +182,6 @@ class LevelUpdateView(View):
             )
 
     def get(self, request, *args, **kwargs):
-
         level = Level.objects.get(id=kwargs["pk"])
         form = self.form_class(request.POST, instance=level)
         return render(
@@ -201,14 +200,13 @@ class GradeView(View):
 
     template_name = "core/grade.html"
     form_class = GradeForm
-    fields = Field.objects.all()
-    levels = Level.objects.all()
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
             grade = form.save(commit=False)
-            grade.name = str(grade.field.abr).upper() + "-" + str(grade.level.abr).upper()
+            grade.name = str(grade.field.abr).upper() + "-" + str(
+                grade.level.abr).upper()
             grade.save()
             return redirect("core:grade")
         else:
@@ -217,7 +215,6 @@ class GradeView(View):
 
     def get(self, request, *args, **kwargs):
         grade = Grade.objects.all()
-
         searched = request.GET.get("searched")
         trier = request.GET.get("trier")
         filtrer_par_capacite = request.GET.get("filtrer_par_capacite")
@@ -226,8 +223,7 @@ class GradeView(View):
             grade = Grade.objects.filter(
                 Q(name__icontains=searched)
                 | Q(field__name__icontains=searched)
-                | Q(level__name__icontains=searched)
-            )
+                | Q(level__name__icontains=searched))
 
         if filtrer_par_capacite == "gt_500":
             grade = Grade.objects.filter(capacity__gt=500)
@@ -267,7 +263,8 @@ class GradeUpdateView(View):
         form = self.form_class(request.POST, instance=grade)
         if form.is_valid():
             grade = form.save(commit=False)
-            grade.name = str(grade.field.abr).upper() + "-" + str(grade.level.abr).upper()
+            grade.name = str(grade.field.abr).upper() + "-" + str(
+                grade.level.abr).upper()
             grade.save()
             return redirect("core:grade")
         else:
@@ -317,15 +314,15 @@ class GroupView(View):
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
-        groups = Group.objects.all() 
+        groups = Group.objects.all()
         searched = request.GET.get("searched")
         trier = request.GET.get("trier")
         filtrer_par_capacite = request.GET.get("filtrer_par_capacite")
         if searched:
             print(searched)
             groups = Group.objects.filter(
-                Q(name__icontains=searched) | Q(grade__name__icontains=searched)
-            )
+                Q(name__icontains=searched)
+                | Q(grade__name__icontains=searched))
 
         if filtrer_par_capacite == "gt_500":
             groups = Group.objects.filter(capacity__gt=500)
@@ -340,7 +337,11 @@ class GroupView(View):
         return render(
             request,
             self.template_name,
-            {"groups": groups, "form": form, "grades": Grade.objects.all()},
+            {
+                "groups": groups,
+                "form": form,
+                "grades": Grade.objects.all()
+            },
         )
 
 
@@ -349,7 +350,6 @@ class GroupUpdateView(View):
 
     template_name = "core/group.html"
     form_class = GroupForm
-    grades = Grade.objects.all()
 
     def post(self, request, *args, **kwargs):
         group = Group.objects.get(id=kwargs["pk"])
@@ -369,7 +369,10 @@ class GroupUpdateView(View):
         return render(
             request,
             self.template_name,
-            {"groups": self.groups, "form": form, "grades": self.grades},
+            {
+                "form": form,
+                "grades": Grade.objects.all()
+            },
         )
 
 
@@ -394,7 +397,8 @@ class AccountView(View):
 
     def get(self, request, *args, **kwargs):
         current_account = get_object_or_404(Institution, user=request.user.id)
-        return render(request, self.template_name, {"current_account": current_account})
+        return render(request, self.template_name,
+                      {"current_account": current_account})
 
 
 @method_decorator(decorators, name="get")
@@ -412,16 +416,13 @@ class ClassroomView(View):
             field = form.save(commit=False)
             field.institution = institution
             field.save()
-            return render(
-                request, self.template_name, {"classrooms": Classroom.objects.all()}
-            )
+            return redirect("core:classroom")
         else:
             print(form.errors)
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
         classroom = Classroom.objects.all()
-
         searched = request.GET.get("searched")
         trier_par_capacite = request.GET.get("trier_par_capacite")
         filtrer_par_capacite = request.GET.get("filtrer_par_capacite")
@@ -444,9 +445,10 @@ class ClassroomView(View):
             classroom = Classroom.objects.order_by("-capacity")
         form = self.form_class()
 
-        return render(
-            request, self.template_name, {"classrooms": classroom, "form": form}
-        )
+        return render(request, self.template_name, {
+            "classrooms": classroom,
+            "form": form
+        })
 
 
 @method_decorator(decorators, name="get")
@@ -457,7 +459,6 @@ class ClassroomUpdateView(View):
     classroom = Classroom.objects.all()
 
     def post(self, request, *args, **kwargs):
-
         classroom = Classroom.objects.get(id=kwargs["pk"])
         form = self.form_class(request.POST, instance=classroom)
         if form.is_valid():
@@ -476,7 +477,6 @@ class ClassroomUpdateView(View):
             )
 
     def get(self, request, *args, **kwargs):
-
         classroom = Classroom.objects.get(id=kwargs["pk"])
         form = self.form_class(request.POST, instance=classroom)
         return render(
@@ -504,29 +504,48 @@ class TeacherView(View):
             teacher = form.save(commit=False)
             teacher.institution = institution
             teacher.save()
-            return render(
-                request, self.template_name, {"teachers": Teacher.objects.all()}
-            )
+            return redirect("core:teacher")
         else:
-            messages(request, form.errors)
+            print(form.errors)
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
+        teachers = Teacher.objects.all()
         searched = request.GET.get("searched")
         trier_par_nom = request.GET.get("trier_par_nom")
         if searched:
             print(searched)
             # je fais un filtre selon deux valeur, il s'agit enfait d'une Union
             teachers = Teacher.objects.filter(
-                Q(name__icontains=searched) | Q(numero__icontains=searched)
-            )
+                Q(name__icontains=searched) | Q(numero__icontains=searched))
         if trier_par_nom == "a-z":
             teachers = Teacher.objects.order_by("name")
         elif trier_par_nom == "z-a":
             teachers = Teacher.objects.order_by("-name")
 
-        teachers = Teacher.objects.all()
         return render(request, self.template_name, {"teachers": teachers})
+
+
+@method_decorator(decorators, name="get")
+class TeacherUpdateView(View):
+
+    template_name = "core/teacher.html"
+    form_class = TeacherForm
+
+    def post(self, request, *args, **kwargs):
+        teacher = Teacher.objects.get(id=kwargs['pk'])
+        form = self.form_class(data=request.POST, instance=teacher)
+        if form.is_valid():
+            form.save()
+            return redirect("core:teacher")
+        else:
+            print(form.errors)
+            return render(request, self.template_name, {})
+
+    def get(self, request, *args, **kwargs):
+        teacher = Teacher.objects.get(id=kwargs['pk'])
+        form = self.form_class(data=request.POST, instance=teacher)
+        return render(request, self.template_name, {"form": form})
 
 
 @method_decorator(decorators, name="get")
@@ -544,7 +563,7 @@ class UnitView(View):
             unit = form.save(commit=False)
             unit.institution = institution
             unit.save()
-            return render(request, self.template_name, {"units": Unit.objects.all()})
+            return redirect("core:create_unit")
         else:
             print(form.errors)
             return render(request, self.template_name, {"form": form})
@@ -571,7 +590,6 @@ class UnitUpdateView(View):
     units = Unit.objects.all()
 
     def post(self, request, *args, **kwargs):
-
         unit = Unit.objects.get(id=kwargs["pk"])
         form = self.form_class(request.POST, instance=unit)
         if form.is_valid():
@@ -590,7 +608,6 @@ class UnitUpdateView(View):
             )
 
     def get(self, request, *args, **kwargs):
-
         unit = Unit.objects.get(id=kwargs["pk"])
         form = self.form_class(request.POST, instance=unit)
         return render(
