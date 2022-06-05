@@ -1,4 +1,3 @@
-import re
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -52,8 +51,8 @@ class HomeView(View):
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
-        plannings = Planning.objects.all()
-        grades = Grade.objects.all()
+        plannings = Planning.objects.filter(id=request.user.id)
+        grades = Grade.objects.filter(id=request.user.id)
         return render(request, self.template_name, {
             "plannings": plannings,
             "grades": grades
@@ -83,7 +82,8 @@ class FieldView(View):
     def get(self, request, *args, **kwargs):
         print(request.user.institution.name)
         form = self.form_class()
-        fields = Field.objects.all()
+        fields = Field.objects.filter(
+            institution_id=request.user.institution.id)
         return render(request, self.template_name, {
             "fields": fields,
             "form": form
@@ -95,7 +95,6 @@ class FieldUpdateView(View):
 
     template_name = "core/field.html"
     form_class = FieldForm
-    field = Field.objects.all()
 
     def post(self, request, *args, **kwargs):
         field = Field.objects.get(id=kwargs["pk"])
@@ -109,8 +108,11 @@ class FieldUpdateView(View):
                 request,
                 self.template_name,
                 {
-                    "form": form,
-                    "field": self.field,
+                    "form":
+                    form,
+                    "field":
+                    Field.objects.filter(
+                        institution_id=request.user.institution.id),
                 },
             )
 
@@ -149,7 +151,8 @@ class LevelView(View):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        levels = Level.objects.all()
+        levels = Level.objects.filter(
+            institution_id=request.user.institution.id)
         return render(request, self.template_name, {
             "levels": levels,
             "form": form
@@ -161,7 +164,6 @@ class LevelUpdateView(View):
 
     template_name = "core/level.html"
     form_class = LevelForm
-    level = Level.objects.all()
 
     def post(self, request, *args, **kwargs):
         level = Level.objects.get(id=kwargs["pk"])
@@ -176,8 +178,11 @@ class LevelUpdateView(View):
                 request,
                 self.template_name,
                 {
-                    "form": form,
-                    "level": self.level,
+                    "form":
+                    form,
+                    "level":
+                    Level.objects.filter(
+                        institution_id=request.user.institution.id),
                 },
             )
 
@@ -214,7 +219,12 @@ class GradeView(View):
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
-        grade = Grade.objects.all()
+        # Filtrage des classes selon les fields et levels de l'utilisateur courant
+        grade = Grade.objects.filter(
+            Q(field_id__in=Field.objects.filter(
+                institution_id=request.user.institution.id))
+            | Q(level_id__in=Level.objects.filter(
+                institution_id=request.user.institution.id)))
         searched = request.GET.get("searched")
         trier = request.GET.get("trier")
         filtrer_par_capacite = request.GET.get("filtrer_par_capacite")
@@ -223,28 +233,58 @@ class GradeView(View):
             grade = Grade.objects.filter(
                 Q(name__icontains=searched)
                 | Q(field__name__icontains=searched)
-                | Q(level__name__icontains=searched))
+                | Q(level__name__icontains=searched)).filter(
+                    Q(field_id__in=Field.objects.filter(
+                        institution_id=request.user.institution.id))
+                    | Q(level_id__in=Level.objects.filter(
+                        institution_id=request.user.institution.id)))
 
         if filtrer_par_capacite == "gt_500":
-            grade = Grade.objects.filter(capacity__gt=500)
+            grade = Grade.objects.filter(capacity__gt=500).filter(
+                Q(field_id__in=Field.objects.filter(
+                    institution_id=request.user.institution.id))
+                | Q(level_id__in=Level.objects.filter(
+                    institution_id=request.user.institution.id)))
         elif filtrer_par_capacite == "lt_500":
-            grade = Grade.objects.filter(capacity__lt=500)
+            grade = Grade.objects.filter(capacity__lt=500).filter(
+                Q(field_id__in=Field.objects.filter(
+                    institution_id=request.user.institution.id))
+                | Q(level_id__in=Level.objects.filter(
+                    institution_id=request.user.institution.id)))
         elif filtrer_par_capacite == "lt_100":
-            grade = Grade.objects.filter(capacity__lt=100)
+            grade = Grade.objects.filter(capacity__lt=100).filter(
+                Q(field_id__in=Field.objects.filter(
+                    institution_id=request.user.institution.id))
+                | Q(level_id__in=Level.objects.filter(
+                    institution_id=request.user.institution.id)))
 
         if trier == "niveau":
-            grade = Grade.objects.order_by("level__abr")
+            grade = Grade.objects.order_by("level__abr").filter(
+                Q(field_id__in=Field.objects.filter(
+                    institution_id=request.user.institution.id))
+                | Q(level_id__in=Level.objects.filter(
+                    institution_id=request.user.institution.id)))
         elif trier == "filiere":
-            grade = Grade.objects.order_by("field__abr")
+            grade = Grade.objects.order_by("field__abr").filter(
+                Q(field_id__in=Field.objects.filter(
+                    institution_id=request.user.institution.id))
+                | Q(level_id__in=Level.objects.filter(
+                    institution_id=request.user.institution.id)))
         form = self.form_class()
         return render(
             request,
             self.template_name,
             {
-                "grades": grade,
-                "form": form,
-                "fields": Field.objects.all(),
-                "levels": Level.objects.all(),
+                "grades":
+                grade,
+                "form":
+                form,
+                "fields":
+                Field.objects.filter(
+                    institution_id=request.user.institution.id),
+                "levels":
+                Level.objects.filter(
+                    institution_id=request.user.institution.id),
             },
         )
 
@@ -254,11 +294,10 @@ class GradeUpdateView(View):
 
     template_name = "core/grade.html"
     form_class = GradeForm
-    grade = Grade.objects.all()
 
     def post(self, request, *args, **kwargs):
-        fields = Field.objects.all()
-        levels = Level.objects.all()
+        fields = Field.objects.filter(id=request.user.id)
+        levels = Level.objects.filter(id=request.user.id)
         grade = Grade.objects.get(id=kwargs["pk"])
         form = self.form_class(request.POST, instance=grade)
         if form.is_valid():
@@ -273,26 +312,44 @@ class GradeUpdateView(View):
                 request,
                 self.template_name,
                 {
-                    "form": form,
-                    "grades": self.grade,
-                    "fields": fields,
-                    "levels": levels,
+                    "form":
+                    form,
+                    "grades":
+                    # Filtrage des classes selon les fields et levels de l'utilisateur courant
+                    Grade.objects.filter(
+                        Q(field_id__in=Field.objects.filter(
+                            institution_id=request.user.institution.id))
+                        | Q(level_id__in=Level.objects.filter(
+                            institution_id=request.user.institution.id))),
+                    "fields":
+                    fields,
+                    "levels":
+                    levels,
                 },
             )
 
     def get(self, request, *args, **kwargs):
-        fields = Field.objects.all()
-        levels = Level.objects.all()
+        fields = Field.objects.filter(id=request.user.id)
+        levels = Level.objects.filter(id=request.user.id)
         grade = Grade.objects.get(id=kwargs["pk"])
         form = self.form_class(request.POST, instance=grade)
         return render(
             request,
             self.template_name,
             {
-                "form": form,
-                "grades": self.grade,
-                "fields": fields,
-                "levels": levels,
+                "form":
+                form,
+                "grades":
+                # Filtrage des classes selon les fields et levels de l'utilisateur courant
+                Grade.objects.filter(
+                    Q(field_id__in=Field.objects.filter(
+                        institution_id=request.user.institution.id))
+                    | Q(level_id__in=Level.objects.filter(
+                        institution_id=request.user.institution.id))),
+                "fields":
+                fields,
+                "levels":
+                levels,
             },
         )
 
@@ -314,7 +371,12 @@ class GroupView(View):
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
-        groups = Group.objects.all()
+        # Filtrage des groupes par rapport aux classes creer par l'utilisateur courant
+        groups = Group.objects.filter(grade_id__in=Grade.objects.filter(
+            Q(field_id__in=Field.objects.filter(
+                institution_id=request.user.institution.id))
+            | Q(level_id__in=Level.objects.filter(
+                institution_id=request.user.institution.id))))
         searched = request.GET.get("searched")
         trier = request.GET.get("trier")
         filtrer_par_capacite = request.GET.get("filtrer_par_capacite")
@@ -322,25 +384,58 @@ class GroupView(View):
             print(searched)
             groups = Group.objects.filter(
                 Q(name__icontains=searched)
-                | Q(grade__name__icontains=searched))
+                | Q(grade__name__icontains=searched)).filter(
+                    grade_id__in=Grade.objects.filter(
+                        Q(field_id__in=Field.objects.filter(
+                            institution_id=request.user.institution.id))
+                        | Q(level_id__in=Level.objects.filter(
+                            institution_id=request.user.institution.id))))
 
         if filtrer_par_capacite == "gt_500":
-            groups = Group.objects.filter(capacity__gt=500)
+            groups = Group.objects.filter(capacity__gt=500).filter(
+                grade_id__in=Grade.objects.filter(
+                    Q(field_id__in=Field.objects.filter(
+                        institution_id=request.user.institution.id))
+                    | Q(level_id__in=Level.objects.filter(
+                        institution_id=request.user.institution.id))))
         elif filtrer_par_capacite == "lt_500":
-            groups = Group.objects.filter(capacity__lt=500)
+            groups = Group.objects.filter(capacity__lt=500).filter(
+                grade_id__in=Grade.objects.filter(
+                    Q(field_id__in=Field.objects.filter(
+                        institution_id=request.user.institution.id))
+                    | Q(level_id__in=Level.objects.filter(
+                        institution_id=request.user.institution.id))))
         elif filtrer_par_capacite == "lt_100":
-            groups = Group.objects.filter(capacity__lt=100)
+            groups = Group.objects.filter(capacity__lt=100).filter(
+                grade_id__in=Grade.objects.filter(
+                    Q(field_id__in=Field.objects.filter(
+                        institution_id=request.user.institution.id))
+                    | Q(level_id__in=Level.objects.filter(
+                        institution_id=request.user.institution.id))))
 
         if trier == "classe":
-            groups = Group.objects.order_by("grade__name")
+            groups = Group.objects.order_by("grade__name").filter(
+                grade_id__in=Grade.objects.filter(
+                    Q(field_id__in=Field.objects.filter(
+                        institution_id=request.user.institution.id))
+                    | Q(level_id__in=Level.objects.filter(
+                        institution_id=request.user.institution.id))))
         form = self.form_class()
         return render(
             request,
             self.template_name,
             {
-                "groups": groups,
-                "form": form,
-                "grades": Grade.objects.all()
+                "groups":
+                groups,
+                "form":
+                form,
+                "grades":
+                # Filtrage des classes selon les fields et levels de l'utilisateur courant
+                Grade.objects.filter(
+                    Q(field_id__in=Field.objects.filter(
+                        institution_id=request.user.institution.id))
+                    | Q(level_id__in=Level.objects.filter(
+                        institution_id=request.user.institution.id)))
             },
         )
 
@@ -370,8 +465,15 @@ class GroupUpdateView(View):
             request,
             self.template_name,
             {
-                "form": form,
-                "grades": Grade.objects.all()
+                "form":
+                form,
+                "grades":
+                # Filtrage des classes selon les fields et levels de l'utilisateur courant
+                Grade.objects.filter(
+                    Q(field_id__in=Field.objects.filter(
+                        institution_id=request.user.institution.id))
+                    | Q(level_id__in=Level.objects.filter(
+                        institution_id=request.user.institution.id)))
             },
         )
 
@@ -422,7 +524,8 @@ class ClassroomView(View):
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
-        classroom = Classroom.objects.all()
+        classroom = Classroom.objects.filter(
+            institution_id=request.user.institution.id)
         searched = request.GET.get("searched")
         trier_par_capacite = request.GET.get("trier_par_capacite")
         filtrer_par_capacite = request.GET.get("filtrer_par_capacite")
@@ -430,19 +533,26 @@ class ClassroomView(View):
 
         if searched:
             print(searched)
-            classroom = Classroom.objects.filter(name__icontains=searched)
+            classroom = Classroom.objects.filter(
+                name__icontains=searched).filter(
+                    institution_id=request.user.institution.id)
 
         if filtrer_par_capacite == "gt_500":
-            classroom = Classroom.objects.filter(capacity__gt=500)
+            classroom = Classroom.objects.filter(capacity__gt=500).filter(
+                institution_id=request.user.institution.id)
         elif filtrer_par_capacite == "lt_500":
-            classroom = Classroom.objects.filter(capacity__lt=500)
+            classroom = Classroom.objects.filter(capacity__lt=500).filter(
+                institution_id=request.user.institution.id)
         elif filtrer_par_capacite == "lt_100":
-            classroom = Classroom.objects.filter(capacity__lt=100)
+            classroom = Classroom.objects.filter(capacity__lt=100).filter(
+                institution_id=request.user.institution.id)
 
         if trier_par_capacite == "cc":
-            classroom = Classroom.objects.order_by("capacity")
+            classroom = Classroom.objects.order_by("capacity").filter(
+                institution_id=request.user.institution.id)
         elif trier_par_capacite == "cd":
-            classroom = Classroom.objects.order_by("-capacity")
+            classroom = Classroom.objects.order_by("-capacity").filter(
+                institution_id=request.user.institution.id)
         form = self.form_class()
 
         return render(request, self.template_name, {
@@ -456,7 +566,6 @@ class ClassroomUpdateView(View):
 
     template_name = "core/classroom.html"
     form_class = ClassroomForm
-    classroom = Classroom.objects.all()
 
     def post(self, request, *args, **kwargs):
         classroom = Classroom.objects.get(id=kwargs["pk"])
@@ -471,8 +580,11 @@ class ClassroomUpdateView(View):
                 request,
                 self.template_name,
                 {
-                    "form": form,
-                    "classrooms": self.classroom,
+                    "form":
+                    form,
+                    "classrooms":
+                    Classroom.objects.filter(
+                        institution_id=request.user.institution.id),
                 },
             )
 
@@ -483,8 +595,11 @@ class ClassroomUpdateView(View):
             request,
             self.template_name,
             {
-                "form": form,
-                "classrooms": self.classroom,
+                "form":
+                form,
+                "classrooms":
+                Classroom.objects.filter(
+                    institution_id=request.user.institution.id),
             },
         )
 
@@ -510,19 +625,23 @@ class TeacherView(View):
             return render(request, self.template_name, {})
 
     def get(self, request, *args, **kwargs):
-        teachers = Teacher.objects.all()
+        teachers = Teacher.objects.filter(
+            institution_id=request.user.institution.id)
         searched = request.GET.get("searched")
         trier_par_nom = request.GET.get("trier_par_nom")
         if searched:
             print(searched)
             # je fais un filtre selon deux valeur, il s'agit enfait d'une Union
             teachers = Teacher.objects.filter(
-                Q(name__icontains=searched) | Q(numero__icontains=searched))
+                Q(name__icontains=searched)
+                | Q(numero__icontains=searched)).filter(
+                    institution_id=request.user.institution.id)
         if trier_par_nom == "a-z":
-            teachers = Teacher.objects.order_by("name")
+            teachers = Teacher.objects.order_by("name").filter(
+                institution_id=request.user.institution.id)
         elif trier_par_nom == "z-a":
-            teachers = Teacher.objects.order_by("-name")
-
+            teachers = Teacher.objects.order_by("-name").filter(
+                institution_id=request.user.institution.id)
         return render(request, self.template_name, {"teachers": teachers})
 
 
@@ -569,8 +688,12 @@ class UnitView(View):
             return render(request, self.template_name, {"form": form})
 
     def get(self, request, *args, **kwargs):
-        grades = Grade.objects.all()
-        units = Unit.objects.all()
+        grades = Grade.objects.filter(
+            Q(field_id__in=Field.objects.filter(
+                institution_id=request.user.institution.id))
+            | Q(level_id__in=Level.objects.filter(
+                institution_id=request.user.institution.id)))
+        units = Unit.objects.filter(institution_id=request.user.institution.id)
         return render(
             request,
             self.template_name,
@@ -586,8 +709,6 @@ class UnitUpdateView(View):
 
     template_name = "core/unit.html"
     form_class = UnitForm
-    grades = Grade.objects.all()
-    units = Unit.objects.all()
 
     def post(self, request, *args, **kwargs):
         unit = Unit.objects.get(id=kwargs["pk"])
@@ -601,9 +722,17 @@ class UnitUpdateView(View):
                 request,
                 self.template_name,
                 {
-                    "form": form,
-                    "units": self.units,
-                    "grades": self.grades,
+                    "form":
+                    form,
+                    "units":
+                    Unit.objects.filter(
+                        institution_id=request.user.institution.id),
+                    "grades":
+                    Grade.objects.filter(
+                        Q(field_id__in=Field.objects.filter(
+                            institution_id=request.user.institution.id))
+                        | Q(level_id__in=Level.objects.filter(
+                            institution_id=request.user.institution.id))),
                 },
             )
 
@@ -614,9 +743,17 @@ class UnitUpdateView(View):
             request,
             self.template_name,
             {
-                "form": form,
-                "units": self.units,
-                "grades": self.grades,
+                "form":
+                form,
+                "units":
+                Unit.objects.filter(
+                    institution_id=request.user.institution.id),
+                "grades":
+                Grade.objects.filter(
+                    Q(field_id__in=Field.objects.filter(
+                        institution_id=request.user.institution.id))
+                    | Q(level_id__in=Level.objects.filter(
+                        institution_id=request.user.institution.id))),
             },
         )
 
