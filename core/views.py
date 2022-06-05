@@ -1,4 +1,4 @@
-import re
+from pprint import pprint
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -37,21 +37,15 @@ class HomeView(View):
             planning.institution = institution
             # Sauvegarde définitive en BD
             planning.save()
-            return render(
-                request,
-                self.template_name,
-                {
-                    "plannings": Planning.objects.all(),
-                    "grades": Grade.objects.all()
-                },
-            )
+            return redirect('core:timetable')
         else:
-            messages(request, form.errors)
-            return render(request, self.template_name, {})
+            print(form.errors)
+            return render(request, self.template_name, {'form':form})
 
     def get(self, request, *args, **kwargs):
-        plannings = Planning.objects.all()
-        grades = Grade.objects.all()
+        institution = get_object_or_404(Institution, user=request.user.id)
+        plannings = Planning.objects.filter(institution=institution.id)
+        grades = Grade.objects.filter(field__institution=institution.id)
         return render(request, self.template_name, {
             "plannings": plannings,
             "grades": grades
@@ -114,7 +108,7 @@ class FieldUpdateView(View):
     def get(self, request, *args, **kwargs):
 
         field = Field.objects.get(id=kwargs["pk"])
-        form = self.form_class(request.POST, instance=field)
+        form = self.form_class(instance=field)
         return render(request, self.template_name, {
             "form": form,
             "field": self.field,
@@ -196,8 +190,7 @@ class GradeView(View):
         institution = get_object_or_404(Institution, user=user)
         form = self.form_class(request.POST)
         if form.is_valid():
-            form.save(commit=False)
-            form.instution = institution
+            form.save()
             return render(
                 request, self.template_name, {
                     "fields": self.fields,
@@ -545,10 +538,19 @@ class UnitUpdateView(View):
 
 
 @method_decorator(decorators, name="get")
-class TimetableView(TemplateView):
+class TimetableView(View):
     """Cette vue c'est pour les emplois du temps."""
-
     template_name = "core/timetable.html"
+
+    def get(self, request, *args, **kwargs):
+        institution = get_object_or_404(Institution,
+                                        id=request.user.institution.id)
+        planning = get_object_or_404(Planning, institution=institution)
+        return render(
+            request,
+            self.template_name,
+            {"planning": planning},
+        )
 
 
 class NotFoundView(TemplateView):

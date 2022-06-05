@@ -76,9 +76,15 @@ class Unit(models.Model):
 
 
 class Planning(models.Model):
+    YEAR = (('2019-2020', '2019-2020'), ('2020-2021', '2020-2021'),
+            ('2021-2022', '2022-2023'))
+    SEMESTER = (
+        ('s1', 'Semestre 1'),
+        ('s2', 'Semestre 2'),
+    )
     name = models.CharField(max_length=100, null=False)
-    school_year = models.CharField(max_length=50, null=False)
-    semester = models.CharField(max_length=20, null=False)
+    school_year = models.CharField(max_length=50, null=False, choices=YEAR)
+    semester = models.CharField(max_length=20, null=False, choices=SEMESTER)
     institution = models.ForeignKey(Institution, models.CASCADE)
     grade = models.ForeignKey(Grade, models.CASCADE)
 
