@@ -15,10 +15,10 @@
 			<div class="container">
 				<div class="text-center">
 					<h6 class="mb-4 fw-bold">
-						<p>EMPLOIS DU TEMPS : TIMETABLE</p>
-						<p>SEMESTRE__2__ANNEE ACADEMIQUE 2021 - 2022 ACADEMIC YEAR__2__SEMESTER</p>
-						<p>FILIÈRE INFORMATIQUE (INFO)</p>
-						<p>INFO - L3</p>
+						<p>EMPLOIS DU TEMPS : {{planning.nom|title}}</p>
+						<p>{{planning.semester|title}}__ANNEE ACADEMIQUE {{planning.school_year}}</p>
+						<p>{{planning.grade.field.name|title}} ({{planning.grade.field.abr}})</p>
+						<p>{{planning.grade.name}}</p>
 					</h6>
 				</div>
 				<div class="row">
@@ -27,399 +27,114 @@
 							<thead>
 								<tr>
 									<th></th>
-									<th class="th">Lundi</th>
-									<th class="th">Mardi</th>
-									<th class="th">Mercredi</th>
-									<th class="th">Jeudi</th>
-									<th class="th">Vendredi</th>
-									<th class="th">Samedi</th>
-									<th class="th">Dimanche</th>
+									
+									{% for day in week_days  %}
+									<th class="th">{{day|first}}</th>
+									{% endfor %}
 								</tr>
 							</thead>
 							<tbody id="tbody" data-bs-toggle="modal" data-bs-target="#exampleModal">
-								<tr data-id="1">
-									<td data-field="name" class="fw-bold text-center">07h-09h55</td>
-									<td class="text-decoration-none bg-pink2" data-field="monday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center">INF3036</p>
-												<p class="my-0">Dr Monthe</p>
-												<p>S006</p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="tuesday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="wednesday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="thursday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="friday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="saturday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="sunday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-								</tr>
-								<tr data-id="2">
-									<td data-field="name" class="fw-bold text-center">10h05-12h55</td>
-									<td class="text-decoration-none" data-field="monday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="tuesday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="wednesday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="thursday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="friday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="saturday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="sunday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-								</tr>
-								<tr data-id="3">
-									<td data-field="name" class="fw-bold text-center">13h05-15h55</td>
-									<td class="text-decoration-none" data-field="monday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="tuesday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="wednesday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="thursday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="friday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="saturday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="sunday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-								</tr>
-								<tr data-id="4">
-									<td data-field="name" class="fw-bold text-center">16h05-18h55</td>
-									<td class="text-decoration-none" data-field="monday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="tuesday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="wednesday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="thursday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="friday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="saturday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="sunday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-								</tr>
-								<tr data-id="5">
-									<td data-field="name" class="fw-bold text-center">19h05-21h55</td>
-									<td class="text-decoration-none" data-field="monday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="tuesday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="wednesday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="thursday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="friday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="saturday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-									<td class="text-decoration-none" data-field="sunday">
-										<a title="Détails">
-											<div class="p-2 text-center">
-												<p class="fs-5 text-center"></p>
-												<p class="my-0"></p>
-												<p></p>
-											</div>
-										</a>
-									</td>
-								</tr>
+								{% for hour in ranges %}
+									<tr data-id="{{forloop.counter}}">
+
+										<td data-field="name" class="fw-bold text-center">{{hour|first}}</td>
+										
+										{% for day in week_days %}
+
+											{% if first_cell.day == day|first and first_cell.range == hour|first %}
+												<td class="text-decoration-none bg-pink2" data-field="{{first_cell.day}}">
+													<a title="Détails">
+														<div class="p-2 text-center">
+															<p class="fs-5 text-center">{{first_cell.unit.code}}</p>
+															<p class="my-0">{{first_cell.teacher.name}}</p>
+															<p>{{first_cell.classroom.name}}</p>
+														</div>
+													</a>
+												</td>
+											{% else %}
+											<td class="text-decoration-none" data-field="">
+												<a title="Détails">
+													<div class="p-2 text-center">
+														<p class="fs-5 text-center"></p>
+														<p class="my-0">-</p>
+														<p></p>
+													</div>
+												</a>
+											</td>
+											{% endif %}
+												
+											
+											{% for cell in cells  %}
+												{% if cell.day == day|first and cell.range == hour|first %}
+													<td class="text-decoration-none bg-pink2" id="td-{{cell.id}}" data-field="{{cell.day}}">
+														<a title="Détails">
+															<div class="p-2 text-center">
+																<p class="fs-5 text-center">{{cell.unit.code}}</p>
+																<p class="my-0">{{cell.teacher.name}}</p>
+																<p>{{cell.classroom.name}}</p>
+															</div>
+														</a>
+													</td>
+												
+												{% endif %}
+													
+											{% endfor %}
+												
+
+											
+										{% endfor %}
+									</tr>
+								</div>
+								{% endfor %}
 							</tbody>
-						</table>
-						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-							  	<div class="modal-content">
-									<div class="modal-header bg-dark">
-										<h5 class="modal-title text-center text-white" id="exampleModalLabel">PARAMÈTRES PLANNING</h5>
-										<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-									<div class="modal-body">
-										<div>
-											<p class="mt-3">Cours: <span id="course" class="fw-bold"></span></p>
-											<p class="mt-3">Enseignant: <span id="teacher" class="fw-bold"></span></p>
-											<p class="mt-3">Salle: <span id="classroom" class="fw-bold"></span></p>
+							<div class="modal fade" id="exampleModal{{cell.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									  <div class="modal-content">
+										<div class="modal-header bg-dark">
+											<h5 class="modal-title text-center text-white" id="exampleModalLabel">PARAMÈTRES PLANNING</h5>
+											<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
-										<div>
-											<div class="d-flex justify-content-between mt-4">
-												<button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button>
-												<button onclick="show_hide()" class="bg-transparent border-0">
-													<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
-												</button>
+										<div class="modal-body">
+											<div>
+												<p class="mt-3">Cours: <span id="course" class="fw-bold">{{cell.unit.code}} - {{cell.unit.name}}</span></p>
+												<p class="mt-3">Enseignant: <span id="teacher" class="fw-bold">{{cell.teacher.name}}</span></p>
+												<p class="mt-3">Salle: <span id="classroom" class="fw-bold">{{cell.classroom.name}}</span></p>
 											</div>
-											<div id="form">
-												<form action="">
-													<div class="d-grid px-lg-5">
-														<select name="ue" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
-															<option value="INF3036">INF3036</option>
-															<option value="INF3096">INF3096</option>
-															<option value="INF3086">INF3086</option>
-														</select>
-														<select name="teacher" id="teachers" class="my-3 bg-dark p-2 border-0 text-white rounded">
-															<option value="Dr Monthe">Dr Monthe</option>
-															<option value="Dr Djiomekong">Dr Djiomekong</option>
-															<option value="Dr Kimbi">Dr Kimbi</option>
-														</select>
-														<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
-															<option value="S006">S006</option>
-															<option value="A250">A250</option>
-															<option value="R110">R110</option>
-														</select>
-													</div>
-													<div class="modal-footer d-flex justify-content-center px-5">
-														<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
-													</div>
-												</form>
+											<div>
+												<div class="d-flex justify-content-between mt-4">
+													<button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button>
+													<button onclick="show_hide('{{cell.id}}')" class="bg-transparent border-0">
+														<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
+													</button>
+												</div>
+												<div id="form{{cell.id}}">
+													<form action="">
+														<div class="d-grid px-lg-5">
+															<select name="unit" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
+																<option value="" selected disabled hidden>selectionner une unité</option>
+																{% for unit in units %}<option value="{{unit.id}}">{{unit.code}}</option>{% endfor %}
+															</select>
+															<select name="teacher" id="teachers" class="my-3 bg-dark p-2 border-0 text-white rounded">
+																<option value="" selected disabled hidden>selectionner un enseignant</option>
+																{% for teacher in teachers %}<option value="{{teacher.id}}">{{teacher.name}}</option>{% endfor %}
+															</select>
+															<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
+																<option value="" selected disabled hidden>selectionner une salle</option>
+																{% for room in classrooms %}<option value="{{room.id}}">{{room.name}}</option>{% endfor %}
+															</select>
+														</div>
+														<div class="modal-footer d-flex justify-content-center px-5">
+															<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+														</div>
+													</form>
+												</div>
 											</div>
 										</div>
-									</div>
-									
-							  	</div>
+										
+									  </div>
+								</div>
 							</div>
-						</div>
-					</div>
+						</table>
 				</div>
 			</div>
 
@@ -455,12 +170,13 @@
 		let course = document.getElementById('course').innerText;
 		let teacher = document.getElementById('teacher').innerText;
 		let classroom = document.getElementById('classroom').innerText;
+		let after = document.getElementById("td-{{cell.id}}").innerText;
 
 		// When the user clicks on the button, open the modal 
 		for (let i = 0; i < td.length; i++) {
 			td[i].onclick = function() {
 				modal.style.display = "block";
-				console.log(i);
+				console.log(after);
 				console.log(course, teacher, classroom)
 
 				//td[i].innerHTML = course;
@@ -491,8 +207,8 @@
 		}
 
 
-		function show_hide() {
-			var x = document.getElementById("form");
+		function show_hide(id_form) {
+			var x = document.getElementById("form-"+id_form);
 			if (x.style.display === "none") {
 				x.style.display = "block";
 			} else {

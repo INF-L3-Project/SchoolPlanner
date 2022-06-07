@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 
 {% load static %}
-{% block title %} SchoolPlanner - Levels {% endblock %}
+{% block title %} SchoolPlanner - Enseignants{% endblock %}
 
     {% block extra_style %}
     	<link rel="stylesheet" type="text/css" href="{% static 'core/css/style2.css' %}">
@@ -14,72 +14,117 @@
 
 	<section class="container-fluid my-4 pt-4 ps-lg-5">
 		<div class="ps-lg-5">
-		<h3 class="fw-bold text-dark mt-5">Enseignant</h3>
+		<h3 class="fw-bold text-dark mt-5">Enseignants</h3>
 
 		<!-- **********************Search bar******************** -->
 
-		<div class="d-flex justify-content-between">
-			<div class="d-flex w-25">
-				<form>
-					<div class="mt-2 bg-light border-1 p-1 border-danger rounded-pill">
-						<button type="submit" class=" border-0 bg-light p-0 me-3">
-							<i class="fa fa-search fa text-dark" aria-hidden="true"></i>
+		<div class="container table-responsive py-5 border-0">
+		<div class="d-flex container bg-dark text-white border border-secondary border-1 border-end rounded-1 mt-2 shadow mx-auto">
+			<form class="d-flex row p-2 w-100 mx-auto" action="{%url 'core:teacher' %}" method='get'>
+				
+				<div class="ps-3 ps-lg-4 col-lg-3 col-md-12">
+					<div class="mt-2 bg-light border-1 p-1 border-danger rounded-1">
+						<button type="submit"  class=" border-0 bg-light ps-3 me-3">
+							<i class="fa fa-search text-dark" aria-hidden="true"></i>
 						</button>
-						<input type="search" name="" class="border-0 w-75 bg-light">
+						<input type="search" placeholder='Rechercher' name="searched" class="border-0 p-1 w-75 bg-light" value='{{searched}}'>
 					</div>
-				</form>
-			</div>
-			<div class="d-flex p-5 pt-0 pb-0 justify-content-center w-50">
-				<div class="d-flex m-2">
-					<form>
-						<div class="mt-2 bg-light p-2 ps-4 pe-4 border-danger rounded-pill">
-							<span class="border-0 bg-light p-0 me-3">
-								<i class="fa fa-filter text-dark" aria-hidden="true"></i>
-							</span>
-							<select class="border-0 bg-light">
-								<option>Ordre alphabétique</option>
-								<option>Plus récent</option>
+					
+				</div>
+				<div class=" col-lg-2 col-md-6">
+						<div class="mt-2 bg-light border-1 p-1 border-danger rounded-1">
+							<select name="trier_par_nom" id="" placeholder="Trier par..." class="bg-light text-dark border-0 text-white w-100 rounded p-2">
+								<option value="" selected disabled hidden>Trier </option>
+								<option value="a-z">trier par nom (A-Z)</option>
+								<option value="z-a">trier par nom (Z-A)</option>
 							</select>
 						</div>
-					</form>
 				</div>
-				<div class="d-flex m-2">
-					<button type="button" class="border-0 pe-3 ps-3 add bg-pink text-white  rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
-						<span class="border-0 p-0 me-2">
+				<div class="col-lg-5 d-flex">
+					<div class="col px-3 pe-lg-3 mx-auto aligner">
+						<button type="submit" class="mt-4 btn bg-pink text-white px-5">Rechecher</button>
+					</div>
+					<div class="col ms-4 ps-5 add aligner" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						<button type="button" class="mt-4 btn bg-pink text-white px-4">
 							<i class="fa fa-plus ps-1" aria-hidden="true"></i>
-						</span>Ajouter
-					</button>
+						    Ajouter </button>
+					</div>
 				</div>
-			</div>
-		</div>
-		</div>
-		<div class="container table-responsive py-5 border-0"> 
+			</form>
+		</div> 
 			<table class="table table-bordered table-hover">
-				<thead class="text-white bg-black m-5">
-			    	<tr class="pt-2">
-						{% comment %} <th scope="col">#</th> {% endcomment %}
-						<th scope="col">Nom</th>
-						<th scope="col">Email </th>
-						<th scope="col">Numéro</th>
-						<th scope="col">Actions</th>
-			    	</tr>
-			  	</thead>
-			  	<tbody>
+			  <thead class="text-white bg-black m-5">
+			    <tr class="pt-2">
+			      <th scope="col">#</th>
+			      <th scope="col">Nom</th>
+				  <th scope="col">Email</th>
+				  <th scope="col">Numéro</th>
+			      <th scope="col">Actions</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    
 				{% for teacher in teachers %}
 					<tr>
-						{% comment %} <th scope="row">1</th> {% endcomment %}
+						<th scope="row">{{ forloop.counter }}</th>
 						<td>{{teacher.name}}</td>
 						<td>{{teacher.email}}</td>
 						<td>{{teacher.number}}</td>
 						<td class="text-pink">
-							<i data-bs-toggle="modal" href="#editModalToggle" class="fa fa-pencil" aria-hidden="true"></i>
-							<i data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="fa fa-trash" aria-hidden="true"></i>
+							<i data-bs-toggle="modal" href="#editModalToggle{{teacher.id}}" class="fa fa-pencil" aria-hidden="true"></i>
+							<!--**********************************Edit confirmation modal************************* -->
+							<div class="modal fade" id="editModalToggle{{teacher.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header bg-dark">
+											<h5 class="modal-title text-center text-white" id="exampleModalLabel">ÉDITION DE L'ENSEIGNANT</h5>
+											<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<div id="form-{{teacher.id}}">
+												<form  action="{% url 'core:update_teacher' teacher.id %}" method='post'>
+													{% csrf_token %}
+													<div class="d-grid px-lg-5">
+														<input name='name' type="text" placeholder="Nom de l'enseignant" class="my-3 bg-dark p-2 border-0 text-white rounded" value="{{teacher.name|default_if_none:''}}" required>
+														<input name='email' type="text" placeholder="Email de l'enseignant" class="my-3 bg-dark p-2 border-0 text-white rounded" value="{{teacher.email|default_if_none:''}}" required>
+														<input name='number' type="number" placeholder="Numéro de l'enseignant" class="my-3 bg-dark p-2 border-0 text-white rounded" value="{{teacher.number|default_if_none:''}}" required>
+													</div>
+													<div class="modal-footer d-flex justify-content-center px-5">
+														<button type="submit" class="btn bg-pink text-white px-lg-5">Sauvegarder</button>
+													</div>
+												</form>
+											</div>
+										</div>
+								</div>
+							</div>
+							</div>
+							<i data-bs-toggle="modal" href="#exampleModalToggle{{teacher.id}}" role="button" class="fa fa-trash" aria-hidden="true"></i>
+							<!-- 	**********************************Delete confirmation modal************************* -->
+
+							<div class="modal fade" id="exampleModalToggle{{teacher.id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+								<div class="modal-dialog modal-dialog-centered">
+									<div class="modal-content">
+										<div class="modal-header bg-dark">
+											<h5 class="modal-title text-center text-white" id="exampleModalLabel">CONFIRMATION DE SUPPRESION</h5>
+											<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											Êtes-vous sûr de vouloir supprimer l'enseignant "{{teacher.name}}"?
+										</div>
+										<div class="modal-footer">
+											<button class="bg-pink text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Oui</button>
+											<button class="bg-black text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Non</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</td>
-			    	</tr>
+					</tr>
 				{% endfor %}
-			  	</tbody>
+					
+			  </tbody>
 			</table>
-		</div>
+			</div>
 	</section>
 
 <!-- ********************** Add modal******************************* -->
@@ -93,83 +138,32 @@
 				</div>
 				<div class="modal-body">
 					<div>
-						<form action="{% url 'core:teacher' %}" method="POST">
+						<form  action="{% url 'core:teacher' %}" method='post'>
 							{% csrf_token %}
 							<div class="d-grid px-lg-5">
-					            <input name="name" type="text" placeholder="Nom complet" class="my-3 bg-dark p-2 border-0 text-white rounded">
-					        </div> 
-							<div class="d-grid px-lg-5">   
-								<input name="email" type="email" placeholder="email" class="my-3 bg-dark p-2 border-0 text-white rounded">
-					        </div>  
-							<div class="d-grid px-lg-5">  
-								<input name ="number" type="number" placeholder="Numéro" class="my-3 bg-dark p-2 border-0 text-white rounded">							
-					        </div>
+								<input name='name' type="text" placeholder="Nom de l'enseignant" class="my-3 bg-dark p-2 border-0 text-white rounded" required>
+								<input name='email' type="text" placeholder="Email de l'enseignant" class="my-3 bg-dark p-2 border-0 text-white rounded" required>
+								<input name='number' type="number" placeholder="Numéro de l'enseignant" class="my-3 bg-dark p-2 border-0 text-white rounded" required>
+							</div>
 							<div class="modal-footer d-flex justify-content-center px-5">
 								<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
 							</div>
 						</form>
 					</div>
-				</div>
-				
-		  	</div>
-		</div>
-	</div>
-<!-- 	**********************************Delete confirmation modal************************* -->
-
-
-<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-	  	<div class="modal-content">
-			<div class="modal-header bg-dark">
-				<h5 class="modal-title text-center text-white" id="exampleModalLabel">CONFIRMATION DE SUPPRESION</h5>
-				<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-		    <div class="modal-body">
-		        Êtes-vous sûr de vouloir supprimer cet enseignant ?
-		    </div>
-		    <div class="modal-footer">
-		        <button class="bg-pink text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Oui</button>
-		        <button class="bg-black text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Non</button>
-		    </div>
+	      		</div>
 	    </div>
-    </div>
-</div>
-<!--**********************************Edit confirmation modal************************* -->
-
-	<div class="modal fade" id="editModalToggle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-		<div class="modal-dialog">
-		  	<div class="modal-content">
-				<div class="modal-header bg-dark">
-					<h5 class="modal-title text-center text-white" id="exampleModalLabel">EDITION D'ENSEIGNANT</h5>
-					<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<div>
-						<form action="">
-							<div class="d-grid px-lg-5">
-					            <input type="text" placeholder="Nom" class="my-3 bg-dark p-2 border-0 text-white rounded">
-					            <input type="email" placeholder="email" class="my-3 bg-dark p-2 border-0 text-white rounded">
-					            <input type="number" placeholder="Numéro" class="my-3 bg-dark p-2 border-0 text-white rounded">							
-					        </div>
-							<div class="modal-footer d-flex justify-content-center px-5">
-								<button type="button" class="btn bg-pink text-white px-lg-5">Sauvegarder</button>
-							</div>
-						</form>
-					</div>
-				</div>
-				
-		  	</div>
-		</div>
+	  </div>
 	</div>
-{% endblock %}
 
+</div>
+
+{% endblock %}
 
 
 {% block extra_script %}
 
 	<script type="text/javascript">
 	</script>
-	
 
 {% endblock %}
+

@@ -90,7 +90,7 @@
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header bg-dark">
-											<h5 class="modal-title text-center text-white" id="exampleModalLabel">ÉDITION DE SALLE</h5>
+											<h5 class="modal-title text-center text-white" id="exampleModalLabel">ÉDITION DE LA CLASSE</h5>
 											<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
@@ -126,7 +126,7 @@
 											<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
-											Êtes-vous sûr de vouloir supprimer la salle "{{grade.name}}"?
+											Êtes-vous sûr de vouloir supprimer la classe "{{grade.name}}"?
 										</div>
 										<div class="modal-footer">
 											<button class="bg-pink text-white border-0 p-1 pe-3 ps-3 rounded-3" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Oui</button>
@@ -150,7 +150,7 @@
 		<div class="modal-dialog">
 		  	<div class="modal-content">
 				<div class="modal-header bg-dark">
-					<h5 class="modal-title text-center text-white" id="exampleModalLabel">NOUVELLE SALLE</h5>
+					<h5 class="modal-title text-center text-white" id="exampleModalLabel">NOUVELLE CLASSE</h5>
 					<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
@@ -158,10 +158,10 @@
 						<form  action="{% url 'core:grade'  %}" method='post'>
 							{% csrf_token %}
 							<div class="d-grid px-lg-5">
-								<select name="field" id="" class="my-3 bg-dark p-2 border-0 text-white rounded" value="{{grade.field|default_if_none:''}}">
+								<select name="field" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
 									{% for field in  fields %}<option value="{{field.id}}">{{field.name}}</option>{% endfor %}
 								</select>
-								<select name="level" id="" class="my-3 bg-dark p-2 border-0 text-white rounded" value="{{grade.level|default_if_none:''}}">
+								<select name="level" id="" class="my-3 bg-dark p-2 border-0 text-white rounded">
 									{% for level in  levels %}<option value="{{level.id}}">{{level.name}}</option>{% endfor %}
 								</select>
 								<input type="number" placeholder="Capacité de la salle" class="my-3 bg-dark p-2 border-0 text-white rounded" name='capacity' required>

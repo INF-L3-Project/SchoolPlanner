@@ -22,13 +22,13 @@ class UnitAdmin(admin.ModelAdmin):
 
 class TeacherAdmin(admin.ModelAdmin):
     list_display = ("name", "institution")
-    list_search = ("name",)
-    list_filter = ("institution__name",)
+    list_search = ("name", )
+    list_filter = ("institution__name", )
 
 
 class ProvideAdmin(admin.ModelAdmin):
     list_display = ("planning", "teacher", "unit", "classroom", "group", "day",
-                    "start_time", "end_time")
+                    "range")
     list_filter = ("planning", "teacher__name", "unit__name",
                    "classroom__name", "group__grade__name", "day")
 

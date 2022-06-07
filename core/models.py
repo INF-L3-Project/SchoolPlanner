@@ -23,8 +23,8 @@ class Level(models.Model):
 class Grade(models.Model):
     name = models.CharField(
         max_length=100,
-        null=False,
-        unique=True,
+        null=True,
+        blank=True,
     )
     capacity = models.IntegerField(null=False, default=100)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
@@ -93,25 +93,30 @@ class Planning(models.Model):
 
 
 class Provide(models.Model):
+    HOUR = (
+        ('07h00-9h55', '07h00-9h55'),
+        ('10h05-12h45', '10h05-12h45'),
+        ('13h05-15h55', '13h05-15h55'),
+        ('16h05-18h45', '16h05-18h45'),
+        ('19h05-21h45', '19h05-21h45'),
+    )
+    DAY = (
+        ("Lundi", "Lundi"),
+        ("Mardi", "Mardi"),
+        ('Mercredi', 'Mercredi'),
+        ('Jeudi', 'Jeudi'),
+        ('Vendredi', 'Vendredi'),
+        ('Samedi', 'Samedi'),
+        ('Dimanche', 'Dimanche'),
+    )
+
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     planning = models.ForeignKey(Planning, on_delete=models.CASCADE)
-    day = models.CharField(
-        max_length=100,
-        choices=[(day, day) for day in [
-            "Lundi",
-            "Mardi",
-            "Mercredi",
-            "Jeudi",
-            "Vendredi",
-            "Samedi",
-            "Dimanche",
-        ]],
-    )
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    day = models.CharField(max_length=100, choices=DAY)
+    range = models.CharField(max_length=100, choices=HOUR)
 
     def __str__(self):
         return f"{self.teacher}|{self.unit.code}|{self.classroom}|{self.group.name}"

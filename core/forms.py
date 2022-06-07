@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import User
 from authentication.models import Institution
-from .models import Classroom, Field, Grade, Group, Level, Planning, Provide, Teacher, Unit
+from .models import (Classroom, Field, Grade, Group, Level, Planning, Provide,
+                     Teacher, Unit)
 from django import forms
 
 
@@ -12,11 +12,11 @@ class FieldForm(forms.ModelForm):
         fields = ("name", "abr")
 
     def clean_abr(self):
-        if self.data['abr'] == '':
-            abr = self.data['name'][:4]
+        if self.data["abr"] == "":
+            abr = str(self.data["name"][:4]).upper()
             return abr
         else:
-            return self.data['abr']
+            return str(self.data["abr"]).upper()
 
 
 class LevelForm(forms.ModelForm):
@@ -30,13 +30,14 @@ class GradeForm(forms.ModelForm):
 
     class Meta:
         model = Grade
-        fields = ("field", "level", "capacity")
+        fields = ("field", "level", "capacity", 'name')
 
     def clean_name(self):
-        field = self.cleaned_data["field"]
-        level = self.cleaned_data["level"]
-        name = str(field.abr).upper() + "-" + str(level.abr).upper()
-        return name
+        field = self.cleaned_data['field']
+        level = self.cleaned_data['field']
+        name = f'{field.abr.upper()} - {level.abr.upper()}'
+        print('name')
+        return name.upper()
 
 
 class GroupForm(forms.ModelForm):
@@ -133,6 +134,14 @@ class PlanningForm(forms.ModelForm):
     class Meta:
         model = Planning
         fields = ("name", "school_year", "semester", "grade")
+
+    def clean_grade(self):
+        grade = self.cleaned_data['grade']
+        planning = Planning.objects.filter(grade=grade)
+        if planning.exists:
+            raise forms.ValidationError(
+                'Un emploi de temps a dejà été crée pour cette classe')
+        return grade
 
 
 class AccountForm(forms.ModelForm):
