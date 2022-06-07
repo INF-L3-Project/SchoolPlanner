@@ -30,14 +30,7 @@ class GradeForm(forms.ModelForm):
 
     class Meta:
         model = Grade
-        fields = ("field", "level", "capacity", 'name')
-
-    def clean_name(self):
-        field = self.cleaned_data['field']
-        level = self.cleaned_data['field']
-        name = f'{field.abr.upper()} - {level.abr.upper()}'
-        print('name')
-        return name.upper()
+        fields = ("field", "level", "capacity")
 
 
 class GroupForm(forms.ModelForm):
@@ -138,7 +131,8 @@ class PlanningForm(forms.ModelForm):
     def clean_grade(self):
         grade = self.cleaned_data['grade']
         planning = Planning.objects.filter(grade=grade)
-        if planning.exists:
+        print(planning.values())
+        if planning.exists():
             raise forms.ValidationError(
                 'Un emploi de temps a dejà été crée pour cette classe')
         return grade

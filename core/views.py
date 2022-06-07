@@ -239,13 +239,11 @@ class GradeView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            form.save()
-            return render(
-                request, self.template_name, {
-                    "fields": self.fields,
-                    "levels": self.levels,
-                    "grades": Grade.objects.all()
-                })
+            grade = form.save(commit=False)
+            grade.name = str(grade.field.abr).upper() + "-" + str(
+                grade.level.abr).upper()
+            grade.save()
+            return redirect("core:grade")
         else:
             print(form.errors)
             return render(request, self.template_name, {})
