@@ -1,0 +1,511 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} SchoolPlanner - Timetable {% endblock %}
+
+{% block extra_style %}
+	<link rel="stylesheet" type="text/css" href="{% static 'core/css/timetable.css' %}">
+{% endblock %}
+
+{% block content %}
+
+	<div class="ps-lg-5">
+		<div class="container-fluid my-4 ps-lg-5 w-100">
+
+			<div class="container">
+				<div class="text-center">
+					<h6 class="mb-4 fw-bold">
+						<p>EMPLOIS DU TEMPS : {{planning.nom|title}}</p>
+						<p>{{planning.semester|title}}__ANNEE ACADEMIQUE {{planning.school_year}}</p>
+						<p>{{planning.grade.field.name|title}} ({{planning.grade.field.abr}})</p>
+						<p>{{planning.grade.name}}</p>
+					</h6>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-bordered" id="editableTable">
+							<thead>
+								<tr>
+									<th></th>
+									<th class="th">Lundi</th>
+									<th class="th">Mardi</th>
+									<th class="th">Mercredi</th>
+									<th class="th">Jeudi</th>
+									<th class="th">Vendredi</th>
+									<th class="th">Samedi</th>
+									<th class="th">Dimanche</th>
+								</tr>
+							</thead>
+							<tbody id="tbody" data-bs-toggle="modal" data-bs-target="#exampleModal">
+								<tr data-id="1">
+									<td data-field="name" class="fw-bold text-center">07h00-09h55</td>
+									{% for schedule in cells %}
+                                        {% if schedule.day == 'Lundi' and schedule.range == '07h00-09h55' %}
+                                        <td class="text-decoration-none bg-pink2" id="td-{{cell.id}}" data-field="{{cell.day}}">
+                                            <a title="Détails">
+                                                <div class="p-2 text-center">
+                                                    <p class="fs-5 text-center">{{cell.unit.code}}</p>
+                                                    <p class="my-0">{{cell.teacher.name}}</p>
+                                                    <p>{{cell.classroom.name}}</p>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        {% elif schedule.day == 'Mardi' and schedule.range == '07h00-09h55' %} 
+                                        <td class="text-decoration-none bg-pink2" id="td-{{cell.id}}" data-field="{{cell.day}}">
+                                            <a title="Détails">
+                                                <div class="p-2 text-center">
+                                                    <p class="fs-5 text-center">{{cell.unit.code}}</p>
+                                                    <p class="my-0">{{cell.teacher.name}}</p>
+                                                    <p>{{cell.classroom.name}}</p>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        {% endif %}
+                                    {% endfor %}
+									<td class="text-decoration-none" data-field="wednesday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="thursday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="friday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="saturday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="sunday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+								</tr>
+								<tr data-id="2">
+									<td data-field="name" class="fw-bold text-center">10h05-12h55</td>
+									<td class="text-decoration-none" data-field="monday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="tuesday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="wednesday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="thursday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="friday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="saturday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="sunday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+								</tr>
+								<tr data-id="3">
+									<td data-field="name" class="fw-bold text-center">13h05-15h55</td>
+									<td class="text-decoration-none" data-field="monday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="tuesday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="wednesday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="thursday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="friday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="saturday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="sunday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+								</tr>
+								<tr data-id="4">
+									<td data-field="name" class="fw-bold text-center">16h05-18h55</td>
+									<td class="text-decoration-none" data-field="monday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="tuesday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="wednesday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="thursday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="friday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="saturday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="sunday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+								</tr>
+								<tr data-id="5">
+									<td data-field="name" class="fw-bold text-center">19h05-21h55</td>
+									<td class="text-decoration-none" data-field="monday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="tuesday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="wednesday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="thursday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="friday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="saturday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+									<td class="text-decoration-none" data-field="sunday">
+										<a title="Détails">
+											<div class="p-2 text-center">
+												<p class="fs-5 text-center"></p>
+												<p class="my-0"></p>
+												<p></p>
+											</div>
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+							  	<div class="modal-content">
+									<div class="modal-header bg-dark">
+										<h5 class="modal-title text-center text-white" id="exampleModalLabel">PARAMÈTRES PLANNING</h5>
+										<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<div>
+											<p class="mt-3">Cours: <span id="course" class="fw-bold"></span></p>
+											<p class="mt-3">Enseignant: <span id="teacher" class="fw-bold"></span></p>
+											<p class="mt-3">Salle: <span id="classroom" class="fw-bold"></span></p>
+										</div>
+										<div>
+											<div class="d-flex justify-content-between mt-4">
+												<button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button>
+												<button onclick="show_hide()" class="bg-transparent border-0">
+													<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
+												</button>
+											</div>
+											<div id="form">
+												<form action="">
+													<div class="d-grid px-lg-5">
+														<select name="ue" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
+															<option value="INF3036">INF3036</option>
+															<option value="INF3096">INF3096</option>
+															<option value="INF3086">INF3086</option>
+														</select>
+														<select name="teacher" id="teachers" class="my-3 bg-dark p-2 border-0 text-white rounded">
+															<option value="Dr Monthe">Dr Monthe</option>
+															<option value="Dr Djiomekong">Dr Djiomekong</option>
+															<option value="Dr Kimbi">Dr Kimbi</option>
+														</select>
+														<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
+															<option value="S006">S006</option>
+															<option value="A250">A250</option>
+															<option value="R110">R110</option>
+														</select>
+													</div>
+													<div class="modal-footer d-flex justify-content-center px-5">
+														<button type="button" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+									
+							  	</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+
+{% endblock %}
+
+
+
+{% block extra_script %}
+
+	<script type="text/javascript">
+
+		//show course, class and teacher after select in dropdown
+		$('#courses').on('input', function () {
+        	$('#course').text($('#courses').val());
+    	})
+		$('#teachers').on('input', function () {
+        	$('#teacher').text($('#teachers').val());
+    	})
+		$('#classrooms').on('input', function () {
+        	$('#classroom').text($('#classrooms').val());
+    	})
+
+		let tBody = document.getElementById('tbody');
+		let modal = document.getElementById('exampleModal');
+		let td = tBody.getElementsByTagName('td');
+		let span = document.getElementsByClassName("close")[0];
+
+		let course = document.getElementById('course').innerText;
+		let teacher = document.getElementById('teacher').innerText;
+		let classroom = document.getElementById('classroom').innerText;
+
+		// When the user clicks on the button, open the modal 
+		for (let i = 0; i < td.length; i++) {
+			td[i].onclick = function() {
+				modal.style.display = "block";
+				console.log(i);
+				console.log(course, teacher, classroom)
+
+				//td[i].innerHTML = course;
+/*
+			//create box container
+				a = document.createElement('a');
+				a.setAttribute("title", "Détails");
+				td[i].appendChild(a);
+				div = document.createElement('div');
+				div.setAttribute("class", "p-2 text-center");
+				a.appendChild(div);
+			//set course
+				p = document.createElement('p');
+				p.setAttribute("class", "fs-5 text-center");
+				div.appendChild(p);
+				p.innerHTML = course;
+			//set teacher
+				p = document.createElement('p');
+				p.setAttribute("class", "my-0");
+				div.appendChild(p);
+				p.innerHTML = teacher;
+			//set classroom
+				p = document.createElement('p');
+				div.appendChild(p);
+				p.innerHTML = classroom;
+*/
+			};
+		}
+
+
+		function show_hide() {
+			var x = document.getElementById("form");
+			if (x.style.display === "none") {
+				x.style.display = "block";
+			} else {
+				x.style.display = "none";
+			}
+		}
+
+	</script>
+	
+
+{% endblock %}

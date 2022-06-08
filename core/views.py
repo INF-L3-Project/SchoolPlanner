@@ -52,20 +52,21 @@ class HomeView(View):
         else:
             messages.error(request, form.errors)
             plannings = Planning.objects.filter(institution=institution.id)
-            grades = Grade.objects.filter(field__institution=institution.id)
+            groups = Group.objects.filter(
+                drade__field__institution=institution.id)
             return render(request, self.template_name, {
                 'form': form,
                 "plannings": plannings,
-                "grades": grades
+                "grades": groups
             })
 
     def get(self, request, *args, **kwargs):
         institution = get_object_or_404(Institution, user=request.user.id)
         plannings = Planning.objects.filter(institution=institution.id)
-        grades = Grade.objects.filter(field__institution=institution.id)
+        groups = Group.objects.filter(grade__field__institution=institution.id)
         return render(request, self.template_name, {
             "plannings": plannings,
-            "grades": grades
+            "grades": groups
         })
 
 
@@ -390,18 +391,37 @@ class GroupView(View):
 
     template_name = "core/group.html"
     form_class = GroupForm
+    groups = Group.objects.all()
 
     def post(self, request, *args, **kwargs):
+        groups = self.groups.filter(
+            grade__field__institution=request.user.institution)
         form = self.form_class(data=request.POST)
         if form.is_valid():
             form.save()
             return redirect("core:group")
         else:
-            print(form.errors)
-            return render(request, self.template_name, {})
+            messages.error(request, form.errors)
+            return render(
+                request,
+                self.template_name,
+                {
+                    'form':
+                    form,
+                    'groups':
+                    groups,
+                    "grades":
+                    # Filtrage des classes selon les fields et levels de l'utilisateur courant
+                    Grade.objects.filter(
+                        Q(field_id__in=Field.objects.filter(
+                            institution_id=request.user.institution.id))
+                        | Q(level_id__in=Level.objects.filter(
+                            institution_id=request.user.institution.id)))
+                })
 
     def get(self, request, *args, **kwargs):
         # Filtrage des groupes par rapport aux classes creer par l'utilisateur courant
+        
         groups = Group.objects.filter(grade_id__in=Grade.objects.filter(
             Q(field_id__in=Field.objects.filter(
                 institution_id=request.user.institution.id))
