@@ -33,7 +33,7 @@
 									{% endfor %}
 								</tr>
 							</thead>
-							<tbody id="tbody" data-bs-toggle="modal" data-bs-target="#exampleModal">
+							<tbody id="tbody">
 								{% for hour in ranges %}
 									<tr data-id="{{forloop.counter}}">
 
@@ -42,31 +42,129 @@
 										{% for day in week_days %}
 
 											{% if first_cell.day == day|first and first_cell.range == hour|first %}
-												<td class="text-decoration-none bg-pink2" data-field="{{first_cell.day}}">
+												<td onclick="changeCell('{{first_cell.id}}', '{{first_cell.classroom.name}}')" class="text-decoration-none bg-pink2" data-field="{{first_cell.day}}" data-bs-toggle="modal" href="#exampleModal{{first_cell.id}}">
 													<a title="Détails">
 														<div class="p-2 text-center">
 															<p class="fs-5 text-center">{{first_cell.unit.code}}</p>
 															<p class="my-0">{{first_cell.teacher.name}}</p>
-															<p>{{first_cell.classroom.name}}</p>
+															<p>{{first_cell.classroom.name}} {{cell.id}}</p>
 														</div>
 													</a>
 												</td>
 											{% else %}
-											<td class="text-decoration-none" data-field="">
-												<a title="Détails">
-													<div class="p-2 text-center">
-														<p class="fs-5 text-center"></p>
-														<p class="my-0">-</p>
-														<p></p>
-													</div>
-												</a>
-											</td>
+												{% with empty_var=0 %}
+												<td id="cell" onclick="changeCell(`{{first_cell.id|default_if_none:''}}`, '{{empty_var}}')" class="text-decoration-none"  data-bs-toggle="modal" href="#exampleModal_cell">
+													<a title="Détails">
+														<div class="p-2 text-center">
+															<p class="fs-5 text-center d-none">{{empty_var}}</p>
+															<p class="my-0">-</p>
+															<p></p>
+														</div>
+													</a>
+												</td>
+												{% endwith %}
 											{% endif %}
+											<div class="modal fade" id="exampleModal_cell" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header bg-dark">
+															<h5 class="modal-title text-center text-white" id="exampleModalLabel">PARAMÈTRES PLANNING</h5>
+															<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+														</div>
+														<div class="modal-body">
+															<div>
+																<p class="mt-3">Cours: <span id="course" class="fw-bold"></span></p>
+																<p class="mt-3">Enseignant: <span id="teacher" class="fw-bold"></span></p>
+																<p class="mt-3">Salle: <span id="classroom" class="fw-bold"></span></p>
+															</div>
+															<div>
+																<div class="d-flex justify-content-between mt-4">
+																	<button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button>
+																	<button onclick="show_hide('{{first_cell.id}}')" class="bg-transparent border-0">
+																		<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
+																	</button>
+																</div>
+																<div id="form{{first_cell.id}}">
+																	<form action="">
+																		<div class="d-grid px-lg-5">
+																			<select name="unit" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
+																				<option value="" selected disabled hidden>selectionner une unité</option>
+																				{% for unit in units %}<option value="{{unit.id}}">{{unit.code}}</option>{% endfor %}
+																			</select>
+																			<select name="teacher" id="teachers" class="my-3 bg-dark p-2 border-0 text-white rounded">
+																				<option value="" selected disabled hidden>selectionner un enseignant</option>
+																				{% for teacher in teachers %}<option value="{{teacher.id}}">{{teacher.name}}</option>{% endfor %}
+																			</select>
+																			<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
+																				<option value="" selected disabled hidden>selectionner une salle</option>
+																				{% for room in classrooms %}<option value="{{room.id}}">{{room.name}}</option>{% endfor %}
+																			</select>
+																		</div>
+																		<div class="modal-footer d-flex justify-content-center px-5">
+																			<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+											<div class="modal fade" id="exampleModal{{first_cell.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header bg-dark">
+															<h5 class="modal-title text-center text-white" id="exampleModalLabel">PARAMÈTRES PLANNING</h5>
+															<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+														</div>
+														<div class="modal-body">
+															<div>
+																<p class="mt-3">Cours: <span id="course" class="fw-bold">{{first_cell.unit.code}} - {{first_cell.unit.name}}</span></p>
+																<p class="mt-3">Enseignant: <span id="teacher" class="fw-bold">{{first_cell.teacher.name}}</span></p>
+																<p class="mt-3">Salle: <span id="classroom" class="fw-bold">{{first_cell.classroom.name}}</span></p>
+															</div>
+															<div>
+																<div class="d-flex justify-content-between mt-4">
+																	<button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button>
+																	<button onclick="show_hide('{{first_cell.id}}')" class="bg-transparent border-0">
+																		<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
+																	</button>
+																</div>
+																<div id="form{{first_cell.id}}">
+																	<form action="">
+																		<div class="d-grid px-lg-5">
+																			<select name="unit" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
+																				<option value="" selected disabled hidden>selectionner une unité</option>
+																				{% for unit in units %}<option value="{{unit.id}}">{{unit.code}}</option>{% endfor %}
+																			</select>
+																			<select name="teacher" id="teachers" class="my-3 bg-dark p-2 border-0 text-white rounded">
+																				<option value="" selected disabled hidden>selectionner un enseignant</option>
+																				{% for teacher in teachers %}<option value="{{teacher.id}}">{{teacher.name}}</option>{% endfor %}
+																			</select>
+																			<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
+																				<option value="" selected disabled hidden>selectionner une salle</option>
+																				{% for room in classrooms %}<option value="{{room.id}}">{{room.name}}</option>{% endfor %}
+																			</select>
+																		</div>
+																		<div class="modal-footer d-flex justify-content-center px-5">
+																			<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+
+											
 												
 											
 											{% for cell in cells  %}
 												{% if cell.day == day|first and cell.range == hour|first %}
-													<td class="text-decoration-none bg-pink2" id="td-{{cell.id}}" data-field="{{cell.day}}">
+													<td onclick="changeCell('{{cell.id}}', '{{cell.classroom.name}}')" class="text-decoration-none bg-pink2" data-field="{{cell.day}}" data-bs-toggle="modal" href="#exampleModal{{cell.id}}">
 														<a title="Détails">
 															<div class="p-2 text-center">
 																<p class="fs-5 text-center">{{cell.unit.code}}</p>
@@ -75,65 +173,66 @@
 															</div>
 														</a>
 													</td>
-												
+													
 												{% endif %}
+												<div>
+													<div class="modal fade" id="exampleModal{{cell.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-header bg-dark">
+																	<h5 class="modal-title text-center text-white" id="exampleModalLabel">PARAMÈTRES PLANNING</h5>
+																	<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+																</div>
+																<div class="modal-body">
+																	<div>
+																		<p class="mt-3">Cours: <span id="course" class="fw-bold">{{cell.unit.code}} - {{cell.unit.name}}</span></p>
+																		<p class="mt-3">Enseignant: <span id="teacher" class="fw-bold">{{cell.teacher.name}}</span></p>
+																		<p class="mt-3">Salle: <span id="classroom" class="fw-bold">{{cell.classroom.name}}</span></p>
+																	</div>
+																	<div>
+																		<div class="d-flex justify-content-between mt-4">
+																			<button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button>
+																			<button onclick="show_hide('{{cell.id}}')" class="bg-transparent border-0">
+																				<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
+																			</button>
+																		</div>
+																		<div id="form{{cell.id}}">
+																			<form action="">
+																				<div class="d-grid px-lg-5">
+																					<select name="unit" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
+																						<option value="" selected disabled hidden>selectionner une unité</option>
+																						{% for unit in units %}<option value="{{unit.id}}">{{unit.code}}</option>{% endfor %}
+																					</select>
+																					<select name="teacher" id="teachers" class="my-3 bg-dark p-2 border-0 text-white rounded">
+																						<option value="" selected disabled hidden>selectionner un enseignant</option>
+																						{% for teacher in teachers %}<option value="{{teacher.id}}">{{teacher.name}}</option>{% endfor %}
+																					</select>
+																					<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
+																						<option value="" selected disabled hidden>selectionner une salle</option>
+																						{% for room in classrooms %}<option value="{{room.id}}">{{room.name}}</option>{% endfor %}
+																					</select>
+																				</div>
+																				<div class="modal-footer d-flex justify-content-center px-5">
+																					<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+																				</div>
+																			</form>
+																		</div>
+																	</div>
+																</div>
+																
+															</div>
+														</div>
+													</div>
+												</div>	
 													
 											{% endfor %}
-												
-
 											
 										{% endfor %}
 									</tr>
 								</div>
 								{% endfor %}
 							</tbody>
-							<div class="modal fade" id="exampleModal{{cell.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
-									  <div class="modal-content">
-										<div class="modal-header bg-dark">
-											<h5 class="modal-title text-center text-white" id="exampleModalLabel">PARAMÈTRES PLANNING</h5>
-											<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<div>
-												<p class="mt-3">Cours: <span id="course" class="fw-bold">{{cell.unit.code}} - {{cell.unit.name}}</span></p>
-												<p class="mt-3">Enseignant: <span id="teacher" class="fw-bold">{{cell.teacher.name}}</span></p>
-												<p class="mt-3">Salle: <span id="classroom" class="fw-bold">{{cell.classroom.name}}</span></p>
-											</div>
-											<div>
-												<div class="d-flex justify-content-between mt-4">
-													<button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button>
-													<button onclick="show_hide('{{cell.id}}')" class="bg-transparent border-0">
-														<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
-													</button>
-												</div>
-												<div id="form{{cell.id}}">
-													<form action="">
-														<div class="d-grid px-lg-5">
-															<select name="unit" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
-																<option value="" selected disabled hidden>selectionner une unité</option>
-																{% for unit in units %}<option value="{{unit.id}}">{{unit.code}}</option>{% endfor %}
-															</select>
-															<select name="teacher" id="teachers" class="my-3 bg-dark p-2 border-0 text-white rounded">
-																<option value="" selected disabled hidden>selectionner un enseignant</option>
-																{% for teacher in teachers %}<option value="{{teacher.id}}">{{teacher.name}}</option>{% endfor %}
-															</select>
-															<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
-																<option value="" selected disabled hidden>selectionner une salle</option>
-																{% for room in classrooms %}<option value="{{room.id}}">{{room.name}}</option>{% endfor %}
-															</select>
-														</div>
-														<div class="modal-footer d-flex justify-content-center px-5">
-															<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
-														</div>
-													</form>
-												</div>
-											</div>
-										</div>
-										
-									  </div>
-								</div>
-							</div>
+							
 						</table>
 				</div>
 			</div>
@@ -162,50 +261,7 @@
         	$('#classroom').text($('#classrooms').val());
     	})
 
-		let tBody = document.getElementById('tbody');
-		let modal = document.getElementById('exampleModal');
-		let td = tBody.getElementsByTagName('td');
-		let span = document.getElementsByClassName("close")[0];
-
-		let course = document.getElementById('course').innerText;
-		let teacher = document.getElementById('teacher').innerText;
-		let classroom = document.getElementById('classroom').innerText;
-		let after = document.getElementById("td-{{cell.id}}").innerText;
-
-		// When the user clicks on the button, open the modal 
-		for (let i = 0; i < td.length; i++) {
-			td[i].onclick = function() {
-				modal.style.display = "block";
-				console.log(after);
-				console.log(course, teacher, classroom)
-
-				//td[i].innerHTML = course;
-/*
-			//create box container
-				a = document.createElement('a');
-				a.setAttribute("title", "Détails");
-				td[i].appendChild(a);
-				div = document.createElement('div');
-				div.setAttribute("class", "p-2 text-center");
-				a.appendChild(div);
-			//set course
-				p = document.createElement('p');
-				p.setAttribute("class", "fs-5 text-center");
-				div.appendChild(p);
-				p.innerHTML = course;
-			//set teacher
-				p = document.createElement('p');
-				p.setAttribute("class", "my-0");
-				div.appendChild(p);
-				p.innerHTML = teacher;
-			//set classroom
-				p = document.createElement('p');
-				div.appendChild(p);
-				p.innerHTML = classroom;
-*/
-			};
-		}
-
+		
 
 		function show_hide(id_form) {
 			var x = document.getElementById("form-"+id_form);
@@ -214,6 +270,38 @@
 			} else {
 				x.style.display = "none";
 			}
+		}
+
+		function changeCell(id_cell, classroom){
+
+			let td = document.getElementsByTagName('td');
+			for (let i = 0; i < td.length; i++) {
+				td[i].onclick = function() {
+					//modal.style.display = "block";
+					//console.log(i);
+					//console.log(course, teacher, classroom)
+
+					if(classroom == 0){
+						classroom = i
+						//console.log(classroom)
+						//this.style.display='none';
+					}
+					console.log(id_cell, classroom)
+
+					$.fn.test = function() {
+						return this.each(function(){
+							var new_id = i;
+							$(this).attr('id',   this.id + '_' + new_id);
+						});
+					};
+
+					$(document).ready(function() {
+						$('#cell').test()
+					});
+				}
+			}
+
+			
 		}
 
 	</script>

@@ -1,10 +1,14 @@
 from pprint import pprint
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.views import View
+from django.views.generic import TemplateView, View
 from authentication.forms import LoginForm, RegisterForm
 from django.forms import ValidationError
 from django.contrib import messages
+
+
+class IndexView(TemplateView):
+    template_name = 'authentication/home.html'
 
 
 class LoginView(View):
