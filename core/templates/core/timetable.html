@@ -10,7 +10,7 @@
 {% block content %}
 
 	<div class="ps-lg-5">
-		<div class="container-fluid my-4 ps-lg-5 w-100">
+		<div id="content" class="container-fluid my-4 ps-lg-5 w-100">
 
 			<div class="container">
 				<div class="text-center">
@@ -56,16 +56,16 @@
 												</td>
 											{% else %}
 												{% with empty_var=first_cell.rand %}
-												<td id="cell" onclick="changeCell(`{{empty_var}}`, '{{empty_var}}')" class="text-decoration-none"  data-bs-toggle="modal" href="#exampleModal_cell">
+												<td id="cell" onclick="changeCell(`{{empty_var}}`, '{{empty_var}}')" class="text-decoration-none"  data-bs-toggle="modal" href="#exampleModal{{empty_var}}">
 													<a title="Détails">
 														<div class="p-2 text-center">
-															<p class="fs-5 text-center d-none">{{empty_var}}</p>
-															<p class="my-0">{{empty_var}}</p>
+															<p class="fs-5 text-center"></p>
+															<p class="my-0"></p>
 															<p></p>
 														</div>
 													</a>
 												</td>
-												<div class="modal fade" id="exampleModal_cell{{empty_var}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal fade" id="exampleModal{{empty_var}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 													<div class="modal-dialog">
 														<div class="modal-content">
 															<div class="modal-header bg-dark">
@@ -250,17 +250,24 @@
 						</table>
 				</div>
 			</div>
-
-
 		</div>
-	</div>
 
+		<div class="ps-lg-5 ms-3 mt-5">
+			<div id="editor"></div>
+			<button id="cmd" class="p-2 border-0 rounded px-5 bg-dark text-light">Imprimer</button>
+		</div>
+
+	</div>
+	
 
 {% endblock %}
 
 
 
 {% block extra_script %}
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script> 
 
 	<script type="text/javascript">
 
@@ -317,6 +324,23 @@
 
 			
 		}
+
+		//function to print timetable
+
+		let doc = new jsPDF();
+		let specialElementHandlers = {
+			'#editor': function (element, renderer) {
+				return true;
+			}
+		};
+
+		$('#cmd').click(function () {
+			doc.fromHTML($('#content').html(), 15, 15, {
+				'width': 170,
+					'elementHandlers': specialElementHandlers
+			});
+			doc.save('timetable.pdf');
+		});
 
 	</script>
 	
