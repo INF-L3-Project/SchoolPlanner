@@ -51,7 +51,7 @@
 														<div class="p-2 text-center">
 															<p class="fs-5 text-center">{{first_cell.unit.code}}</p>
 															<p class="my-0">{{first_cell.teacher.name}}</p>
-															<p>{{first_cell.classroom.name}} {{cell.id}}</p>
+															<p>{{first_cell.classroom.name}}</p>
 														</div>
 													</a>
 												</td>
@@ -66,56 +66,6 @@
 														</div>
 													</a>
 												</td>
-												<div class="modal fade" id="exampleModal{{empty_var}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-													<div class="modal-dialog">
-														<div class="modal-content">
-															<div class="modal-header bg-dark">
-																<h5 class="modal-title text-center text-white" id="exampleModalLabel">	AJOUTER UNE PLAGE</h5>
-																<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
-															</div>
-															<div class="modal-body">
-																<div>
-																	<div class="d-flex justify-content-between mt-4">
-																		<button onclick="show_hide('{{empty_var}}')" class="bg-transparent border-0">
-																			<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Ajouter</span>
-																		</button>
-																	</div>
-																	<div id="form{{empty_var}}">
-																		<form action="{% url 'core:edit_shedule' planning.id %}" method='post'>
-																			{% csrf_token %}
-																			<div class="d-grid px-lg-5">
-																				<select name="unit" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
-																					<option value="" selected disabled hidden>selectionner une unité</option>
-																					{% for unit in units %}<option value="{{unit.id}}">{{unit.code}}</option>{% endfor %}
-																				</select>
-																				<select name="teacher" id="teachers" class="my-3 bg-dark p-2 border-0 text-white rounded">
-																					<option value="" selected disabled hidden>selectionner un enseignant</option>
-																					{% for teacher in teachers %}<option value="{{teacher.id}}">{{teacher.name}}</option>{% endfor %}
-																				</select>
-																				<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
-																					<option value="" selected disabled hidden>selectionner une salle</option>
-																					{% for room in classrooms %}<option value="{{room.id}}">{{room.name}}</option>{% endfor %}
-																				</select>
-																				<select name="group" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
-																					<option value="" selected disabled hidden>selectionner un groupe/specialité</option>
-																					{% for group in groups %}<option value="{{group.id}}">{{group.name}}</option>{% endfor %}
-																				</select>
-																				<input type="text"  hidden name="day" value="{{day|first}}" required>
-																				<input type="text"  hidden name="range" value="{{hour|first}}" required>
-																				<input type="text"  hidden name="planning" value="{{planning.id}}" required>
-																			</div>
-																			<div class="modal-footer d-flex justify-content-center px-5">
-																				<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
-																			</div>
-																		</form>
-																	</div>
-																</div>
-															</div>
-															
-														</div>
-													</div>
-												</div>
-		
 												{% endwith %}
 											{% endif %}
 												<div class="modal fade" id="exampleModal{{first_cell.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -130,43 +80,6 @@
 																<p class="mt-3">Cours: <span id="course" class="fw-bold">{{first_cell.unit.code}} - {{first_cell.unit.name}}</span></p>
 																<p class="mt-3">Enseignant: <span id="teacher" class="fw-bold">{{first_cell.teacher.name}}</span></p>
 																<p class="mt-3">Salle: <span id="classroom" class="fw-bold">{{first_cell.classroom.name}}</span></p>
-															</div>
-															<div>
-																<div class="d-flex justify-content-between mt-4">
-																
-																{% if first_cell.id %}
-																<a href="{% url 'core:delete_provide' first_cell.id %}"><button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button></a>
-																{% endif %}
-																	<button onclick="show_hide('{{first_cell.id}}')" class="bg-transparent border-0">
-																		<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
-																	</button>
-																</div>
-																<div id="form{{first_cell.id}}">
-																	<form action="{% url 'core:update_provide' first_cell.id %}" method='post'>
-																		{% csrf_token %}
-																		<div class="d-grid px-lg-5">
-																			<select name="unit" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
-																				<option value="" selected disabled hidden>selectionner une unité</option>
-																				{% for unit in units %}<option value="{{unit.id}}">{{unit.code}}</option>{% endfor %}
-																			</select>
-																			<select name="teacher" id="teachers" class="my-3 bg-dark p-2 border-0 text-white rounded">
-																				<option value="" selected disabled hidden>selectionner un enseignant</option>
-																				{% for teacher in teachers %}<option value="{{teacher.id}}">{{teacher.name}}</option>{% endfor %}
-																			</select>
-																			<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
-																				<option value="" selected disabled hidden>selectionner une salle</option>
-																				{% for room in classrooms %}<option value="{{room.id}}">{{room.name}}</option>{% endfor %}
-																			</select>
-																			<select name="group" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
-																				<option value="" selected disabled hidden>selectionner un groupe/specialité</option>
-																				{% for group in groups %}<option value="{{group.id}}">{{group.name}}</option>{% endfor %}
-																			</select>
-																		</div>
-																		<div class="modal-footer d-flex justify-content-center px-5">
-																			<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
-																		</div>
-																	</form>
-																</div>
 															</div>
 														</div>
 														
@@ -188,7 +101,6 @@
 															</div>
 														</a>
 													</td>
-													
 												{% endif %}
 												<div>
 													<div class="modal fade" id="exampleModal{{cell.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -203,42 +115,6 @@
 																		<p class="mt-3">Cours: <span id="course" class="fw-bold">{{cell.unit.code}} - {{cell.unit.name}}</span></p>
 																		<p class="mt-3">Enseignant: <span id="teacher" class="fw-bold">{{cell.teacher.name}}</span></p>
 																		<p class="mt-3">Salle: <span id="classroom" class="fw-bold">{{cell.classroom.name}}</span></p>
-																	</div>
-																	<div>
-																		<div class="d-flex justify-content-between mt-4">
-																			{% if cell %}
-																			<a href="{% url 'core:delete_provide' cell.id %}"><button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button></a>
-																			{% endif %}
-																			<button onclick="show_hide('{{cell.id}}')" class="bg-transparent border-0">
-																				<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
-																			</button>
-																		</div>
-																		<div id="form{{cell.id}}">
-																			<form action="{% url 'core:update_provide' cell.id %}" method='post'>
-																				{% csrf_token %}
-																				<div class="d-grid px-lg-5">
-																					<select name="unit" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
-																						<option value="" selected disabled hidden>selectionner une unité</option>
-																						{% for unit in units %}<option value="{{cell.unit.id}}">{{unit.code}}</option>{% endfor %}
-																					</select>
-																					<select name="teacher" id="teachers" class="my-3 bg-dark p-2 border-0 text-white rounded">
-																						<option value="" selected disabled hidden>selectionner un enseignant</option>
-																						{% for teacher in teachers %}<option value="{{teacher.id}}">{{teacher.name}}</option>{% endfor %}
-																					</select>
-																					<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded" {{cell.classroom.name}}>
-																						<option value="" selected disabled hidden>selectionner une salle</option>
-																						{% for room in classrooms %}<option value="{{room.id}}">{{room.name}}</option>{% endfor %}
-																					</select>
-																					<select name="group" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded" value='{{cell.group.name}}'>
-																						<option value="" selected disabled hidden>selectionner un groupe/specialité</option>
-																						{% for group in groups %}<option value="{{group.id}}">{{group.name}}</option>{% endfor %}
-																					</select>
-																				</div>
-																				<div class="modal-footer d-flex justify-content-center px-5">
-																					<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
-																				</div>
-																			</form>
-																		</div>
 																	</div>
 																</div>
 																

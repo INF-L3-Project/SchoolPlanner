@@ -67,6 +67,7 @@ class HomeView(View):
         groups = Group.objects.filter(grade__field__institution=institution.id)
         classrooms = Classroom.objects.filter(institution=institution.id)
         teachers = Teacher.objects.filter(institution=institution.id)
+
         provides = Provide.objects.all()
 
         afficher_salle = request.GET.get("afficher_salle")
@@ -78,13 +79,53 @@ class HomeView(View):
             provides = Provide.objects.filter(classroom=afficher_teacher)
             pprint(provides)
 
-        return render(request, self.template_name, {
-            "plannings": plannings,
-            "grades": groups,
-            "teachers":teachers,
-            "classrooms":classrooms,
-        })
+        pprint(provides.values)
+        return render(
+            request, self.template_name, {
+                "plannings": plannings,
+                "grades": groups,
+                "teachers": teachers,
+                "classrooms": classrooms,
+                'cells': provides,
+                'first_cell': provides.first(),
+                'week_days': Provide.DAY,
+                'ranges': Provide.HOUR,
+                'groups': groups,
+            })
 
+
+# class SheduleView(View):
+#     template_name = 'core/shedule.html'
+
+#     def get(self, request, *args, **kwargs):
+#         planning = get_object_or_404(Planning, id=kwargs['pk'])
+#         grade = get_object_or_404(Grade, id=planning.grade.id)
+#         groups = Group.objects.filter(grade=grade)
+#         classrooms = Classroom.objects.filter(
+#             institution=planning.institution.id)
+#         teachers = Teacher.objects.filter(institution=planning.institution.id)
+#         units = Unit.objects.filter(grade=grade.id)
+#         cells = Provide.objects.filter(planning=planning.id).order_by('range')
+
+#         first_cell = cells.first()
+#         if first_cell:
+#             cells = cells.exclude(id=cells.first().id)
+#         pprint(units.values())
+
+#         # if not provide.exists():
+#         #     provide = None
+#         return render(
+#             request, self.template_name, {
+#                 'planning': planning,
+#                 'cells': cells,
+#                 'first_cell': first_cell,
+#                 'week_days': Provide.DAY,
+#                 'ranges': Provide.HOUR,
+#                 'groups': groups,
+#                 'classrooms': classrooms,
+#                 'teachers': teachers,
+#                 'units': units
+#             })
 
 
 class EditScheduleView(View):
