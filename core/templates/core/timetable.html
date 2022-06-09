@@ -80,7 +80,7 @@
 																			<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Ajouter</span>
 																		</button>
 																	</div>
-																	<div id="form{{empty_var}}">
+																	<div id="form-{{empty_var}}">
 																		<form action="{% url 'core:edit_shedule' planning.id %}" method='post'>
 																			{% csrf_token %}
 																			<div class="d-grid px-lg-5">
@@ -141,7 +141,7 @@
 																		<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
 																	</button>
 																</div>
-																<div id="form{{first_cell.id}}">
+																<div id="form-{{first_cell.id}}">
 																	<form action="{% url 'core:update_provide' first_cell.id %}" method='post'>
 																		{% csrf_token %}
 																		<div class="d-grid px-lg-5">
@@ -213,7 +213,7 @@
 																				<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
 																			</button>
 																		</div>
-																		<div id="form{{cell.id}}">
+																		<div id="form-{{cell.id}}">
 																			<form action="{% url 'core:update_provide' cell.id %}" method='post'>
 																				{% csrf_token %}
 																				<div class="d-grid px-lg-5">
@@ -298,8 +298,6 @@
 				x.style.display = "none";
 			}
 		}
-
-		
 
 		function changeCell(id_cell, classroom){
 
