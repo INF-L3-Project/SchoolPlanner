@@ -16,13 +16,6 @@
 			<div class="d-flex justify-content-between">
 				<h3 class="fw-bold mb-4">Mes emplois de temps</h3>
 				
-				<div>
-					<select id="selectAction" name="class" class="mt-4 bg-dark p-2 border-0 text-white rounded">
-						<option value="class">Afficher par Classe</option>
-						<option value="classroom">Afficher par Salle</option>
-						<option value="teacher">Afficher par Enseignant</option>
-					</select>
-				</div>
 			</div>
 			{% include 'core/message.html' %}
 			<div class="row">
@@ -38,6 +31,42 @@
 			</div>
 
 			<div class="d-flex justify-content-end mt-5">
+
+				<form class="d-flex row p-2 w-100 mx-auto" action="{%url 'core:times' %}" method='get'>
+				
+					<div class="ps-3 ps-lg-4 col-lg-3 col-md-12">
+						<div class="mt-2 bg-light border-1 p-1 border-danger rounded-1">
+							<button type="submit"  class=" border-0 bg-light ps-3 me-3">
+								<i class="fa fa-search text-dark" aria-hidden="true"></i>
+							</button>
+							<input type="search" placeholder='Rechercher' name="searched" class="border-0 p-1 w-75 bg-light" value='{{searched}}'>
+						</div>
+						
+					</div>
+					<div class=" col-lg-2 col-md-6">
+							<div class="mt-2 bg-light border-1 p-1 border-danger rounded-1">
+								<select name="afficher_salle" id="" placeholder="Afficher par salle" class="bg-light text-dark border-0 text-white w-100 rounded p-2">
+									<option value="" selected disabled hidden>Choisissez une salle  </option>
+									{% for room in  classrooms %}<option value="{{room.id}}">{{room.name}}</option>{% endfor %}
+									
+								</select>
+							</div>
+					</div>
+					<div class=" col-lg-2 col-md-6">
+						<div class="mt-2 bg-light border-1 p-1 border-danger rounded-1">
+							<select name="afficher_teacher" id="" placeholder="Afficher par enseignant" class="bg-light text-dark border-0 text-white w-100 rounded p-2">
+								<option value="" selected disabled hidden>Choisissez une enseignant  </option>
+								{% for teacher in  teachers %}<option value="{{teacher.id}}">{{teacher.name}}</option>{% endfor %}
+							</select>
+						</div>
+					</div>
+					<div class="col-lg-5 d-flex">
+						<div class="col px-3 pe-lg-3 mx-auto aligner">
+							<button type="submit" class="mt-4 btn bg-pink text-white px-5">Afficher</button>
+						</div>
+						
+					</div>
+				</form>
 
 					<button class="border-0 bg-dark p-2 fw-bold text-light px-5 rounded" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						Nouveau 

@@ -86,42 +86,40 @@ class ProvideForm(forms.ModelForm):
         fields = ("planning", "teacher", "unit", "classroom", "group", "day",
                     "range")
 
-    # def clean(self):
-    #     # Check if the group selected can doing course at the selected classroom
-    #     group = get_object_or_404(Group, id=self.data["group"])
-    #     classroom = get_object_or_404(Classroom, id=self.data["classroom"])
-    #     if group.capacity > classroom.capacity:
-    #         raise forms.ValidationError(
-    #             "Cette salle ne peut pas contenir un groupe avec une telle capacité."
-    #         )
-    #     # Check if a classroom is already taken at the selected range
-    #     if (Provide.objects.all().filter(
-    #             classroom=self.data["classroom"],
-    #             day=self.data["day"],
-    #             start_time=self.data["start_time"],
-    #             end_time=self.data["end_time"],
-    #     ).exists()):
-    #         raise forms.ValidationError(
-    #             "Cette salle de classe est déjà occupé à cette plage horaire.")
-    #     # Verify that a group is already taken at the selected range
-    #     if (Provide.objects.all().filter(
-    #             group=self.data["group"],
-    #             day=self.data["day"],
-    #             start_time=self.data["start_time"],
-    #             end_time=self.data["end_time"],
-    #     ).exists()):
-    #         raise forms.ValidationError(
-    #             "Ce groupe fait déjà cours à cette plage horaire.")
-    #     # Verify that a teacher is already taken at the selected range
-    #     if (Provide.objects.all().filter(
-    #             teacher=self.data["teacher"],
-    #             day=self.data["day"],
-    #             start_time=self.data["start_time"],
-    #             end_time=self.data["end_time"],
-    #     ).exists()):
-    #         raise forms.ValidationError(
-    #             "Ce professeur est déjà pris à cette plage horaire.")
-    # return 
+    def clean(self):
+        # Check if the group selected can doing course at the selected classroom
+        group = get_object_or_404(Group, id=self.data["group"])
+        classroom = get_object_or_404(Classroom, id=self.data["classroom"])
+        if group.capacity > classroom.capacity:
+            raise forms.ValidationError(
+                "Cette salle ne peut pas contenir un groupe avec une telle capacité."
+            )
+        # Check if a classroom is already taken at the selected range
+        if (Provide.objects.all().filter(
+                classroom=self.data["classroom"],
+                day=self.data["day"],
+                range=self.data["range"],
+        ).exists()):
+            raise forms.ValidationError(
+                "Cette salle de classe est déjà occupé à cette plage horaire.")
+        # Verify that a group is already taken at the selected range
+        if (Provide.objects.all().filter(
+                group=self.data["group"],
+                day=self.data["day"],
+                range=self.data["range"],
+        ).exists()):
+            raise forms.ValidationError(
+                "Ce groupe fait déjà cours à cette plage horaire.")
+        # Verify that a teacher is already taken at the selected range
+        if (Provide.objects.all().filter(
+                teacher=self.data["teacher"],
+                day=self.data["day"],
+                range=self.data["range"],
+                
+        ).exists()):
+            raise forms.ValidationError(
+                "Ce professeur est déjà pris à cette plage horaire.")
+    
 
 class PlanningForm(forms.ModelForm):
 

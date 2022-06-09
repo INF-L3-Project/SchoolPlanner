@@ -9,7 +9,7 @@ from core.views import (ClassroomUpdateView, FieldUpdateView, GradeUpdateView,
 
 app_name = 'core'
 urlpatterns = [
-    path('', HomeView.as_view(), name='home'),
+    path('home/', HomeView.as_view(), name='home'),
     path('account/', AccountView.as_view(), name='account'),
     path('field/', FieldView.as_view(), name='field'),
     path('field/<int:pk>/update',
