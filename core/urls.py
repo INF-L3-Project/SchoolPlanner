@@ -2,8 +2,10 @@ from django.urls import path
 from core.views import (ClassroomUpdateView, FieldUpdateView, GradeUpdateView,
                         GroupUpdateView, HomeView, AccountView, FieldView,
                         GradeView, ClassroomView, GroupView, LevelUpdateView,
-                        LevelView, ProvideDeleteView, TeacherUpdateView, TeacherView,
-                        UnitUpdateView, UnitView, TimetableView, NotFoundView, EditScheduleView)
+                        LevelView, ProvideDeleteView, ProvideUpdateView,
+                        TeacherUpdateView, TeacherView, UnitUpdateView,
+                        UnitView, TimetableView, NotFoundView,
+                        EditScheduleView)
 
 app_name = 'core'
 urlpatterns = [
@@ -40,8 +42,10 @@ urlpatterns = [
     path('shedule/<int:pk>/edit',
          EditScheduleView.as_view(),
          name='edit_shedule'),
-     path('provide/<int:pk>/delete',
+    path('provide/<int:pk>/delete',
          ProvideDeleteView.as_view(),
          name='delete_provide'),
-     
+    path('provide/<int:pk>/update',
+         ProvideUpdateView.as_view(),
+         name='update_provide'),
 ]

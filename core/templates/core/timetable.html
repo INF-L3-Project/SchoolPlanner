@@ -139,7 +139,8 @@
 																	</button>
 																</div>
 																<div id="form{{first_cell.id}}">
-																	<form action="" method='post'>
+																	<form action="{% url 'core:update_provide' first_cell.id %}" method='post'>
+																		{% csrf_token %}
 																		<div class="d-grid px-lg-5">
 																			<select name="unit" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
 																				<option value="" selected disabled hidden>selectionner une unité</option>
@@ -210,19 +211,24 @@
 																			</button>
 																		</div>
 																		<div id="form{{cell.id}}">
-																			<form action="">
+																			<form action="{% url 'core:update_provide' cell.id %}" method='post'>
+																				{% csrf_token %}
 																				<div class="d-grid px-lg-5">
 																					<select name="unit" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
 																						<option value="" selected disabled hidden>selectionner une unité</option>
-																						{% for unit in units %}<option value="{{unit.id}}">{{unit.code}}</option>{% endfor %}
+																						{% for unit in units %}<option value="{{cell.unit.id}}">{{unit.code}}</option>{% endfor %}
 																					</select>
 																					<select name="teacher" id="teachers" class="my-3 bg-dark p-2 border-0 text-white rounded">
 																						<option value="" selected disabled hidden>selectionner un enseignant</option>
 																						{% for teacher in teachers %}<option value="{{teacher.id}}">{{teacher.name}}</option>{% endfor %}
 																					</select>
-																					<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
+																					<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded" {{cell.classroom.name}}>
 																						<option value="" selected disabled hidden>selectionner une salle</option>
 																						{% for room in classrooms %}<option value="{{room.id}}">{{room.name}}</option>{% endfor %}
+																					</select>
+																					<select name="group" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded" value='{{cell.group.name}}'>
+																						<option value="" selected disabled hidden>selectionner un groupe/specialité</option>
+																						{% for group in groups %}<option value="{{group.id}}">{{group.name}}</option>{% endfor %}
 																					</select>
 																				</div>
 																				<div class="modal-footer d-flex justify-content-center px-5">
