@@ -34,7 +34,10 @@
 								</tr>
 							</thead>
 							<tbody id="tbody">
+								{% with uid=cells.count %}
+								
 								{% for hour in ranges %}
+								
 									<tr data-id="{{forloop.counter}}">
 
 										<td data-field="name" class="fw-bold text-center">{{hour|first}}</td>
@@ -52,66 +55,67 @@
 													</a>
 												</td>
 											{% else %}
-												{% with empty_var=0 %}
-												<td id="cell" onclick="changeCell(`{{first_cell.id|default_if_none:''}}`, '{{empty_var}}')" class="text-decoration-none"  data-bs-toggle="modal" href="#exampleModal_cell">
+												{% with empty_var=first_cell.rand %}
+												<td id="cell" onclick="changeCell(`{{empty_var}}`, '{{empty_var}}')" class="text-decoration-none"  data-bs-toggle="modal" href="#exampleModal_cell">
 													<a title="Détails">
 														<div class="p-2 text-center">
 															<p class="fs-5 text-center d-none">{{empty_var}}</p>
-															<p class="my-0">-</p>
+															<p class="my-0">{{empty_var}}</p>
 															<p></p>
 														</div>
 													</a>
 												</td>
-												{% endwith %}
-											{% endif %}
-											<div class="modal fade" id="exampleModal_cell" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-												<div class="modal-dialog">
-													<div class="modal-content">
-														<div class="modal-header bg-dark">
-															<h5 class="modal-title text-center text-white" id="exampleModalLabel">PARAMÈTRES PLANNING</h5>
-															<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
-														</div>
-														<div class="modal-body">
-															<div>
-																<p class="mt-3">Cours: <span id="course" class="fw-bold"></span></p>
-																<p class="mt-3">Enseignant: <span id="teacher" class="fw-bold"></span></p>
-																<p class="mt-3">Salle: <span id="classroom" class="fw-bold"></span></p>
+												<div class="modal fade" id="exampleModal_cell{{empty_var}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header bg-dark">
+																<h5 class="modal-title text-center text-white" id="exampleModalLabel">PARAMÈTRES PLANNING</h5>
+																<button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
 															</div>
-															<div>
-																<div class="d-flex justify-content-between mt-4">
-																	<button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button>
-																	<button onclick="show_hide('{{first_cell.id}}')" class="bg-transparent border-0">
-																		<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
-																	</button>
+															<div class="modal-body">
+																<div>
+																	<p class="mt-3">Cours: <span id="course" class="fw-bold"></span></p>
+																	<p class="mt-3">Enseignant: <span id="teacher" class="fw-bold"></span></p>
+																	<p class="mt-3">Salle: <span id="classroom" class="fw-bold"></span></p>
 																</div>
-																<div id="form{{first_cell.id}}">
-																	<form action="">
-																		<div class="d-grid px-lg-5">
-																			<select name="unit" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
-																				<option value="" selected disabled hidden>selectionner une unité</option>
-																				{% for unit in units %}<option value="{{unit.id}}">{{unit.code}}</option>{% endfor %}
-																			</select>
-																			<select name="teacher" id="teachers" class="my-3 bg-dark p-2 border-0 text-white rounded">
-																				<option value="" selected disabled hidden>selectionner un enseignant</option>
-																				{% for teacher in teachers %}<option value="{{teacher.id}}">{{teacher.name}}</option>{% endfor %}
-																			</select>
-																			<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
-																				<option value="" selected disabled hidden>selectionner une salle</option>
-																				{% for room in classrooms %}<option value="{{room.id}}">{{room.name}}</option>{% endfor %}
-																			</select>
-																		</div>
-																		<div class="modal-footer d-flex justify-content-center px-5">
-																			<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
-																		</div>
-																	</form>
+																<div>
+																	<div class="d-flex justify-content-between mt-4">
+																		<button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button>
+																		<button onclick="show_hide('{{empty_var}}')" class="bg-transparent border-0">
+																			<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
+																		</button>
+																	</div>
+																	<div id="form{{empty_var}}">
+																		<form action="">
+																			<div class="d-grid px-lg-5">
+																				<select name="unit" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
+																					<option value="" selected disabled hidden>selectionner une unité</option>
+																					{% for unit in units %}<option value="{{unit.id}}">{{unit.code}}</option>{% endfor %}
+																				</select>
+																				<select name="teacher" id="teachers" class="my-3 bg-dark p-2 border-0 text-white rounded">
+																					<option value="" selected disabled hidden>selectionner un enseignant</option>
+																					{% for teacher in teachers %}<option value="{{teacher.id}}">{{teacher.name}}</option>{% endfor %}
+																				</select>
+																				<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
+																					<option value="" selected disabled hidden>selectionner une salle</option>
+																					{% for room in classrooms %}<option value="{{room.id}}">{{room.name}}</option>{% endfor %}
+																				</select>
+																			</div>
+																			<div class="modal-footer d-flex justify-content-center px-5">
+																				<button type="submit" class="btn bg-pink text-white px-lg-5">Enregistrer</button>
+																			</div>
+																		</form>
+																	</div>
 																</div>
 															</div>
+															
 														</div>
-														
 													</div>
 												</div>
-											</div>
-											<div class="modal fade" id="exampleModal{{first_cell.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		
+												{% endwith %}
+											{% endif %}
+												<div class="modal fade" id="exampleModal{{first_cell.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 												<div class="modal-dialog">
 													<div class="modal-content">
 														<div class="modal-header bg-dark">
@@ -126,13 +130,16 @@
 															</div>
 															<div>
 																<div class="d-flex justify-content-between mt-4">
-																	<button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button>
+																
+																{% if first_cell.id %}
+																<a href="{% url 'core:delete_provide' first_cell.id %}"><button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button></a>
+																{% endif %}
 																	<button onclick="show_hide('{{first_cell.id}}')" class="bg-transparent border-0">
 																		<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
 																	</button>
 																</div>
 																<div id="form{{first_cell.id}}">
-																	<form action="">
+																	<form action="" method='post'>
 																		<div class="d-grid px-lg-5">
 																			<select name="unit" id="courses" class="mt-5 bg-dark p-2 border-0 text-white rounded">
 																				<option value="" selected disabled hidden>selectionner une unité</option>
@@ -145,6 +152,10 @@
 																			<select name="classroom" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
 																				<option value="" selected disabled hidden>selectionner une salle</option>
 																				{% for room in classrooms %}<option value="{{room.id}}">{{room.name}}</option>{% endfor %}
+																			</select>
+																			<select name="group" id="classrooms" class="mb-5 bg-dark p-2 border-0 text-white rounded">
+																				<option value="" selected disabled hidden>selectionner un groupe/specialité</option>
+																				{% for group in groups %}<option value="{{group.id}}">{{group.name}}</option>{% endfor %}
 																			</select>
 																		</div>
 																		<div class="modal-footer d-flex justify-content-center px-5">
@@ -191,7 +202,9 @@
 																	</div>
 																	<div>
 																		<div class="d-flex justify-content-between mt-4">
-																			<button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button>
+																			{% if cell %}
+																			<a href="{% url 'core:delete_provide' cell.id %}"><button type="button" class="btn bg-dark text-white px-lg-4">Supprimer</button></a>
+																			{% endif %}
 																			<button onclick="show_hide('{{cell.id}}')" class="bg-transparent border-0">
 																				<i class="fa fa-pencil text-pink2 fs-5"></i><span class="ms-2">Modifier</span>
 																			</button>
@@ -231,6 +244,7 @@
 									</tr>
 								</div>
 								{% endfor %}
+								{% endwith %}
 							</tbody>
 							
 						</table>

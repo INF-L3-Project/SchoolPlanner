@@ -1,4 +1,7 @@
 from pprint import pprint
+from tokenize import group
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -6,9 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.db.models import Q
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DeleteView
 from django.contrib.auth.models import User
-from pytz import HOUR
 from authentication.models import Institution
 from .models import Classroom, Field, Grade, Group, Level, Planning, Provide, Teacher, Unit
 from .forms import (
@@ -76,7 +78,14 @@ class EditScheduleView(View):
 
     def get(self, request, *args, **kwargs):
         planning = get_object_or_404(Planning, id=kwargs['pk'])
+        grade = get_object_or_404(Grade, id=planning.grade.id)
+        groups = Group.objects.filter(grade=grade.id)
+        classrooms = Classroom.objects.filter(
+            institution=planning.institution.id)
+        teachers = Teacher.objects.filter(institution=planning.institution.id)
+        units = Unit.objects.filter(grade=grade.id)
         cells = Provide.objects.filter(planning=planning.id).order_by('range')
+
         first_cell = cells.first()
         if first_cell:
             cells = cells.exclude(id=cells.first().id)
@@ -90,8 +99,48 @@ class EditScheduleView(View):
                 'cells': cells,
                 'first_cell': first_cell,
                 'week_days': Provide.DAY,
-                'ranges': Provide.HOUR
+                'ranges': Provide.HOUR,
+                'groups': groups,
+                'classrooms': classrooms,
+                'teachers': teachers,
+                'units': units
             })
+
+
+class ProvideDeleteView(View):
+    model = Provide
+    template_name = 'core/timetable.html'
+
+    def get(self, request, *args, **kwargs):
+        provide = get_object_or_404(Provide, id=kwargs['pk'])
+        planning_id = provide.planning.id
+        provide.delete()
+        print("hello")
+        return HttpResponseRedirect(
+            reverse('core:edit_shedule', kwargs={'pk': planning_id}))
+
+
+class ProvideUpdateView(View):
+    model = Provide
+    template_name = 'core/timetable.html'
+    form_class = ProvideForm
+
+    def post(self, request, *args, **kwargs):
+        provide = get_object_or_404(Provide, id=kwargs['pk'])
+        planning_id = provide.planning.id
+        form = self.form_class(request.POST, instance=provide)
+        if form.is_valid():
+            form.save()
+            return reverse('core:edit_shedule', kwargs={'pk': planning_id})
+        else:
+            messages.error(request, form.errors)
+            return render(request, self.template_name, {'form': form})
+
+    def get(self, request, *args, **kwargs):
+        provide = get_object_or_404(Provide, id=kwargs['pk'])
+        planning_id = provide.planning.id
+        form = self.form_class(instance=provide)
+        return render(request, self.template_name, {'form': form})
 
 
 @method_decorator(decorators, name="get")
@@ -421,7 +470,7 @@ class GroupView(View):
 
     def get(self, request, *args, **kwargs):
         # Filtrage des groupes par rapport aux classes creer par l'utilisateur courant
-        
+
         groups = Group.objects.filter(grade_id__in=Grade.objects.filter(
             Q(field_id__in=Field.objects.filter(
                 institution_id=request.user.institution.id))

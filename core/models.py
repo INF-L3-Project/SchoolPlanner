@@ -1,3 +1,4 @@
+from random import randint
 from django.db import models
 from authentication.models import Institution
 
@@ -120,3 +121,7 @@ class Provide(models.Model):
 
     def __str__(self):
         return f"{self.teacher}|{self.unit.code}|{self.classroom}|{self.group.name}"
+
+    def rand(self):
+        dd = randint(1000,5000)
+        return dd
