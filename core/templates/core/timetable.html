@@ -254,7 +254,7 @@
 
 		<div class="ps-lg-5 ms-3 mt-5">
 			<div id="editor"></div>
-			<button id="cmd" class="p-2 border-0 rounded px-5 bg-dark text-light">Imprimer</button>
+			<button id="button" class="p-2 border-0 rounded px-5 bg-dark text-light">Imprimer</button>
 		</div>
 
 	</div>
@@ -265,9 +265,6 @@
 
 
 {% block extra_script %}
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
-	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script> 
 
 	<script type="text/javascript">
 
@@ -298,20 +295,15 @@
 			let td = document.getElementsByTagName('td');
 			for (let i = 0; i < td.length; i++) {
 				td[i].onclick = function() {
-					//modal.style.display = "block";
-					//console.log(i);
-					//console.log(course, teacher, classroom)
 
 					if(classroom == 0){
 						classroom = i
-						//console.log(classroom)
-						//this.style.display='none';
 					}
 					console.log(id_cell, classroom)
 
 					$.fn.test = function() {
 						return this.each(function(){
-							var new_id = i;
+							let new_id = i;
 							$(this).attr('id',   this.id + '_' + new_id);
 						});
 					};
@@ -325,24 +317,16 @@
 			
 		}
 
-		//function to print timetable
+		//code to print timetable
 
-		let doc = new jsPDF();
-		let specialElementHandlers = {
-			'#editor': function (element, renderer) {
-				return true;
-			}
-		};
-
-		$('#cmd').click(function () {
-			doc.fromHTML($('#content').html(), 15, 15, {
-				'width': 170,
-					'elementHandlers': specialElementHandlers
-			});
-			doc.save('timetable.pdf');
-		});
-
+		let button = document.getElementById("button");
+        let makepdf = document.getElementById("content");
+  
+        button.addEventListener("click", function () {
+            html2pdf().from(makepdf).save();
+        });
+		
 	</script>
-	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
 
 {% endblock %}
