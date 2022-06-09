@@ -83,7 +83,8 @@ class ProvideForm(forms.ModelForm):
 
     class Meta:
         model = Provide
-        fields = "__all__"
+        fields = ("planning", "teacher", "unit", "classroom", "group", "day",
+                    "range")
 
     def clean(self):
         # Check if the group selected can doing course at the selected classroom
@@ -97,8 +98,7 @@ class ProvideForm(forms.ModelForm):
         if (Provide.objects.all().filter(
                 classroom=self.data["classroom"],
                 day=self.data["day"],
-                start_time=self.data["start_time"],
-                end_time=self.data["end_time"],
+                range=self.data["range"],
         ).exists()):
             raise forms.ValidationError(
                 "Cette salle de classe est déjà occupé à cette plage horaire.")
@@ -106,8 +106,7 @@ class ProvideForm(forms.ModelForm):
         if (Provide.objects.all().filter(
                 group=self.data["group"],
                 day=self.data["day"],
-                start_time=self.data["start_time"],
-                end_time=self.data["end_time"],
+                range=self.data["range"],
         ).exists()):
             raise forms.ValidationError(
                 "Ce groupe fait déjà cours à cette plage horaire.")
@@ -115,12 +114,12 @@ class ProvideForm(forms.ModelForm):
         if (Provide.objects.all().filter(
                 teacher=self.data["teacher"],
                 day=self.data["day"],
-                start_time=self.data["start_time"],
-                end_time=self.data["end_time"],
+                range=self.data["range"],
+                
         ).exists()):
             raise forms.ValidationError(
                 "Ce professeur est déjà pris à cette plage horaire.")
-
+    
 
 class PlanningForm(forms.ModelForm):
 

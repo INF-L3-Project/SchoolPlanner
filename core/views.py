@@ -1,5 +1,4 @@
 from pprint import pprint
-from tokenize import group
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
@@ -9,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.db.models import Q
-from django.views.generic import TemplateView, DeleteView
+from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from authentication.models import Institution
 from .models import Classroom, Field, Grade, Group, Level, Planning, Provide, Teacher, Unit
@@ -66,20 +65,36 @@ class HomeView(View):
         institution = get_object_or_404(Institution, user=request.user.id)
         plannings = Planning.objects.filter(institution=institution.id)
         groups = Group.objects.filter(grade__field__institution=institution.id)
+        classrooms = Classroom.objects.filter(institution=institution.id)
+        teachers = Teacher.objects.filter(institution=institution.id)
+        provides = Provide.objects.all()
+
+        afficher_salle = request.GET.get("afficher_salle")
+        afficher_teacher = request.GET.get("afficher_teacher")
+        if afficher_salle:
+            provides = Provide.objects.filter(classroom=afficher_salle)
+            pprint(provides)
+        if afficher_teacher:
+            provides = Provide.objects.filter(classroom=afficher_teacher)
+            pprint(provides)
+
         return render(request, self.template_name, {
             "plannings": plannings,
-            "grades": groups
+            "grades": groups,
+            "teachers":teachers,
+            "classrooms":classrooms,
         })
+
 
 
 class EditScheduleView(View):
     template_name = 'core/timetable.html'
-    form_class = ProvideForm()
+    form_class = ProvideForm
 
     def get(self, request, *args, **kwargs):
         planning = get_object_or_404(Planning, id=kwargs['pk'])
         grade = get_object_or_404(Grade, id=planning.grade.id)
-        groups = Group.objects.filter(grade=grade.id)
+        groups = Group.objects.filter(grade=grade)
         classrooms = Classroom.objects.filter(
             institution=planning.institution.id)
         teachers = Teacher.objects.filter(institution=planning.institution.id)
@@ -89,7 +104,7 @@ class EditScheduleView(View):
         first_cell = cells.first()
         if first_cell:
             cells = cells.exclude(id=cells.first().id)
-        pprint(cells.values())
+        pprint(units.values())
 
         # if not provide.exists():
         #     provide = None
@@ -105,6 +120,20 @@ class EditScheduleView(View):
                 'teachers': teachers,
                 'units': units
             })
+
+    def post(self, request, *args, **kwargs):
+        planning = get_object_or_404(Planning, id=kwargs['pk'])
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            pprint(form)
+            return HttpResponseRedirect(
+                reverse('core:edit_shedule', kwargs={'pk': planning.id}))
+        else:
+            pprint(form.errors)
+            messages.error(request, form.errors)
+            return HttpResponseRedirect(
+                reverse('core:edit_shedule', kwargs={'pk': planning.id}))
 
 
 class ProvideDeleteView(View):
@@ -128,13 +157,15 @@ class ProvideUpdateView(View):
     def post(self, request, *args, **kwargs):
         provide = get_object_or_404(Provide, id=kwargs['pk'])
         planning_id = provide.planning.id
-        form = self.form_class(request.POST, instance=provide)
-        if form.is_valid():
-            form.save()
-            return reverse('core:edit_shedule', kwargs={'pk': planning_id})
-        else:
-            messages.error(request, form.errors)
-            return render(request, self.template_name, {'form': form})
+        data = request.POST
+        provide.unit = get_object_or_404(Unit, id=data['unit'])
+        provide.group = get_object_or_404(Group, id=data['group'])
+        provide.teacher = get_object_or_404(Teacher, id=data['teacher'])
+        provide.classroom = get_object_or_404(Classroom, id=data['classroom'])
+        provide.save()
+
+        return HttpResponseRedirect(
+            reverse('core:edit_shedule', kwargs={'pk': planning_id}))
 
     def get(self, request, *args, **kwargs):
         provide = get_object_or_404(Provide, id=kwargs['pk'])
