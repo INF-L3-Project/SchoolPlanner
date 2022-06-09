@@ -56,7 +56,7 @@
 												</td>
 											{% else %}
 												{% with empty_var=first_cell.rand %}
-												<td id="cell" onclick="changeCell(`{{empty_var}}`, '{{empty_var}}')" class="text-decoration-none"  data-bs-toggle="modal" href="#exampleModal{{empty_var}}">
+												<td id="cell-{{empty_var}}" onclick="changeCell(`{{empty_var}}`, '{{empty_var}}')" class="text-decoration-none"  data-bs-toggle="modal" href="#exampleModal{{empty_var}}">
 													<a title="Détails">
 														<div class="p-2 text-center">
 															<p class="fs-5 text-center"></p>
@@ -282,7 +282,7 @@
 		
 
 		function show_hide(id_form) {
-			var x = document.getElementById("form-"+id_form);
+			let x = document.getElementById("form-"+id_form);
 			if (x.style.display === "none") {
 				x.style.display = "block";
 			} else {
@@ -290,29 +290,32 @@
 			}
 		}
 
+		
+
 		function changeCell(id_cell, classroom){
 
-			let td = document.getElementsByTagName('td');
-			for (let i = 0; i < td.length; i++) {
-				td[i].onclick = function() {
-
-					if(classroom == 0){
-						classroom = i
-					}
-					console.log(id_cell, classroom)
-
-					$.fn.test = function() {
-						return this.each(function(){
-							let new_id = i;
-							$(this).attr('id',   this.id + '_' + new_id);
-						});
-					};
-
-					$(document).ready(function() {
-						$('#cell').test()
-					});
-				}
+			if(classroom == id_cell){
+				let cell = document.getElementById("cell-"+id_cell);
+				console.log(id_cell, classroom)
+				//cell.style.display = "none";
 			}
+			
+			
+			// let td = document.getElementsByTagName('td');
+			// for (let i = 0; i < td.length; i++) {
+			// 	td[i].onclick = function() {
+
+			// 		if(classroom == id_cell){
+			// 			id_cell = i;
+			// 			//console.log(i)
+			// 			//console.log(id_cell, classroom)
+			// 		}
+			// 		//console.log(i)
+			// 		//console.log(id_cell, classroom)
+
+					
+			// 	}
+			// }
 
 			
 		}
